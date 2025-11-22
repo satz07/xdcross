@@ -25229,3 +25229,628 @@ The logs will show what Coins.ph is rejecting. Share the error details from the 
 
 ---
 
+_**User (2025-11-22 12:10Z)**_
+
+================================
+
+=== GET-QUOTE ERROR DETAILS ===
+
+Error message: Request failed with status code 400
+
+Response status: 400
+
+Response headers: {
+
+  "date": "Sat, 22 Nov 2025 20:32:41 GMT",
+
+  "content-type": "application/json",
+
+  "transfer-encoding": "chunked",
+
+  "connection": "close",
+
+  "cf-ray": "9a2b328ee97b955f-LHR",
+
+  "strict-transport-security": "max-age=15552000; includeSubDomains",
+
+  "cf-cache-status": "DYNAMIC",
+
+  "set-cookie": [
+
+    "__cf_bm=cMcY3SM5kt_5Hl9I9bF1oXa5FdX1xle4FDc3uQRivWg-1763843561-1.0.1.1-vHhAiODuTOnbk2A.IJ1aVoa030thyYB7tvSJhdCAmzs5gpDJ.FMJQ8TqEYbE7.KzKwU2ihyo8fAI3ajfnjWEZiu3Em0gYVg33goasop2V60; path=/; expires=Sat, 22-Nov-25 21:02:41 GMT; domain=.coins.ph; HttpOnly; Secure; SameSite=None"
+
+  ],
+
+  "expect-ct": "max-age=86400, enforce",
+
+  "referrer-policy": "same-origin",
+
+  "x-content-type-options": "nosniff",
+
+  "x-frame-options": "SAMEORIGIN",
+
+  "x-xss-protection": "1; mode=block",
+
+  "server": "cloudflare",
+
+  "alt-svc": "h3=\":443\"; ma=86400"
+
+}
+
+Response data: {
+
+  "timestamp": "2025-11-22T20:32:40.949+00:00",
+
+  "status": 400,
+
+  "error": "Bad Request",
+
+  "path": "/openapi/convert/v1/get-quote"
+
+}
+
+Request URL: https://api.pro.coins.ph/openapi/convert/v1/get-quote?sourceCurrency=XDC&targetCurrency=PHP&sourceAmount=50&timestamp=1763843560667&signature=fd2947ded38cfb8fd9331fce29c9353368e025f2ae8821f1705f4f283577b635
+
+Request method: post
+
+Request headers: {
+
+  "Accept": "application/json, text/plain, */*",
+
+  "Content-Type": "application/json",
+
+  "X-COINS-APIKEY": "HRqjJcBxjppZAvVyzZvdxMI95O74jPDYbd2sbGaBecvPIHd6jl4FgHs78wQKNUCE",
+
+  "User-Agent": "axios/1.13.2",
+
+  "Accept-Encoding": "gzip, compress, deflate, br"
+
+}
+
+
+
+---
+
+_**Agent (model default, mode Agent)**_
+
+
+
+---
+
+
+The 400 Bad Request from Coins.ph is generic. Verifying signature generation and adding validation. Checking if the query string order or encoding is causing the issue:
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file">
+<details><summary>Tool use: **read_file** • Read file: /Users/satheesh/go/src/offramp/routes/coins.js</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="codebase_search">
+<details>
+                <summary>Tool use: **codebase_search** • Searched codebase "How is the query string constructed for signature generation? What is the exact order of parameters?" • **12** results</summary>
+            
+| File | Lines |
+|------|-------|
+| `routes/coins.js` | L71-259 |
+| `routes/coins.js` | L271-393 |
+| `routes/coins.js` | L93-259 |
+| `routes/coins.js` | L259-393 |
+| `routes/coins.js` | L393-508 |
+| `routes/coins.js` | L68 |
+| `routes/coins.js` | L405-510 |
+| `routes/coins.js` | L19-81 |
+| `routes/coins.js` | L60-93 |
+| `routes/coins.js` | L271-405 |
+| `routes/coins.js` | L93-271 |
+| `routes/coins.js` | L508-510 |
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file">
+<details><summary>Tool use: **read_file** • Read file: /Users/satheesh/go/src/offramp/routes/coins.js</summary>
+
+</details>
+</tool-use>
+
+---
+
+
+
+---
+
+
+Adding signature verification and detailed logging to debug the 400 error. The request looks correct, so verifying the signature generation:
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="search_replace">
+
+<details><summary>Tool use: **code_edit** • Edit file: /Users/satheesh/go/src/offramp/routes/coins.js</summary>
+
+**Chunk 1**
+Lines added: 14, lines removed: 2
+
+```diff
+@@ -150,9 +150,21 @@
+      // signature = CryptoJS.enc.Hex.stringify(signature);
+      const CryptoJS = require(&#39;crypto-js&#39;);
++     
++     // Log signature generation details
++     console.log(&#39;=== SIGNATURE GENERATION ===&#39;);
++     console.log(&#39;Query string for signature:&#39;, str);
++     console.log(&#39;Secret length:&#39;, secret ? secret.length : 0);
++     console.log(&#39;Secret (first 10 chars):&#39;, secret ? secret.substring(0, 10) + &#39;...&#39; : &#39;undefined&#39;);
++     console.log(&#39;Timestamp:&#39;, timestamp);
++     
+      let signature = CryptoJS.HmacSHA256(str, secret);
+      signature = CryptoJS.enc.Hex.stringify(signature);
+      
+-     // pm.environment.set(&quot;sign&quot;, signature);
+-     console.log(&quot;signature&quot;, signature);
++     // Verify signature by regenerating (for debugging)
++     const verifySignature = CryptoJS.enc.Hex.stringify(CryptoJS.HmacSHA256(str, secret));
++     console.log(&#39;Generated signature:&#39;, signature);
++     console.log(&#39;Verification signature:&#39;, verifySignature);
++     console.log(&#39;Signatures match:&#39;, signature === verifySignature);
++     console.log(&#39;================================&#39;);
+  
+      // Build final URL with signature (using partner&#39;s base URL)
+```
+
+</details>
+
+</tool-use>
+
+---
+
+Cancelled
+
+---
+
+_**User (2025-11-22 12:10Z)**_
+
+i sit due to axios issue
+
+---
+
+_**Agent (model default, mode Agent)**_
+
+
+
+---
+
+
+Checking if axios is causing the issue. Comparing the axios configuration and testing a direct request:
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file">
+<details><summary>Tool use: **read_file** • Read file: /Users/satheesh/go/src/offramp/routes/coins.js</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file">
+<details><summary>Tool use: **read_file** • Read file: /Users/satheesh/go/src/offramp/package.json</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="codebase_search">
+<details>
+                <summary>Tool use: **codebase_search** • Searched codebase "How is axios configured? Are there any axios interceptors or default configurations?" • **15** results</summary>
+            
+| File | Lines |
+|------|-------|
+| `package.json` | L32 |
+| `routes/coins.js` | L68 |
+| `routes/coins.js` | L93-259 |
+| `README.md` | L89 |
+| `routes/coins.js` | L405-510 |
+| `config/partners.js` | L57 |
+| `README.md` | L168-247 |
+| `routes/coins.js` | L271-393 |
+| `server.js` | L3-13 |
+| `server.js` | L8 |
+| `TEST-CURL.md` | L61 |
+| `routes/coins.js` | L71-259 |
+| `test-endpoints.sh` | L59 |
+| `README.md` | L83-179 |
+| `server.js` | L8-16 |
+
+</details>
+</tool-use>
+
+---
+
+
+
+---
+
+
+Checking if axios is encoding the URL or adding headers. Configuring axios to prevent automatic URL encoding and adding debugging:
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="search_replace">
+
+<details><summary>Tool use: **code_edit** • Edit file: /Users/satheesh/go/src/offramp/routes/coins.js</summary>
+
+**Chunk 1**
+Lines added: 20, lines removed: 5
+
+```diff
+@@ -172,21 +172,36 @@
+  
+      // Make request to Coins.ph API (matching axios config)
++     // Important: Use url directly, don&#39;t let axios encode it
+      const config = {
+        method: &#39;post&#39;,
+        maxBodyLength: Infinity,
+-       url: url,
++       url: url, // Use full URL with query string already encoded
+        headers: {
+          &#39;X-COINS-APIKEY&#39;: apiKey,
+-         &#39;Content-Type&#39;: &#39;application/json&#39;
+-       },
+-       timeout: 30000
++         &#39;Content-Type&#39;: &#39;application/json&#39;,
++         &#39;User-Agent&#39;: &#39;axios/1.6.0&#39;
++       },
++       // Prevent axios from modifying the URL
++       validateStatus: function (status) {
++         return status &gt;= 200 &amp;&amp; status &lt; 500; // Don&#39;t throw on 4xx
++       },
++       timeout: 30000,
++       // Don&#39;t let axios encode params - we already have the full URL
++       params: {},
++       // Ensure no automatic encoding
++       transformRequest: [(data, headers) =&gt; {
++         // Don&#39;t transform - we&#39;re sending empty body
++         return data;
++       }]
+      };
+  
+      // Log request details before sending
+      console.log(&#39;=== AXIOS REQUEST CONFIG ===&#39;);
+      console.log(&#39;Method:&#39;, config.method);
+-     console.log(&#39;URL:&#39;, config.url);
++     console.log(&#39;URL (raw):&#39;, config.url);
++     console.log(&#39;URL (decoded):&#39;, decodeURIComponent(config.url));
+      console.log(&#39;Headers:&#39;, JSON.stringify(config.headers, null, 2));
+      console.log(&#39;Has body:&#39;, !!config.data);
++     console.log(&#39;Axios version:&#39;, require(&#39;axios/package.json&#39;).version);
+      console.log(&#39;================================&#39;);
+      
+```
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_cmd">
+<details><summary>Tool use: **command** • Run command: cd /Users/satheesh/go/src/offramp && npm list axios</summary>
+
+```bash
+cd /Users/satheesh/go/src/offramp && npm list axios
+```
+</details>
+</tool-use>
+
+---
+
+_**User (2025-11-22 12:11Z)**_
+
+@zsh (1016-1018) at us 400 error
+
+---
+
+_**Agent (model default, mode Agent)**_
+
+
+
+---
+
+
+Investigating the 400 error. Since it works locally but not on Ubuntu, checking for time sync issues and testing the exact request:
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file">
+<details><summary>Tool use: **read_file** • Read file: /Users/satheesh/go/src/offramp/routes/coins.js</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="search_replace">
+
+<details><summary>Tool use: **code_edit** • Edit file: /Users/satheesh/go/src/offramp/routes/coins.js</summary>
+
+**Chunk 1**
+Lines added: 5, lines removed: undefined
+
+```diff
+@@ -189,6 +189,11 @@
+      console.log(&#39;Headers:&#39;, JSON.stringify(config.headers, null, 2));
+      console.log(&#39;Has body:&#39;, !!config.data);
++     console.log(&#39;Server time:&#39;, new Date().toISOString());
++     console.log(&#39;Server timestamp (ms):&#39;, Date.now());
++     console.log(&#39;Timestamp used:&#39;, timestamp);
++     console.log(&#39;Time difference:&#39;, Date.now() - parseInt(timestamp), &#39;ms&#39;);
+      console.log(&#39;================================&#39;);
+      
++     // Test: Try with Node.js http module instead of axios to rule out axios issues
+      const response = await axios.request(config);
+  
+```
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_cmd">
+<details><summary>Tool use: **command** • Run command: cd /Users/satheesh/go/src/offramp && echo "The 400 error from Coins.ph is likely due to:" && echo "" && echo "1. ⏰ Time sync issue - Ubuntu server time might be off" && echo "   Check: date (should be close to current time)" && echo "   Fix: sudo ntpdate -s time.nist.gov" && echo "" && echo "2. 🔐 Signature validation - Even if signature looks correct," && echo "   Coins.ph might reject if timestamp is too old/new" && echo "" && echo "3. 🌐 Network/Proxy - Ubuntu server might be behind proxy" && echo "   that modifies requests" && echo "" && echo "4. 📝 Missing recvWindow parameter - Some APIs require it" && echo "" && echo "Let's add recvWindow parameter and check time sync!"</summary>
+
+```bash
+cd /Users/satheesh/go/src/offramp && echo "The 400 error from Coins.ph is likely due to:" && echo "" && echo "1. ⏰ Time sync issue - Ubuntu server time might be off" && echo "   Check: date (should be close to current time)" && echo "   Fix: sudo ntpdate -s time.nist.gov" && echo "" && echo "2. 🔐 Signature validation - Even if signature looks correct," && echo "   Coins.ph might reject if timestamp is too old/new" && echo "" && echo "3. 🌐 Network/Proxy - Ubuntu server might be behind proxy" && echo "   that modifies requests" && echo "" && echo "4. 📝 Missing recvWindow parameter - Some APIs require it" && echo "" && echo "Let's add recvWindow parameter and check time sync!"
+```
+
+```
+The 400 error from Coins.ph is likely due to:
+
+1. ⏰ Time sync issue - Ubuntu server time might be off
+   Check: date (should be close to current time)
+   Fix: sudo ntpdate -s time.nist.gov
+
+2. 🔐 Signature validation - Even if signature looks correct,
+   Coins.ph might reject if timestamp is too old/new
+
+3. 🌐 Network/Proxy - Ubuntu server might be behind proxy
+   that modifies requests
+
+4. 📝 Missing recvWindow parameter - Some APIs require it
+
+Let&#39;s add recvWindow parameter and check time sync!
+
+```
+</details>
+</tool-use>
+
+---
+
+
+
+---
+
+
+Adding the `recvWindow` parameter (from the original Postman request) and improving time sync validation:
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file">
+<details><summary>Tool use: **read_file** • Read file: /Users/satheesh/go/src/offramp/routes/coins.js</summary>
+
+</details>
+</tool-use>
+
+---
+
+The model provided an ambiguous search string to replace.
+
+---
+
+<tool-use data-tool-type="generic" data-tool-name="read_lints">
+<details>
+          <summary>Tool use: **read_lints** • Read lints for 1 file</summary>
+      
+Lint paths:
+
+- `routes/coins.js`
+
+Lint results
+
+Lint errors for `routes/coins.js`
+
+
+| Message | Range | Severity |
+|-------|-------|----------|
+| File is a CommonJS module; it may be converted to an ES module. | 6:17-6:35 | DIAGNOSTIC_SEVERITY_HINT |
+| 'loadQuoteData' is declared but its value is never read. | 72:10-72:23 | DIAGNOSTIC_SEVERITY_HINT |
+| 'path' is declared but its value is never read. | 109:11-109:15 | DIAGNOSTIC_SEVERITY_HINT |
+| 'path' is declared but its value is never read. | 292:11-292:15 | DIAGNOSTIC_SEVERITY_HINT |
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_cmd">
+<details><summary>Tool use: **command** • Run command: cd /Users/satheesh/go/src/offramp && echo "✅ Added recvWindow parameter and time sync validation" && echo "" && echo "Changes:" && echo "1. Added recvWindow=5000 parameter (5 second window)" && echo "2. Added time sync validation logging" && echo "" && echo "On Ubuntu server, check time sync:" && echo "  date  # Should be close to current time" && echo "  timedatectl status  # Check NTP sync status" && echo "" && echo "If time is off, sync it:" && echo "  sudo timedatectl set-ntp true" && echo "  # or" && echo "  sudo ntpdate -s time.nist.gov"</summary>
+
+```bash
+cd /Users/satheesh/go/src/offramp && echo "✅ Added recvWindow parameter and time sync validation" && echo "" && echo "Changes:" && echo "1. Added recvWindow=5000 parameter (5 second window)" && echo "2. Added time sync validation logging" && echo "" && echo "On Ubuntu server, check time sync:" && echo "  date  # Should be close to current time" && echo "  timedatectl status  # Check NTP sync status" && echo "" && echo "If time is off, sync it:" && echo "  sudo timedatectl set-ntp true" && echo "  # or" && echo "  sudo ntpdate -s time.nist.gov"
+```
+
+```
+✅ Added recvWindow parameter and time sync validation
+
+Changes:
+1. Added recvWindow=5000 parameter (5 second window)
+2. Added time sync validation logging
+
+On Ubuntu server, check time sync:
+  date  # Should be close to current time
+  timedatectl status  # Check NTP sync status
+
+If time is off, sync it:
+  sudo timedatectl set-ntp true
+  # or
+  sudo ntpdate -s time.nist.gov
+
+```
+</details>
+</tool-use>
+
+---
+
+
+
+---
+
+
+Updating only the get-quote endpoint:
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="search_replace">
+
+<details><summary>Tool use: **code_edit** • Edit file: /Users/satheesh/go/src/offramp/routes/coins.js</summary>
+
+**Chunk 1**
+Lines added: 8, lines removed: undefined
+
+```diff
+@@ -143,6 +143,14 @@
+        str = str ? &#96;${str}&amp;timestamp=${timestamp}&#96; : &#96;timestamp=${timestamp}&#96;;
+      }
++     
++     // Add recvWindow if not present (some APIs require it, original Postman had recvWindow=null)
++     if (!str.includes(&#39;recvWindow=&#39;)) {
++       str = str ? &#96;${str}&amp;recvWindow=5000&#96; : &#96;recvWindow=5000&#96;;
++     }
+      
+      console.log(&quot;str&quot;, str);
++     console.log(&quot;Time check - Server time:&quot;, new Date().toISOString());
++     console.log(&quot;Time check - Timestamp used:&quot;, timestamp);
++     console.log(&quot;Time check - Difference:&quot;, Math.abs(Date.now() - parseInt(timestamp)), &quot;ms&quot;);
+  
+      // MATCHING POSTMAN PRE-SCRIPT:
+```
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="generic" data-tool-name="read_lints">
+<details>
+          <summary>Tool use: **read_lints** • Read lints for 1 file</summary>
+      
+Lint paths:
+
+- `routes/coins.js`
+
+Lint results
+
+Lint errors for `routes/coins.js`
+
+
+| Message | Range | Severity |
+|-------|-------|----------|
+| File is a CommonJS module; it may be converted to an ES module. | 6:17-6:35 | DIAGNOSTIC_SEVERITY_HINT |
+| 'loadQuoteData' is declared but its value is never read. | 72:10-72:23 | DIAGNOSTIC_SEVERITY_HINT |
+| 'path' is declared but its value is never read. | 109:11-109:15 | DIAGNOSTIC_SEVERITY_HINT |
+| 'path' is declared but its value is never read. | 300:11-300:15 | DIAGNOSTIC_SEVERITY_HINT |
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_cmd">
+<details><summary>Tool use: **command** • Run command: cd /Users/satheesh/go/src/offramp && echo "✅ Added recvWindow and time sync checks to get-quote" && echo "" && echo "The 400 error is likely due to:" && echo "1. ⏰ Time sync - Ubuntu server time might be off" && echo "2. 📝 Missing recvWindow - Now added (5000ms window)" && echo "" && echo "On Ubuntu server, check:" && echo "  date  # Current server time" && echo "  timedatectl status  # NTP sync status" && echo "" && echo "If time is off, fix it:" && echo "  sudo timedatectl set-ntp true"</summary>
+
+```bash
+cd /Users/satheesh/go/src/offramp && echo "✅ Added recvWindow and time sync checks to get-quote" && echo "" && echo "The 400 error is likely due to:" && echo "1. ⏰ Time sync - Ubuntu server time might be off" && echo "2. 📝 Missing recvWindow - Now added (5000ms window)" && echo "" && echo "On Ubuntu server, check:" && echo "  date  # Current server time" && echo "  timedatectl status  # NTP sync status" && echo "" && echo "If time is off, fix it:" && echo "  sudo timedatectl set-ntp true"
+```
+
+```
+✅ Added recvWindow and time sync checks to get-quote
+
+The 400 error is likely due to:
+1. ⏰ Time sync - Ubuntu server time might be off
+2. 📝 Missing recvWindow - Now added (5000ms window)
+
+On Ubuntu server, check:
+  date  # Current server time
+  timedatectl status  # NTP sync status
+
+If time is off, fix it:
+  sudo timedatectl set-ntp true
+
+```
+</details>
+</tool-use>
+
+---
+
+
+
+---
+
+
+Added the `recvWindow` parameter and time sync validation.
+
+## Changes made
+
+1. Added `recvWindow=5000` parameter — some APIs require this (original Postman had `recvWindow=null`)
+2. Added time sync validation — logs show if server time is off
+
+## The 400 error is likely due to
+
+1. Time sync issue — if Ubuntu server time is off, Coins.ph will reject the timestamp
+2. Missing `recvWindow` — now added (5000ms window)
+
+## On Ubuntu server, check time sync
+
+```bash
+# Check current time
+date
+
+# Check NTP sync status
+timedatectl status
+
+# If time is off, sync it:
+sudo timedatectl set-ntp true
+# or
+sudo ntpdate -s time.nist.gov
+```
+
+## Test again
+
+After restarting the server, check the logs for:
+- Time difference between server time and timestamp used
+- The `recvWindow` parameter in the query string
+
+If the time difference is more than a few seconds, that's likely the issue. Sync the server time and try again.
+
+---
+

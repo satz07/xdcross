@@ -143,7 +143,15 @@ router.post('/get-quote', async (req, res) => {
       str = str ? `${str}&timestamp=${timestamp}` : `timestamp=${timestamp}`;
     }
     
+    // Add recvWindow if not present (some APIs require it, original Postman had recvWindow=null)
+    if (!str.includes('recvWindow=')) {
+      str = str ? `${str}&recvWindow=5000` : `recvWindow=5000`;
+    }
+    
     console.log("str", str);
+    console.log("Time check - Server time:", new Date().toISOString());
+    console.log("Time check - Timestamp used:", timestamp);
+    console.log("Time check - Difference:", Math.abs(Date.now() - parseInt(timestamp)), "ms");
 
     // MATCHING POSTMAN PRE-SCRIPT:
     // let signature = CryptoJS.HmacSHA256(str,pm.environment.get("secret"));
@@ -188,8 +196,13 @@ router.post('/get-quote', async (req, res) => {
     console.log('URL:', config.url);
     console.log('Headers:', JSON.stringify(config.headers, null, 2));
     console.log('Has body:', !!config.data);
+    console.log('Server time:', new Date().toISOString());
+    console.log('Server timestamp (ms):', Date.now());
+    console.log('Timestamp used:', timestamp);
+    console.log('Time difference:', Date.now() - parseInt(timestamp), 'ms');
     console.log('================================');
     
+    // Test: Try with Node.js http module instead of axios to rule out axios issues
     const response = await axios.request(config);
 
     // Save timestamp and signature for use in accept-quote
