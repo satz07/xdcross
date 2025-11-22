@@ -182,6 +182,14 @@ router.post('/get-quote', async (req, res) => {
       timeout: 30000
     };
 
+    // Log request details before sending
+    console.log('=== AXIOS REQUEST CONFIG ===');
+    console.log('Method:', config.method);
+    console.log('URL:', config.url);
+    console.log('Headers:', JSON.stringify(config.headers, null, 2));
+    console.log('Has body:', !!config.data);
+    console.log('================================');
+    
     const response = await axios.request(config);
 
     // Save timestamp and signature for use in accept-quote
@@ -211,6 +219,24 @@ router.post('/get-quote', async (req, res) => {
         }
       });
     }
+    
+    // Detailed error logging for debugging
+    console.error('=== GET-QUOTE ERROR DETAILS ===');
+    console.error('Error message:', error.message);
+    if (error.response) {
+      console.error('Response status:', error.response.status);
+      console.error('Response headers:', JSON.stringify(error.response.headers, null, 2));
+      console.error('Response data:', JSON.stringify(error.response.data, null, 2));
+      console.error('Request URL:', error.config?.url);
+      console.error('Request method:', error.config?.method);
+      console.error('Request headers:', JSON.stringify(error.config?.headers, null, 2));
+    } else if (error.request) {
+      console.error('No response received from Coins.ph API');
+      console.error('Request config:', JSON.stringify(error.config, null, 2));
+    } else {
+      console.error('Error setting up request:', error.message);
+    }
+    console.error('================================');
     
     if (error.response) {
       res.status(error.response.status).json({
