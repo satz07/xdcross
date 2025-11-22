@@ -26,7 +26,7 @@ const partners = {
  * @param {string} partnerId - Partner identifier (default: 'id0001')
  * @returns {Object|null} Partner configuration or null if not found
  */
-function getPartner(partnerId = 'id0001') {
+function getPartner(partnerId) {
   const partner = partners[partnerId];
   
   if (!partner) {

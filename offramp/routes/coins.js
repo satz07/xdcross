@@ -18,8 +18,28 @@ const QUOTE_DATA_FILE = path.join(process.cwd(), '.quote-data.json');
  * Extracts partner ID dynamically from URL path: /api/{partnerId}/...
  */
 function getPartnerFromRequest(req) {
-  // Extract partner ID from URL path (e.g., /api/id0001/get-quote -> id0001)
-  const partnerId = req.params.partnerId;
+  // Extract partner ID directly from URL path
+  // URL format: /api/id0001/get-quote -> extract 'id0001'
+  // Try multiple sources to extract partnerId from URL
+  console.log("req-------------", req.params);
+  let partnerId = req.params.partnerId;
+  
+  // If not in params, extract directly from URL path
+  if (!partnerId) {
+    // Extract from req.path or req.originalUrl
+    // Format: /api/id0001/get-quote or /id0001/get-quote
+    const urlPath = req.path || req.originalUrl || '';
+    const pathParts = urlPath.split('/').filter(part => part); // Remove empty parts
+    
+    // Find partnerId - it should be after 'api' or be the first part
+    const apiIndex = pathParts.indexOf('api');
+    if (apiIndex >= 0 && pathParts[apiIndex + 1]) {
+      partnerId = pathParts[apiIndex + 1];
+    } else if (pathParts.length > 0) {
+      // If no 'api' found, take first part
+      partnerId = pathParts[0];
+    }
+  }
   
   if (!partnerId) {
     throw new Error('Partner ID not found in URL path. Expected format: /api/{partnerId}/endpoint');
