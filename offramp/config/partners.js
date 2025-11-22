@@ -30,14 +30,20 @@ function getPartner(partnerId) {
   const partner = partners[partnerId];
   
   if (!partner) {
+    console.log(`[getPartner] Partner '${partnerId}' not found in partners config`);
     return null;
   }
   
   if (!partner.enabled) {
+    console.log(`[getPartner] Partner '${partnerId}' is disabled`);
     return null;
   }
   
   if (!partner.apiKey || !partner.secret) {
+    console.log(`[getPartner] Partner '${partnerId}' missing API key or secret`);
+    console.log(`[getPartner] API Key exists: ${!!partner.apiKey}, Secret exists: ${!!partner.secret}`);
+    console.log(`[getPartner] COINS_API_KEY from env: ${!!process.env.COINS_API_KEY}`);
+    console.log(`[getPartner] COINS_API_SECRET from env: ${!!process.env.COINS_API_SECRET}`);
     return null;
   }
   
