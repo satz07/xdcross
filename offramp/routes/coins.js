@@ -4,7 +4,7 @@
  */
 
 const express = require('express');
-const router = express.Router();
+const router = express.Router({ mergeParams: true }); // Enable route params from parent route
 const axios = require('axios');
 const fs = require('fs');
 const path = require('path');
@@ -19,16 +19,7 @@ const QUOTE_DATA_FILE = path.join(process.cwd(), '.quote-data.json');
  */
 function getPartnerFromRequest(req) {
   // Extract partner ID from URL path (e.g., /api/id0001/get-quote -> id0001)
-  // Try multiple sources in case of routing differences
-  const partnerId = req.path.split('/')[2] || // Extract from path: /api/id0001/get-quote
-                    req.originalUrl.split('/')[2]; // Extract from originalUrl
-  
-  console.log('=== Partner ID Extraction Debug ===');
-  console.log('req.params.partnerId:', req.params.partnerId);
-  console.log('req.path:', req.path);
-  console.log('req.originalUrl:', req.originalUrl);
-  console.log('Extracted partnerId:', partnerId);
-  console.log('===================================');
+  const partnerId = req.params.partnerId;
   
   if (!partnerId) {
     throw new Error('Partner ID not found in URL path. Expected format: /api/{partnerId}/endpoint');
@@ -39,6 +30,9 @@ function getPartnerFromRequest(req) {
   if (!partner) {
     throw new Error(`Partner '${partnerId}' not found or not configured`);
   }
+  
+  console.log('Partner ID extracted from URL:', partnerId);
+  console.log('Partner config:', { name: partner.name, baseUrl: partner.baseUrl });
   
   return partner;
 }
@@ -81,7 +75,6 @@ function loadQuoteData() {
 router.post('/get-quote', async (req, res) => {
   try {
     // Get partner configuration (abstracts partner details from user)
-    console.log("req", req.path);
     const partner = getPartnerFromRequest(req);
     const apiKey = partner.apiKey;
     const secret = partner.secret;

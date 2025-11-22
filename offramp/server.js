@@ -31,7 +31,6 @@ app.get('/health', (req, res) => {
 
 // Coins.ph API routes - dynamic partner ID from URL path
 // URL format: /api/{partnerId}/get-quote, /api/{partnerId}/accept-quote, etc.
-// Use mergeParams: true to pass route params to router
 app.use('/api/:partnerId', coinsRoutes);
 
 // Error handling middleware
