@@ -13,9 +13,27 @@ const PORT = process.env.PORT || 3000;
 app.use(helmet());
 app.use(cors());
 
-// Body parser middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// Body parser middleware - CRITICAL for JSON requests
+app.use(express.json({ limit: '1mb' }));
+app.use(express.urlencoded({ extended: false, limit: '1mb' }));
+
+// Debug middleware - Log what actually arrives at server (after body parsing)
+app.use((req, res, next) => {
+  console.log('');
+  console.log('=== INCOMING REQUEST (Server View) ===');
+  console.log('Method:', req.method);
+  console.log('Original URL:', req.originalUrl);
+  console.log('Path:', req.path);
+  console.log('Query (parsed):', req.query);
+  console.log('Query String (raw):', req.originalUrl.includes('?') ? req.originalUrl.substring(req.originalUrl.indexOf('?') + 1) : '');
+  console.log('Headers:', JSON.stringify(req.headers, null, 2));
+  console.log('Body (parsed):', req.body);
+  console.log('Protocol:', req.protocol);
+  console.log('Host:', req.get('host'));
+  console.log('========================');
+  console.log('');
+  next();
+});
 
 // Rate limiting
 const limiter = rateLimit({

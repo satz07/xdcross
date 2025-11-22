@@ -126,17 +126,33 @@ router.post('/get-quote', async (req, res) => {
     };
     console.log("bodyJson", bodyJson);
     
-    // let param = request.url.substr(request.url.indexOf("?")+1,request.url.length-1)
+    // Build string to sign - CRITICAL: Must match exactly what server expects
+    // Extract query string from original URL (what server actually sees)
     const queryStartIndex = fullUrl.indexOf('?');
     let param = queryStartIndex >= 0 
       ? fullUrl.substring(queryStartIndex + 1, fullUrl.length) 
       : '';
     
+    // Also try from req.originalUrl directly (what Express sees)
+    const expressQueryString = req.originalUrl.includes('?') 
+      ? req.originalUrl.substring(req.originalUrl.indexOf('?') + 1)
+      : '';
+    
+    console.log('=== SIGNATURE STRING BUILDING ===');
+    console.log('Full URL:', fullUrl);
+    console.log('Query from fullUrl:', param);
+    console.log('Query from req.originalUrl:', expressQueryString);
+    console.log('req.query (parsed):', req.query);
+    
+    // Use the query string from the URL (not parsed req.query, as order matters!)
+    let str = param || expressQueryString;
+    
     // str = param.replace("{{timestamp}}",pm.environment.get("timestamp"));
-    let str = param.replace("{{timestamp}}", timestamp);
+    str = str.replace("{{timestamp}}", timestamp);
     
     // str = str.replace("&signature={{sign}}","");
     str = str.replace("&signature={{sign}}", "");
+    str = str.replace("signature={{sign}}", ""); // Also handle if it's first param
     
     // If timestamp wasn't in the original query string, add it
     if (!str.includes('timestamp=')) {
@@ -148,10 +164,14 @@ router.post('/get-quote', async (req, res) => {
       str = str ? `${str}&recvWindow=5000` : `recvWindow=5000`;
     }
     
-    console.log("str", str);
+    // Remove signature if it exists (we'll add it after signing)
+    str = str.replace(/[&?]signature=[^&]*/g, '');
+    
+    console.log("String to sign (final):", str);
     console.log("Time check - Server time:", new Date().toISOString());
     console.log("Time check - Timestamp used:", timestamp);
     console.log("Time check - Difference:", Math.abs(Date.now() - parseInt(timestamp)), "ms");
+    console.log("==================================");
 
     // MATCHING POSTMAN PRE-SCRIPT:
     // let signature = CryptoJS.HmacSHA256(str,pm.environment.get("secret"));

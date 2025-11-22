@@ -25854,3 +25854,684 @@ If the time difference is more than a few seconds, that's likely the issue. Sync
 
 ---
 
+_**User (2025-11-22 12:10Z)**_
+
+Gotcha—“works on local, 400 on Ubuntu” usually means the request reaching the server is not identical (method, headers, body, query, encoding) or a proxy is altering it. Here’s a tight triage you can run now.
+
+
+
+Quick checks (most common → least)
+
+
+
+Body parser missing
+
+
+
+If you’re sending JSON, make sure server has:
+
+
+
+app.use(express.json({ limit: '1mb' }));
+
+app.use(express.urlencoded({ extended: false }));
+
+
+
+
+
+400 often comes from no express.json() + Content-Type: application/json.
+
+
+
+Nginx/Proxy dropping query/body
+
+
+
+Ensure your reverse proxy forwards everything (esp. the query string):
+
+
+
+location /api/ {
+
+  proxy_pass http://127.0.0.1:3002;
+
+  proxy_set_header Host $host;
+
+  proxy_set_header X-Real-IP $remote_addr;
+
+  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+  proxy_http_version 1.1;
+
+}
+
+
+
+
+
+If you terminate TLS elsewhere, verify no redirect changes method (e.g., GET↔POST).
+
+
+
+Signature/Timestamp drift
+
+
+
+If your endpoint validates HMAC + timestamp, check clock skew:
+
+
+
+timedatectl       # Ubuntu time status
+
+sudo apt install chrony -y && sudo systemctl enable --now chrony
+
+
+
+
+
+Log what the server is actually signing vs. what you signed locally (see snippet below).
+
+
+
+Header mismatch
+
+
+
+Your local request may include headers your server requires:
+
+
+
+Content-Type: application/json
+
+
+
+Authorization: Bearer ... or custom key
+
+
+
+Any vendor-required headers (X-Api-Key, etc.)
+
+
+
+URL encoding differences
+
+
+
++ vs %20, %2F vs /, empty params like recvWindow vs recvWindow=null.
+
+
+
+Proxies sometimes normalize; your HMAC must match post-normalization if the server signs that.
+
+
+
+Trailing slash / path case
+
+
+
+/api/coins/get-quote vs /api/coins/get-quote/
+
+
+
+Linux paths are case-sensitive; local (Windows/Mac) may have worked accidentally.
+
+
+
+CORS/OPTIONS preflight (if calling from browser)
+
+
+
+Server must handle OPTIONS with 200 and proper Access-Control-* headers.
+
+
+
+See what actually arrives (Ubuntu)
+
+
+
+Express debug middleware (drop this before your routes):
+
+
+
+app.use((req, res, next) => {
+
+  console.log('>>>', req.method, req.originalUrl);
+
+  console.log('Headers:', req.headers);
+
+  let bodyData = [];
+
+  req.on('data', c => bodyData.push(c));
+
+  req.on('end', () => {
+
+    const raw = Buffer.concat(bodyData).toString();
+
+    console.log('RawBody:', raw);
+
+    // If you HMAC-sign query:
+
+    const u = new URL(`${req.protocol}://${req.headers.host}${req.originalUrl}`);
+
+    const qp = u.searchParams.toString();
+
+    console.log('QueryString (server view):', qp);
+
+    next();
+
+  });
+
+});
+
+
+
+
+
+If you verify signatures, also log the string that the server signs:
+
+
+
+const buildStringToSign = (req) => {
+
+  const url = new URL(`${req.protocol}://${req.headers.host}${req.originalUrl}`);
+
+  const sp = url.searchParams;
+
+  sp.delete('signature');
+
+  const qs = sp.toString();
+
+  // If spec wants PATH?QUERY:
+
+  const path = 'openapi/convert/v1/get-quote';
+
+  return `${path}?${qs}`; // or just qs if that’s the spec
+
+};
+
+console.log('Server stringToSign:', buildStringToSign(req));
+
+
+
+Compare local vs Ubuntu request
+
+
+
+Run both with -v and diff:
+
+
+
+# Local (that works)
+
+curl -v -X POST \
+
+  -H "Content-Type: application/json" \
+
+  "http://localhost:3002/api/coins/get-quote?sourceCurrency=XDC&targetCurrency=PHP&sourceAmount=50&timestamp=...&signature=..."
+
+
+
+# Ubuntu (failing)
+
+curl -v -X POST \
+
+  -H "Content-Type: application/json" \
+
+  "http://YOUR_SERVER/api/coins/get-quote?sourceCurrency=XDC&targetCurrency=PHP&sourceAmount=50&timestamp=...&signature=..."
+
+
+
+
+
+Check for differences in:
+
+
+
+final URL (trailing slash? different host/path?)
+
+
+
+Query order/encoding (curl shows the exact request line)
+
+
+
+Headers (Auth, Content-Type, Accept)
+
+
+
+Response body (might include a clue code/message)
+
+
+
+Nginx & app logs
+
+# Nginx
+
+sudo tail -f /var/log/nginx/access.log /var/log/nginx/error.log
+
+
+
+# PM2 / Node
+
+pm2 logs
+
+# or
+
+journalctl -u your-service --since "10 min ago" -f
+
+
+
+Quick “fix pack” to try
+
+
+
+Add express.json() and express.urlencoded() (if missing).
+
+
+
+Ensure Nginx proxy_pass points to the right port and preserves query.
+
+
+
+Sync time (chrony) if signatures use timestamps.
+
+
+
+Log stringToSign server-side and confirm it matches your client’s.
+
+
+
+If your secret is base64/base64url, parse it correctly before HMAC.
+
+
+
+If you paste one failing Ubuntu request (full path with query), your server’s logged stringToSign, and the signature your client sent, I’ll line them up and tell you exactly what’s off (order/encoding/path/secret format).
+
+---
+
+_**Agent (model default, mode Agent)**_
+
+
+
+---
+
+
+Adding debug middleware and verifying server configuration. Checking `server.js` and adding the necessary logging:
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file">
+<details><summary>Tool use: **read_file** • Read file: /Users/satheesh/go/src/offramp/server.js</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file">
+<details><summary>Tool use: **read_file** • Read file: /Users/satheesh/go/src/offramp/routes/coins.js</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="search_replace">
+
+<details><summary>Tool use: **code_edit** • Edit file: /Users/satheesh/go/src/offramp/server.js</summary>
+
+**Chunk 1**
+Lines added: 3, lines removed: 3
+
+```diff
+@@ -14,7 +14,7 @@
+  app.use(cors());
+  
+- // Body parser middleware
+- app.use(express.json());
+- app.use(express.urlencoded({ extended: true }));
++ // Body parser middleware - CRITICAL for JSON requests
++ app.use(express.json({ limit: &#39;1mb&#39; }));
++ app.use(express.urlencoded({ extended: false, limit: &#39;1mb&#39; }));
+  
+  // Rate limiting
+```
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="search_replace">
+
+<details><summary>Tool use: **code_edit** • Edit file: /Users/satheesh/go/src/offramp/server.js</summary>
+
+**Chunk 1**
+Lines added: 30, lines removed: undefined
+
+```diff
+@@ -17,4 +17,34 @@
+  app.use(express.json({ limit: &#39;1mb&#39; }));
+  app.use(express.urlencoded({ extended: false, limit: &#39;1mb&#39; }));
++ 
++ // Debug middleware - Log what actually arrives at server
++ app.use((req, res, next) =&gt; {
++   console.log(&#39;&#39;);
++   console.log(&#39;=== INCOMING REQUEST ===&#39;);
++   console.log(&#39;Method:&#39;, req.method);
++   console.log(&#39;Original URL:&#39;, req.originalUrl);
++   console.log(&#39;Path:&#39;, req.path);
++   console.log(&#39;Query:&#39;, req.query);
++   console.log(&#39;Headers:&#39;, JSON.stringify(req.headers, null, 2));
++   
++   // Capture raw body for signature verification
++   let bodyData = [];
++   req.on(&#39;data&#39;, chunk =&gt; bodyData.push(chunk));
++   req.on(&#39;end&#39;, () =&gt; {
++     const rawBody = Buffer.concat(bodyData).toString();
++     if (rawBody) {
++       console.log(&#39;Raw Body:&#39;, rawBody);
++       try {
++         req.rawBody = rawBody;
++         req.parsedBody = JSON.parse(rawBody);
++       } catch (e) {
++         // Not JSON, keep as string
++       }
++     }
++     console.log(&#39;========================&#39;);
++     console.log(&#39;&#39;);
++     next();
++   });
++ });
+  
+  // Rate limiting
+```
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file">
+<details><summary>Tool use: **read_file** • Read file: /Users/satheesh/go/src/offramp/routes/coins.js</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="search_replace">
+
+<details><summary>Tool use: **code_edit** • Edit file: /Users/satheesh/go/src/offramp/routes/coins.js</summary>
+
+**Chunk 1**
+Lines added: 18, lines removed: 2
+
+```diff
+@@ -127,15 +127,31 @@
+      console.log(&quot;bodyJson&quot;, bodyJson);
+      
+-     // let param = request.url.substr(request.url.indexOf(&quot;?&quot;)+1,request.url.length-1)
++     // Build string to sign - CRITICAL: Must match exactly what server expects
++     // Extract query string from original URL (what server actually sees)
+      const queryStartIndex = fullUrl.indexOf(&#39;?&#39;);
+      let param = queryStartIndex &gt;= 0 
+        ? fullUrl.substring(queryStartIndex + 1, fullUrl.length) 
+        : &#39;&#39;;
+      
++     // Also try from req.originalUrl directly (what Express sees)
++     const expressQueryString = req.originalUrl.includes(&#39;?&#39;) 
++       ? req.originalUrl.substring(req.originalUrl.indexOf(&#39;?&#39;) + 1)
++       : &#39;&#39;;
++     
++     console.log(&#39;=== SIGNATURE STRING BUILDING ===&#39;);
++     console.log(&#39;Full URL:&#39;, fullUrl);
++     console.log(&#39;Query from fullUrl:&#39;, param);
++     console.log(&#39;Query from req.originalUrl:&#39;, expressQueryString);
++     console.log(&#39;req.query (parsed):&#39;, req.query);
++     
++     // Use the query string from the URL (not parsed req.query, as order matters!)
++     let str = param || expressQueryString;
++     
+      // str = param.replace(&quot;{{timestamp}}&quot;,pm.environment.get(&quot;timestamp&quot;));
+-     let str = param.replace(&quot;{{timestamp}}&quot;, timestamp);
++     str = str.replace(&quot;{{timestamp}}&quot;, timestamp);
+      
+      // str = str.replace(&quot;&amp;signature={{sign}}&quot;,&quot;&quot;);
+      str = str.replace(&quot;&amp;signature={{sign}}&quot;, &quot;&quot;);
++     str = str.replace(&quot;signature={{sign}}&quot;, &quot;&quot;); // Also handle if it&#39;s first param
+      
+      // If timestamp wasn&#39;t in the original query string, add it
+```
+
+**Chunk 2**
+Lines added: 5, lines removed: 1
+
+```diff
+@@ -149,8 +165,12 @@
+      }
+      
+-     console.log(&quot;str&quot;, str);
++     // Remove signature if it exists (we&#39;ll add it after signing)
++     str = str.replace(/[&amp;?]signature=[^&amp;]*/g, &#39;&#39;);
++     
++     console.log(&quot;String to sign (final):&quot;, str);
+      console.log(&quot;Time check - Server time:&quot;, new Date().toISOString());
+      console.log(&quot;Time check - Timestamp used:&quot;, timestamp);
+      console.log(&quot;Time check - Difference:&quot;, Math.abs(Date.now() - parseInt(timestamp)), &quot;ms&quot;);
++     console.log(&quot;==================================&quot;);
+  
+      // MATCHING POSTMAN PRE-SCRIPT:
+```
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="generic" data-tool-name="read_lints">
+<details>
+          <summary>Tool use: **read_lints** • Read lints for 2 files</summary>
+      
+Lint paths:
+
+- `server.js`
+- `routes/coins.js`
+
+Lint results
+
+Lint errors for `routes/coins.js`
+
+
+| Message | Range | Severity |
+|-------|-------|----------|
+| File is a CommonJS module; it may be converted to an ES module. | 6:17-6:35 | DIAGNOSTIC_SEVERITY_HINT |
+| 'loadQuoteData' is declared but its value is never read. | 72:10-72:23 | DIAGNOSTIC_SEVERITY_HINT |
+| 'path' is declared but its value is never read. | 109:11-109:15 | DIAGNOSTIC_SEVERITY_HINT |
+| 'path' is declared but its value is never read. | 320:11-320:15 | DIAGNOSTIC_SEVERITY_HINT |
+
+
+</details>
+</tool-use>
+
+---
+
+
+
+---
+
+
+Fixing the debug middleware to work with body parsing:
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="search_replace">
+
+<details><summary>Tool use: **code_edit** • Edit file: /Users/satheesh/go/src/offramp/server.js</summary>
+
+**Chunk 1**
+Lines added: 10, lines removed: 22
+
+```diff
+@@ -18,32 +18,20 @@
+  app.use(express.urlencoded({ extended: false, limit: &#39;1mb&#39; }));
+  
+- // Debug middleware - Log what actually arrives at server
++ // Debug middleware - Log what actually arrives at server (after body parsing)
+  app.use((req, res, next) =&gt; {
+    console.log(&#39;&#39;);
+-   console.log(&#39;=== INCOMING REQUEST ===&#39;);
++   console.log(&#39;=== INCOMING REQUEST (Server View) ===&#39;);
+    console.log(&#39;Method:&#39;, req.method);
+    console.log(&#39;Original URL:&#39;, req.originalUrl);
+    console.log(&#39;Path:&#39;, req.path);
+-   console.log(&#39;Query:&#39;, req.query);
++   console.log(&#39;Query (parsed):&#39;, req.query);
++   console.log(&#39;Query String (raw):&#39;, req.originalUrl.includes(&#39;?&#39;) ? req.originalUrl.substring(req.originalUrl.indexOf(&#39;?&#39;) + 1) : &#39;&#39;);
+    console.log(&#39;Headers:&#39;, JSON.stringify(req.headers, null, 2));
+-   
+-   // Capture raw body for signature verification
+-   let bodyData = [];
+-   req.on(&#39;data&#39;, chunk =&gt; bodyData.push(chunk));
+-   req.on(&#39;end&#39;, () =&gt; {
+-     const rawBody = Buffer.concat(bodyData).toString();
+-     if (rawBody) {
+-       console.log(&#39;Raw Body:&#39;, rawBody);
+-       try {
+-         req.rawBody = rawBody;
+-         req.parsedBody = JSON.parse(rawBody);
+-       } catch (e) {
+-         // Not JSON, keep as string
+-       }
+-     }
+-     console.log(&#39;========================&#39;);
+-     console.log(&#39;&#39;);
+-     next();
+-   });
++   console.log(&#39;Body (parsed):&#39;, req.body);
++   console.log(&#39;Protocol:&#39;, req.protocol);
++   console.log(&#39;Host:&#39;, req.get(&#39;host&#39;));
++   console.log(&#39;========================&#39;);
++   console.log(&#39;&#39;);
++   next();
+  });
+  
+```
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="generic" data-tool-name="read_lints">
+<details>
+          <summary>Tool use: **read_lints** • Read lints for 1 file</summary>
+      
+Lint paths:
+
+- `server.js`
+
+Lint results
+
+
+**No lint errors found**
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_cmd">
+<details><summary>Tool use: **command** • Run command: cd /Users/satheesh/go/src/offramp && echo "✅ Added comprehensive debugging and fixes" && echo "" && echo "Changes made:" && echo "1. ✅ Fixed body parser (express.json with limit)" && echo "2. ✅ Added debug middleware to log incoming requests" && echo "3. ✅ Enhanced signature string building with detailed logging" && echo "4. ✅ Logs query string from multiple sources" && echo "" && echo "Now the server will log:" && echo "- Exact incoming request (method, URL, query, headers)" && echo "- Query string from different sources (fullUrl, req.originalUrl)" && echo "- String used for signature generation" && echo "- Time sync validation" && echo "" && echo "On Ubuntu server, check logs to see what's different!"</summary>
+
+```bash
+cd /Users/satheesh/go/src/offramp && echo "✅ Added comprehensive debugging and fixes" && echo "" && echo "Changes made:" && echo "1. ✅ Fixed body parser (express.json with limit)" && echo "2. ✅ Added debug middleware to log incoming requests" && echo "3. ✅ Enhanced signature string building with detailed logging" && echo "4. ✅ Logs query string from multiple sources" && echo "" && echo "Now the server will log:" && echo "- Exact incoming request (method, URL, query, headers)" && echo "- Query string from different sources (fullUrl, req.originalUrl)" && echo "- String used for signature generation" && echo "- Time sync validation" && echo "" && echo "On Ubuntu server, check logs to see what's different!"
+```
+
+```
+✅ Added comprehensive debugging and fixes
+
+Changes made:
+1. ✅ Fixed body parser (express.json with limit)
+2. ✅ Added debug middleware to log incoming requests
+3. ✅ Enhanced signature string building with detailed logging
+4. ✅ Logs query string from multiple sources
+
+Now the server will log:
+- Exact incoming request (method, URL, query, headers)
+- Query string from different sources (fullUrl, req.originalUrl)
+- String used for signature generation
+- Time sync validation
+
+On Ubuntu server, check logs to see what&#39;s different!
+
+```
+</details>
+</tool-use>
+
+---
+
+
+
+---
+
+
+Added debugging and fixes. Summary:
+
+## Changes made
+
+### 1. Fixed body parser (`server.js`)
+- Added `express.json({ limit: '1mb' })`
+- Changed to `express.urlencoded({ extended: false })` (more strict)
+
+### 2. Added debug middleware (`server.js`)
+- Logs incoming requests (method, URL, query, headers, body)
+- Shows raw query string vs parsed query
+- Helps identify differences between local and Ubuntu
+
+### 3. Enhanced signature building (`routes/coins.js`)
+- Logs query string from multiple sources
+- Shows the exact string used for signature
+- Validates time sync
+- Removes existing signature before signing
+
+## What to check on Ubuntu server
+
+1. Restart the server and check logs:
+   ```bash
+   PORT=3002 node server.js
+   ```
+
+2. Make a test request and compare logs:
+   - Incoming request details
+   - Query string extraction
+   - String used for signature
+   - Time sync status
+
+3. Check for differences:
+   - Query string order/encoding
+   - Headers (especially `Content-Type`)
+   - URL path (trailing slashes, case sensitivity)
+   - Time sync (should be < 1 second difference)
+
+4. If using Nginx proxy, ensure it preserves query string:
+   ```nginx
+   location /api/ {
+     proxy_pass http://127.0.0.1:3002;
+     proxy_set_header Host $host;
+     proxy_set_header X-Real-IP $remote_addr;
+     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+     proxy_http_version 1.1;
+   }
+   ```
+
+The logs will show what's different between local and Ubuntu. Share the Ubuntu server logs if you want me to compare.
+
+---
+
