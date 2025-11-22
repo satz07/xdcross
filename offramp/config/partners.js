@@ -27,8 +27,10 @@ const partners = {
  * @returns {Object|null} Partner configuration or null if not found
  */
 function getPartner(partnerId) {
+  console.log("1",partnerId)
+  console.log("2",partners)
   const partner = partners[partnerId];
-  
+  console.log("3",partner)
   if (!partner) {
     console.log(`[getPartner] Partner '${partnerId}' not found in partners config`);
     return null;
