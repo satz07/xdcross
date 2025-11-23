@@ -214,6 +214,20 @@ router.post('/get-quote', async (req, res) => {
     }, null, 2));
     console.log('==================================================');
     console.log('');
+    
+    // Generate exact curl command for testing on different server
+    const curlCommand = `curl -X POST \\
+  -H "X-COINS-APIKEY: ${apiKey}" \\
+  -H "Content-Type: application/json" \\
+  "${url}"`;
+    
+    console.log('=== EXACT CURL COMMAND (for testing) ===');
+    console.log(curlCommand);
+    console.log('');
+    console.log('=== SINGLE LINE CURL (copy-paste ready) ===');
+    console.log(`curl -X POST -H "X-COINS-APIKEY: ${apiKey}" -H "Content-Type: application/json" "${url}"`);
+    console.log('==========================================');
+    console.log('');
 
     // Make request to partner API (matching axios config)
     const config = {
@@ -374,6 +388,20 @@ router.post('/accept-quote', async (req, res) => {
     }, null, 2));
     console.log('==================================================');
     console.log('');
+    
+    // Generate exact curl command for testing on different server
+    const curlCommand = `curl -X POST \\
+  -H "X-COINS-APIKEY: ${apiKey}" \\
+  -H "Content-Type: application/json" \\
+  "${url}"`;
+    
+    console.log('=== EXACT CURL COMMAND (for testing) ===');
+    console.log(curlCommand);
+    console.log('');
+    console.log('=== SINGLE LINE CURL (copy-paste ready) ===');
+    console.log(`curl -X POST -H "X-COINS-APIKEY: ${apiKey}" -H "Content-Type: application/json" "${url}"`);
+    console.log('==========================================');
+    console.log('');
 
     // Make request to partner API (matching axios config)
     const config = {
@@ -448,6 +476,7 @@ router.post('/cash-out', async (req, res) => {
 
     // EXACT MATCH TO POSTMAN PRE-SCRIPT:
     // var str_requestBody = pm.request.body.raw
+    // IMPORTANT: JSON.stringify must match exactly what Postman sends (no spaces)
     const strRequestBody = JSON.stringify(req.body);
     
     // let timestamp = (new Date()).getTime().toString();
@@ -459,12 +488,16 @@ router.post('/cash-out', async (req, res) => {
     // let signature = CryptoJS.HmacSHA256(signatureBody, pm.environment.get("secret"))
     // signature = CryptoJS.enc.Hex.stringify(signature)
     const CryptoJS = require('crypto-js');
+    
+    console.log('=== Cash Out Request ===');
+    console.log('Request Body (parsed):', JSON.stringify(req.body, null, 2));
+    console.log('Request Body (stringified for signature):', strRequestBody);
+    console.log('Body length:', strRequestBody.length);
+    console.log('Timestamp:', timestamp);
+    
     let signature = CryptoJS.HmacSHA256(strRequestBody, secret);
     signature = CryptoJS.enc.Hex.stringify(signature);
     
-    console.log('=== Cash Out Request ===');
-    console.log('Request Body:', strRequestBody);
-    console.log('Timestamp:', timestamp);
     console.log('Signature:', signature);
     console.log('');
 
@@ -482,6 +515,23 @@ router.post('/cash-out', async (req, res) => {
     }, null, 2));
     console.log('Request Body:', req.body);
     console.log('==================================================');
+    console.log('');
+    
+    // Generate exact curl command for testing on different server
+    const bodyEscaped = strRequestBody.replace(/"/g, '\\"');
+    const curlCommand = `curl -X POST \\
+  -H "X-COINS-APIKEY: ${apiKey}" \\
+  -H "timestamp: ${timestamp}" \\
+  -H "Content-Type: application/json" \\
+  -d "${bodyEscaped}" \\
+  "${url}"`;
+    
+    console.log('=== EXACT CURL COMMAND (for testing) ===');
+    console.log(curlCommand);
+    console.log('');
+    console.log('=== SINGLE LINE CURL (copy-paste ready) ===');
+    console.log(`curl -X POST -H "X-COINS-APIKEY: ${apiKey}" -H "timestamp: ${timestamp}" -H "Content-Type: application/json" -d '${strRequestBody}' "${url}"`);
+    console.log('==========================================');
     console.log('');
 
     // Make request to partner API (matching axios config)
