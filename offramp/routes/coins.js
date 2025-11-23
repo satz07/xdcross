@@ -82,8 +82,8 @@ function loadQuoteData() {
 }
 
 /**
- * Get Quote - Coins.ph API
- * POST /api/coins/get-quote
+ * Get Quote - Partner API
+ * POST /api/{partnerId}/get-quote
  * 
  * Signature generation matches Postman pre-script exactly:
  * 1. Get query string from URL
@@ -154,20 +154,28 @@ router.post('/get-quote', async (req, res) => {
     str = str.replace("&signature={{sign}}", "");
     str = str.replace("signature={{sign}}", ""); // Also handle if it's first param
     
+    // Remove recvWindow if present (MUST be removed before adding timestamp)
+    // Original Postman had recvWindow=null, but Coins.ph rejects it - remove completely
+    // Try multiple patterns to ensure it's removed
+    str = str.replace(/[&?]recvWindow=[^&]*/g, '');
+    str = str.replace(/recvWindow=[^&]*&?/g, '');
+    str = str.replace(/&recvWindow=[^&]*/g, '');
+    str = str.replace(/\?recvWindow=[^&]*/g, '?');
+    // Clean up any double ampersands or question marks that might result
+    str = str.replace(/&&+/g, '&').replace(/\?\?+/g, '?').replace(/^&|&$/g, '').replace(/^\?|\?$/g, '');
+    
     // If timestamp wasn't in the original query string, add it
     if (!str.includes('timestamp=')) {
       str = str ? `${str}&timestamp=${timestamp}` : `timestamp=${timestamp}`;
     }
     
-    // Add recvWindow if not present (some APIs require it, original Postman had recvWindow=null)
-    if (!str.includes('recvWindow=')) {
-      str = str ? `${str}&recvWindow=5000` : `recvWindow=5000`;
-    }
-    
     // Remove signature if it exists (we'll add it after signing)
     str = str.replace(/[&?]signature=[^&]*/g, '');
+    // Clean up any double ampersands
+    str = str.replace(/&&+/g, '&').replace(/^&|&$/g, '');
     
     console.log("String to sign (final):", str);
+    console.log("Contains recvWindow:", str.includes('recvWindow'));
     console.log("Time check - Server time:", new Date().toISOString());
     console.log("Time check - Timestamp used:", timestamp);
     console.log("Time check - Difference:", Math.abs(Date.now() - parseInt(timestamp)), "ms");
@@ -177,11 +185,20 @@ router.post('/get-quote', async (req, res) => {
     // let signature = CryptoJS.HmacSHA256(str,pm.environment.get("secret"));
     // signature = CryptoJS.enc.Hex.stringify(signature);
     const CryptoJS = require('crypto-js');
+    
+    // Verify signature generation
+    console.log('=== SIGNATURE GENERATION ===');
+    console.log('String to sign:', str);
+    console.log('Secret length:', secret ? secret.length : 0);
+    
     let signature = CryptoJS.HmacSHA256(str, secret);
     signature = CryptoJS.enc.Hex.stringify(signature);
     
-    // pm.environment.set("sign", signature);
-    console.log("signature", signature);
+    // Verify by regenerating
+    const verifySig = CryptoJS.enc.Hex.stringify(CryptoJS.HmacSHA256(str, secret));
+    console.log('Generated signature:', signature);
+    console.log('Verification match:', signature === verifySig);
+    console.log('================================');
 
     // Build final URL with signature (using partner's base URL)
     const finalQueryString = str ? `${str}&signature=${signature}` : `signature=${signature}`;
@@ -198,7 +215,7 @@ router.post('/get-quote', async (req, res) => {
     console.log('==================================================');
     console.log('');
 
-    // Make request to Coins.ph API (matching axios config)
+    // Make request to partner API (matching axios config)
     const config = {
       method: 'post',
       maxBodyLength: Infinity,
@@ -228,18 +245,10 @@ router.post('/get-quote', async (req, res) => {
     // Save timestamp and signature for use in accept-quote
     saveQuoteData(timestamp, signature);
 
+    // Return only the data - mask all partner details from end user
     res.json({
       success: true,
-      source: partner.name || 'partner',
-      partner: partner.name,
-      data: response.data,
-      timestamp: timestamp,
-      signature: signature,
-      requestParams: {
-        ...req.query,
-        timestamp: timestamp,
-        signature: signature
-      }
+      data: response.data
     });
   } catch (error) {
     // Handle partner configuration errors
@@ -264,7 +273,7 @@ router.post('/get-quote', async (req, res) => {
       console.error('Request method:', error.config?.method);
       console.error('Request headers:', JSON.stringify(error.config?.headers, null, 2));
     } else if (error.request) {
-      console.error('No response received from Coins.ph API');
+      console.error('No response received from partner API');
       console.error('Request config:', JSON.stringify(error.config, null, 2));
     } else {
       console.error('Error setting up request:', error.message);
@@ -293,8 +302,8 @@ router.post('/get-quote', async (req, res) => {
 });
 
 /**
- * Accept Quote - Coins.ph API
- * POST /api/coins/accept-quote
+ * Accept Quote - Partner API
+ * POST /api/{partnerId}/accept-quote
  * 
  * Signature generation matches Postman pre-script exactly:
  * 1. Get query string from URL
@@ -366,7 +375,7 @@ router.post('/accept-quote', async (req, res) => {
     console.log('==================================================');
     console.log('');
 
-    // Make request to Coins.ph API (matching axios config)
+    // Make request to partner API (matching axios config)
     const config = {
       method: 'post',
       maxBodyLength: Infinity,
@@ -380,18 +389,10 @@ router.post('/accept-quote', async (req, res) => {
 
     const response = await axios.request(config);
 
+    // Return only the data - mask all partner details from end user
     res.json({
       success: true,
-      source: partner.name || 'partner',
-      partner: partner.name,
-      data: response.data,
-      timestamp: timestamp,
-      signature: signature,
-      requestParams: {
-        ...req.query,
-        timestamp: timestamp,
-        signature: signature
-      }
+      data: response.data
     });
   } catch (error) {
     // Handle partner configuration errors
@@ -427,8 +428,8 @@ router.post('/accept-quote', async (req, res) => {
 });
 
 /**
- * Cash Out - Coins.ph API
- * POST /api/coins/cash-out
+ * Cash Out - Partner API
+ * POST /api/{partnerId}/cash-out
  * 
  * Signature generation uses request body (not query string):
  * 1. Get raw request body
@@ -483,7 +484,7 @@ router.post('/cash-out', async (req, res) => {
     console.log('==================================================');
     console.log('');
 
-    // Make request to Coins.ph API (matching axios config)
+    // Make request to partner API (matching axios config)
     const config = {
       method: 'post',
       maxBodyLength: Infinity,
@@ -499,14 +500,10 @@ router.post('/cash-out', async (req, res) => {
 
     const response = await axios.request(config);
 
+    // Return only the data - mask all partner details from end user
     res.json({
       success: true,
-      source: partner.name || 'partner',
-      partner: partner.name,
-      data: response.data,
-      timestamp: timestamp,
-      signature: signature,
-      requestBody: req.body
+      data: response.data
     });
   } catch (error) {
     // Handle partner configuration errors

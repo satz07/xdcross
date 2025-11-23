@@ -1,0 +1,186 @@
+{
+	"info": {
+		"_postman_id": "offramp-api-collection",
+		"name": "Offramp API Proxy",
+		"description": "API proxy for partner integrations. Partner details are completely abstracted - just use the partner ID in the URL path.\n\n**Setup:**\n1. Set `base_url` variable to your server URL (e.g., `http://localhost:3002`)\n2. Set `partner_id` variable to your partner ID (e.g., `id0001`)\n3. All endpoints automatically handle signature generation - no need to configure API keys/secrets!\n\n**Note:** All partner details (API keys, secrets, base URLs) are completely masked from end users. Only the partner ID is used in the URL path.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Quote",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/{{partner_id}}/get-quote?sourceCurrency={{source_currency}}&targetCurrency={{target_currency}}&sourceAmount={{source_amount}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"{{partner_id}}",
+						"get-quote"
+					],
+					"query": [
+						{
+							"key": "sourceCurrency",
+							"value": "{{source_currency}}",
+							"description": "Source currency code (e.g., XDC, BTC, ETH)"
+						},
+						{
+							"key": "targetCurrency",
+							"value": "{{target_currency}}",
+							"description": "Target currency code (e.g., PHP, USD)"
+						},
+						{
+							"key": "sourceAmount",
+							"value": "{{source_amount}}",
+							"description": "Amount to convert"
+						}
+					]
+				},
+				"description": "Get a quote for currency conversion. The proxy automatically generates timestamp and signature - no need to configure them!"
+			},
+			"response": []
+		},
+		{
+			"name": "Accept Quote",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/{{partner_id}}/accept-quote?quoteId={{quote_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"{{partner_id}}",
+						"accept-quote"
+					],
+					"query": [
+						{
+							"key": "quoteId",
+							"value": "{{quote_id}}",
+							"description": "Quote ID from get-quote response"
+						}
+					]
+				},
+				"description": "Accept a quote using the quoteId from the get-quote response. Replace {{quote_id}} with the actual quoteId from the previous response."
+			},
+			"response": []
+		},
+		{
+			"name": "Cash Out",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"internalOrderId\": \"{{internal_order_id}}\",\n  \"currency\": \"{{currency}}\",\n  \"amount\": \"{{amount}}\",\n  \"channelName\": \"{{channel_name}}\",\n  \"channelSubject\": \"{{channel_subject}}\",\n  \"extendInfo\": {\n    \"recipientName\": \"{{recipient_name}}\",\n    \"recipientAccountNumber\": \"{{recipient_account_number}}\"\n  }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/{{partner_id}}/cash-out",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"{{partner_id}}",
+						"cash-out"
+					]
+				},
+				"description": "Cash out request. Signature is automatically generated from the request body - no need to configure it!"
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:3002",
+			"type": "string"
+		},
+		{
+			"key": "partner_id",
+			"value": "id0001",
+			"type": "string"
+		},
+		{
+			"key": "source_currency",
+			"value": "XDC",
+			"type": "string"
+		},
+		{
+			"key": "target_currency",
+			"value": "PHP",
+			"type": "string"
+		},
+		{
+			"key": "source_amount",
+			"value": "50",
+			"type": "string"
+		},
+		{
+			"key": "quote_id",
+			"value": "2088568334659666570",
+			"type": "string"
+		},
+		{
+			"key": "internal_order_id",
+			"value": "1234",
+			"type": "string"
+		},
+		{
+			"key": "currency",
+			"value": "PHP",
+			"type": "string"
+		},
+		{
+			"key": "amount",
+			"value": "50",
+			"type": "string"
+		},
+		{
+			"key": "channel_name",
+			"value": "SWIFTPAY_PESONET",
+			"type": "string"
+		},
+		{
+			"key": "channel_subject",
+			"value": "gcash",
+			"type": "string"
+		},
+		{
+			"key": "recipient_name",
+			"value": "sandy-open-api-test",
+			"type": "string"
+		},
+		{
+			"key": "recipient_account_number",
+			"value": "123456789",
+			"type": "string"
+		}
+	]
+}
+
