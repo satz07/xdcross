@@ -3,7 +3,8 @@
 # Test script for all API endpoints
 # Usage: ./test-all.sh
 
-BASE_URL="http://localhost:3002"
+#BASE_URL="http://localhost:3002"
+BASE_URL="http://80.243.180.174:3002"
 API_BASE="${BASE_URL}/api/id0001"
 
 echo "=========================================="

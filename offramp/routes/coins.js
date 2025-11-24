@@ -500,8 +500,38 @@ router.post('/cash-out', async (req, res) => {
     // var str_requestBody = pm.request.body.raw
     // IMPORTANT: Use raw body if available, otherwise stringify (must match Postman exactly)
     // The raw body preserves the exact format from the client
-    const strRequestBody = req.rawBody || JSON.stringify(req.body);
     
+    // Get raw body for signature (must match Postman exactly)
+    let strRequestBody = req.rawBody;
+    
+    // If no raw body, stringify req.body (this should be clean JSON)
+    if (!strRequestBody) {
+      strRequestBody = JSON.stringify(req.body);
+    } else {
+      // Clean the raw body - parse and re-stringify to ensure it's valid JSON
+      try {
+        const parsed = JSON.parse(strRequestBody);
+        strRequestBody = JSON.stringify(parsed); // Clean JSON string
+      } catch (e) {
+        // If parsing fails, try to clean it manually
+        console.log("Warning: Could not parse rawBody, attempting to clean...");
+        // Remove any double encoding
+        strRequestBody = strRequestBody.replace(/\\"/g, '"').replace(/\\\\/g, '\\');
+        try {
+          const parsed = JSON.parse(strRequestBody);
+          strRequestBody = JSON.stringify(parsed);
+        } catch (e2) {
+          // Last resort: use as-is
+          console.log("Warning: Could not clean rawBody, using as-is");
+        }
+      }
+    }
+    
+    console.log("strRequestBody (for signature):", strRequestBody);
+    console.log("strRequestBody length:", strRequestBody.length);
+    console.log("req.rawBody exists:", !!req.rawBody);
+    console.log("req.rawBody (raw):", req.rawBody);
+    console.log("req.body:", JSON.stringify(req.body, null, 2));
     // let timestamp = (new Date()).getTime().toString();
     const timestamp = new Date().getTime().toString();
     
@@ -533,25 +563,47 @@ router.post('/cash-out', async (req, res) => {
     console.log('Final URL:', url);
     console.log('Request Headers:', JSON.stringify({
       'X-COINS-APIKEY': apiKey,
-      'timestamp': timestamp
+      'timestamp': timestamp,
+      'Content-Type': 'application/json'
     }, null, 2));
     console.log('Request Body:', req.body);
     console.log('==================================================');
     console.log('');
     
     // Generate exact curl command for testing on different server
-    const bodyEscaped = strRequestBody.replace(/"/g, '\\"');
+    // Use req.body (parsed) and stringify it cleanly for display (signature still uses raw body)
+    // Ensure req.body is a proper object, not a string
+    let bodyForCurl = req.body;
+    if (typeof bodyForCurl === 'string') {
+      try {
+        bodyForCurl = JSON.parse(bodyForCurl);
+      } catch (e) {
+        console.log("Warning: req.body is string but not valid JSON");
+      }
+    }
+    const cleanBodyForCurl = JSON.stringify(bodyForCurl);
+    
+    // Debug: Check body structure
+    console.log('=== BODY DEBUG ===');
+    console.log('req.body type:', typeof req.body);
+    console.log('req.body:', req.body);
+    console.log('req.body keys:', Object.keys(req.body || {}));
+    console.log('cleanBodyForCurl:', cleanBodyForCurl);
+    console.log('==================');
+    
+    // Use single quotes around JSON body to avoid escaping issues
     const curlCommand = `curl -X POST \\
   -H "X-COINS-APIKEY: ${apiKey}" \\
   -H "timestamp: ${timestamp}" \\
-  -d "${bodyEscaped}" \\
+  -H "Content-Type: application/json" \\
+  -d '${cleanBodyForCurl}' \\
   "${url}"`;
     
     console.log('=== EXACT CURL COMMAND (for testing) ===');
     console.log(curlCommand);
     console.log('');
     console.log('=== SINGLE LINE CURL (copy-paste ready) ===');
-    console.log(`curl -X POST -H "X-COINS-APIKEY: ${apiKey}" -H "timestamp: ${timestamp}" -d '${strRequestBody}' "${url}"`);
+    console.log(`curl -X POST -H "X-COINS-APIKEY: ${apiKey}" -H "timestamp: ${timestamp}" -H "Content-Type: application/json" -d '${cleanBodyForCurl}' "${url}"`);
     console.log('==========================================');
     console.log('');
 
@@ -562,7 +614,8 @@ router.post('/cash-out', async (req, res) => {
       url: url,
       headers: {
         'X-COINS-APIKEY': apiKey,
-        'timestamp': timestamp
+        'timestamp': timestamp,
+        'Content-Type': 'application/json'
       },
       data: strRequestBody,
       timeout: 30000
