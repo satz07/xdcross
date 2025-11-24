@@ -14,7 +14,17 @@ app.use(helmet());
 app.use(cors());
 
 // Body parser middleware - CRITICAL for JSON requests
-app.use(express.json({ limit: '1mb' }));
+// Use verify option to capture raw body for cash-out signature
+app.use(express.json({ 
+  limit: '1mb',
+  verify: (req, res, buf) => {
+    // Capture raw body before parsing (needed for cash-out signature generation)
+    // This preserves the exact format from the client
+    if (req.path && req.path.includes('cash-out')) {
+      req.rawBody = buf.toString('utf8');
+    }
+  }
+}));
 app.use(express.urlencoded({ extended: false, limit: '1mb' }));
 
 // Debug middleware - Log what actually arrives at server (after body parsing)

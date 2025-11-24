@@ -109,7 +109,17 @@ router.post('/get-quote', async (req, res) => {
     const path = "openapi/convert/v1/get-quote";
     
     // let timestamp = new Date().getTime().toString();
+    // Use server time - if there's a time sync issue, this will help
+    // For time sync issues, you can add an offset: new Date().getTime() + offset
     const timestamp = new Date().getTime().toString();
+    
+    // Log time sync info for debugging
+    const serverTime = Date.now();
+    console.log('=== TIME SYNC CHECK ===');
+    console.log('Server time (ms):', serverTime);
+    console.log('Timestamp used:', timestamp);
+    console.log('Time difference:', serverTime - parseInt(timestamp), 'ms');
+    console.log('========================');
     
     // pm.environment.set("path",path)
     // pm.environment.set("timestamp",timestamp);
@@ -169,6 +179,14 @@ router.post('/get-quote', async (req, res) => {
       str = str ? `${str}&timestamp=${timestamp}` : `timestamp=${timestamp}`;
     }
     
+    // Add recvWindow to allow for time sync differences (in milliseconds)
+    // Default: 60000ms (60 seconds) - adjust if needed for your server
+    // The error says timestamp is outside recv window, so we need to add this
+    const recvWindow = process.env.RECV_WINDOW || '60000'; // 60 seconds default
+    if (!str.includes('recvWindow=')) {
+      str = str ? `${str}&recvWindow=${recvWindow}` : `recvWindow=${recvWindow}`;
+    }
+    
     // Remove signature if it exists (we'll add it after signing)
     str = str.replace(/[&?]signature=[^&]*/g, '');
     // Clean up any double ampersands
@@ -209,8 +227,7 @@ router.post('/get-quote', async (req, res) => {
     console.log('=== FINAL REQUEST ===');
     console.log('Final URL:', url);
     console.log('Request Headers:', JSON.stringify({
-      'X-COINS-APIKEY': apiKey,
-      'Content-Type': 'application/json'
+      'X-COINS-APIKEY': apiKey
     }, null, 2));
     console.log('==================================================');
     console.log('');
@@ -218,14 +235,13 @@ router.post('/get-quote', async (req, res) => {
     // Generate exact curl command for testing on different server
     const curlCommand = `curl -X POST \\
   -H "X-COINS-APIKEY: ${apiKey}" \\
-  -H "Content-Type: application/json" \\
-  "${url}"`;
-    
+  
+  "${url}"`; 
     console.log('=== EXACT CURL COMMAND (for testing) ===');
     console.log(curlCommand);
     console.log('');
     console.log('=== SINGLE LINE CURL (copy-paste ready) ===');
-    console.log(`curl -X POST -H "X-COINS-APIKEY: ${apiKey}" -H "Content-Type: application/json" "${url}"`);
+    console.log(`curl -X POST -H "X-COINS-APIKEY: ${apiKey}" "${url}"`);
     console.log('==========================================');
     console.log('');
 
@@ -235,8 +251,7 @@ router.post('/get-quote', async (req, res) => {
       maxBodyLength: Infinity,
       url: url,
       headers: {
-        'X-COINS-APIKEY': apiKey,
-        'Content-Type': 'application/json'
+        'X-COINS-APIKEY': apiKey
       },
       timeout: 30000
     };
@@ -343,7 +358,17 @@ router.post('/accept-quote', async (req, res) => {
     const path = "openapi/convert/v1/accept-quote";
     
     // let timestamp = new Date().getTime().toString();
+    // Use server time - if there's a time sync issue, this will help
+    // For time sync issues, you can add an offset: new Date().getTime() + offset
     const timestamp = new Date().getTime().toString();
+    
+    // Log time sync info for debugging
+    const serverTime = Date.now();
+    console.log('=== TIME SYNC CHECK ===');
+    console.log('Server time (ms):', serverTime);
+    console.log('Timestamp used:', timestamp);
+    console.log('Time difference:', serverTime - parseInt(timestamp), 'ms');
+    console.log('========================');
     
     // let param = request.url.substr(request.url.indexOf("?")+1,request.url.length-1)
     const queryStartIndex = fullUrl.indexOf('?');
@@ -383,8 +408,7 @@ router.post('/accept-quote', async (req, res) => {
     console.log('=== FINAL REQUEST ===');
     console.log('Final URL:', url);
     console.log('Request Headers:', JSON.stringify({
-      'X-COINS-APIKEY': apiKey,
-      'Content-Type': 'application/json'
+      'X-COINS-APIKEY': apiKey
     }, null, 2));
     console.log('==================================================');
     console.log('');
@@ -392,14 +416,13 @@ router.post('/accept-quote', async (req, res) => {
     // Generate exact curl command for testing on different server
     const curlCommand = `curl -X POST \\
   -H "X-COINS-APIKEY: ${apiKey}" \\
-  -H "Content-Type: application/json" \\
   "${url}"`;
     
     console.log('=== EXACT CURL COMMAND (for testing) ===');
     console.log(curlCommand);
     console.log('');
     console.log('=== SINGLE LINE CURL (copy-paste ready) ===');
-    console.log(`curl -X POST -H "X-COINS-APIKEY: ${apiKey}" -H "Content-Type: application/json" "${url}"`);
+    console.log(`curl -X POST -H "X-COINS-APIKEY: ${apiKey}" "${url}"`);
     console.log('==========================================');
     console.log('');
 
@@ -409,8 +432,7 @@ router.post('/accept-quote', async (req, res) => {
       maxBodyLength: Infinity,
       url: url,
       headers: {
-        'X-COINS-APIKEY': apiKey,
-        'Content-Type': 'application/json'
+        'X-COINS-APIKEY': apiKey
       },
       timeout: 30000
     };
@@ -476,8 +498,9 @@ router.post('/cash-out', async (req, res) => {
 
     // EXACT MATCH TO POSTMAN PRE-SCRIPT:
     // var str_requestBody = pm.request.body.raw
-    // IMPORTANT: JSON.stringify must match exactly what Postman sends (no spaces)
-    const strRequestBody = JSON.stringify(req.body);
+    // IMPORTANT: Use raw body if available, otherwise stringify (must match Postman exactly)
+    // The raw body preserves the exact format from the client
+    const strRequestBody = req.rawBody || JSON.stringify(req.body);
     
     // let timestamp = (new Date()).getTime().toString();
     const timestamp = new Date().getTime().toString();
@@ -510,8 +533,7 @@ router.post('/cash-out', async (req, res) => {
     console.log('Final URL:', url);
     console.log('Request Headers:', JSON.stringify({
       'X-COINS-APIKEY': apiKey,
-      'timestamp': timestamp,
-      'Content-Type': 'application/json'
+      'timestamp': timestamp
     }, null, 2));
     console.log('Request Body:', req.body);
     console.log('==================================================');
@@ -522,7 +544,6 @@ router.post('/cash-out', async (req, res) => {
     const curlCommand = `curl -X POST \\
   -H "X-COINS-APIKEY: ${apiKey}" \\
   -H "timestamp: ${timestamp}" \\
-  -H "Content-Type: application/json" \\
   -d "${bodyEscaped}" \\
   "${url}"`;
     
@@ -530,7 +551,7 @@ router.post('/cash-out', async (req, res) => {
     console.log(curlCommand);
     console.log('');
     console.log('=== SINGLE LINE CURL (copy-paste ready) ===');
-    console.log(`curl -X POST -H "X-COINS-APIKEY: ${apiKey}" -H "timestamp: ${timestamp}" -H "Content-Type: application/json" -d '${strRequestBody}' "${url}"`);
+    console.log(`curl -X POST -H "X-COINS-APIKEY: ${apiKey}" -H "timestamp: ${timestamp}" -d '${strRequestBody}' "${url}"`);
     console.log('==========================================');
     console.log('');
 
@@ -541,8 +562,7 @@ router.post('/cash-out', async (req, res) => {
       url: url,
       headers: {
         'X-COINS-APIKEY': apiKey,
-        'timestamp': timestamp,
-        'Content-Type': 'application/json'
+        'timestamp': timestamp
       },
       data: strRequestBody,
       timeout: 30000
