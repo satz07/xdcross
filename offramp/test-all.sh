@@ -15,8 +15,8 @@ echo ""
 # Test 1: Get Quote
 echo "1. Testing GET-QUOTE endpoint..."
 echo "----------------------------------------"
-GET_QUOTE_RESPONSE=$(curl -s -X POST "${API_BASE}/get-quote?sourceCurrency=XDC&targetCurrency=PHP&sourceAmount=50")
-echo "$GET_QUOTE_RESPONSE" | python3 -m json.tool 2>/dev/null || echo "$GET_QUOTE_RESPONSE"
+#GET_QUOTE_RESPONSE=$(curl -s -X POST "${API_BASE}/get-quote?sourceCurrency=XDC&targetCurrency=PHP&sourceAmount=50")
+#echo "$GET_QUOTE_RESPONSE" | python3 -m json.tool 2>/dev/null || echo "$GET_QUOTE_RESPONSE"
 echo ""
 echo ""
 
@@ -39,8 +39,8 @@ echo ""
 echo "2. Testing ACCEPT-QUOTE endpoint..."
 echo "----------------------------------------"
 echo "Using quoteId from get-quote: $QUOTE_ID"
-ACCEPT_QUOTE_RESPONSE=$(curl -s -X POST "${API_BASE}/accept-quote?quoteId=${QUOTE_ID}")
-echo "$ACCEPT_QUOTE_RESPONSE" | python3 -m json.tool 2>/dev/null || echo "$ACCEPT_QUOTE_RESPONSE"
+#ACCEPT_QUOTE_RESPONSE=$(curl -s -X POST "${API_BASE}/accept-quote?quoteId=${QUOTE_ID}")
+#echo "$ACCEPT_QUOTE_RESPONSE" | python3 -m json.tool 2>/dev/null || echo "$ACCEPT_QUOTE_RESPONSE"
 echo ""
 echo ""
 

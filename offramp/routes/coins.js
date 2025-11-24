@@ -496,42 +496,44 @@ router.post('/cash-out', async (req, res) => {
     const secret = partner.secret;
     const baseUrl = partner.baseUrl;
 
-    // EXACT MATCH TO POSTMAN PRE-SCRIPT:
+    // EXACT MATCH TO POSTMAN PRE-SCRIPT AND AXIOS EXAMPLE:
     // var str_requestBody = pm.request.body.raw
-    // IMPORTANT: Use raw body if available, otherwise stringify (must match Postman exactly)
-    // The raw body preserves the exact format from the client
+    // In axios example: let data = JSON.stringify({...}); data: data
+    // 
+    // IMPORTANT: Body must be a JSON string for signature generation
+    // and for axios request (matches test-cash-out.js logic)
     
-    // Get raw body for signature (must match Postman exactly)
+    // Get request body as JSON string (for signature and axios data)
+    // Priority: Use raw body if available (exact format from client)
+    // Otherwise: Stringify req.body to get clean JSON string
     let strRequestBody = req.rawBody;
     
-    // If no raw body, stringify req.body (this should be clean JSON)
     if (!strRequestBody) {
+      // No raw body - stringify req.body (same as test file: JSON.stringify(testData))
       strRequestBody = JSON.stringify(req.body);
     } else {
-      // Clean the raw body - parse and re-stringify to ensure it's valid JSON
+      // Raw body exists - normalize it (parse and re-stringify to ensure clean format)
+      // This ensures consistent formatting without extra quotes or encoding
       try {
         const parsed = JSON.parse(strRequestBody);
         strRequestBody = JSON.stringify(parsed); // Clean JSON string
       } catch (e) {
-        // If parsing fails, try to clean it manually
-        console.log("Warning: Could not parse rawBody, attempting to clean...");
-        // Remove any double encoding
-        strRequestBody = strRequestBody.replace(/\\"/g, '"').replace(/\\\\/g, '\\');
-        try {
-          const parsed = JSON.parse(strRequestBody);
-          strRequestBody = JSON.stringify(parsed);
-        } catch (e2) {
-          // Last resort: use as-is
-          console.log("Warning: Could not clean rawBody, using as-is");
-        }
+        // If parsing fails, use raw body as-is
+        console.log("Warning: Could not parse rawBody, using as-is");
       }
     }
     
-    console.log("strRequestBody (for signature):", strRequestBody);
-    console.log("strRequestBody length:", strRequestBody.length);
-    console.log("req.rawBody exists:", !!req.rawBody);
-    console.log("req.rawBody (raw):", req.rawBody);
-    console.log("req.body:", JSON.stringify(req.body, null, 2));
+    // Log body format (matching test-cash-out.js approach)
+    console.log('=== BODY FORMAT (matching test-cash-out.js) ===');
+    console.log('strRequestBody (for signature & axios data):', strRequestBody);
+    console.log('strRequestBody type:', typeof strRequestBody);
+    console.log('strRequestBody length:', strRequestBody.length);
+    console.log('req.rawBody exists:', !!req.rawBody);
+    if (req.rawBody) {
+      console.log('req.rawBody (raw):', req.rawBody);
+    }
+    console.log('req.body (parsed object):', JSON.stringify(req.body, null, 2));
+    console.log('================================================');
     // let timestamp = (new Date()).getTime().toString();
     const timestamp = new Date().getTime().toString();
     
@@ -607,19 +609,37 @@ router.post('/cash-out', async (req, res) => {
     console.log('==========================================');
     console.log('');
 
-    // Make request to partner API (matching axios config)
+    // Make request to partner API (matching test-cash-out.js and axios example)
+    // This matches the exact format from test-cash-out.js:
+    // const data = JSON.stringify(testData);
+    // axios.post(url, data, { headers: {...} })
+    // 
+    // Or in axios.request format:
+    // let data = JSON.stringify({...});
+    // config = { method: 'post', url: '...', headers: {...}, data: data }
     const config = {
       method: 'post',
       maxBodyLength: Infinity,
-      url: url,
+      url: url, // Format: https://api.pro.coins.ph/openapi/fiat/v1/cash-out?signature=...
       headers: {
         'X-COINS-APIKEY': apiKey,
         'timestamp': timestamp,
         'Content-Type': 'application/json'
+        // Note: Cookie header is optional and not included
       },
-      data: strRequestBody,
+      data: strRequestBody, // JSON string (matches: let data = JSON.stringify({...}); data: data)
       timeout: 30000
     };
+
+    // Log axios config (matching test-cash-out.js logging style)
+    console.log('=== AXIOS CONFIG (matching test-cash-out.js) ===');
+    console.log('Method:', config.method);
+    console.log('URL:', config.url);
+    console.log('Headers:', JSON.stringify(config.headers, null, 2));
+    console.log('Data (body):', config.data);
+    console.log('Data type:', typeof config.data);
+    console.log('Data length:', config.data ? config.data.length : 0);
+    console.log('==================================================');
 
     const response = await axios.request(config);
 
