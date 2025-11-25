@@ -50,16 +50,16 @@ const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 100 // limit each IP to 100 requests per windowMs
 });
-app.use('/api/', limiter);
+app.use('/', limiter); // Apply to all routes
 
 // Health check endpoint
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
-// Coins.ph API routes - dynamic partner ID from URL path
-// URL format: /api/{partnerId}/get-quote, /api/{partnerId}/accept-quote, etc.
-app.use('/api/:partnerId', coinsRoutes);
+// Partner API routes - dynamic partner ID from URL path
+// URL format: /{partnerId}/get-quote, /{partnerId}/accept-quote, etc.
+app.use('/:partnerId', coinsRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
@@ -85,8 +85,8 @@ app.use((req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
   console.log(`Health check: http://localhost:${PORT}/health`);
-  console.log(`API Routes: http://localhost:${PORT}/api/{partnerId}/...`);
-  console.log(`Example: http://localhost:${PORT}/api/id0001/get-quote`);
+  console.log(`API Routes: http://localhost:${PORT}/{partnerId}/...`);
+  console.log(`Example: http://localhost:${PORT}/id0001/get-quote`);
 });
 
 module.exports = app;

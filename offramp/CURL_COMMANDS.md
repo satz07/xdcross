@@ -9,13 +9,13 @@ Replace `BASE_URL` with your server URL:
 ## 1. Get Quote
 
 ```bash
-curl -X POST "http://localhost:3002/api/id0001/get-quote?sourceCurrency=XDC&targetCurrency=PHP&sourceAmount=50"
+curl -X POST "http://localhost:3002/id0001/get-quote?sourceCurrency=XDC&targetCurrency=PHP&sourceAmount=50"
 ```
 
 **With variables:**
 ```bash
 BASE_URL="http://localhost:3002"
-curl -X POST "${BASE_URL}/api/id0001/get-quote?sourceCurrency=XDC&targetCurrency=PHP&sourceAmount=50"
+curl -X POST "${BASE_URL}/id0001/get-quote?sourceCurrency=XDC&targetCurrency=PHP&sourceAmount=50"
 ```
 
 ## 2. Accept Quote
@@ -23,64 +23,73 @@ curl -X POST "${BASE_URL}/api/id0001/get-quote?sourceCurrency=XDC&targetCurrency
 **Note:** Replace `QUOTE_ID` with the actual `quoteId` from get-quote response.
 
 ```bash
-curl -X POST "http://localhost:3002/api/id0001/accept-quote?quoteId=20907530396610106886"
+curl -X POST "http://localhost:3002/id0001/accept-quote?quoteId=20907530396610106886"
 ```
 
 **With variables:**
 ```bash
 BASE_URL="http://localhost:3002"
 QUOTE_ID="20907530396610106886"
-curl -X POST "${BASE_URL}/api/id0001/accept-quote?quoteId=${QUOTE_ID}"
+curl -X POST "${BASE_URL}/id0001/accept-quote?quoteId=${QUOTE_ID}"
 ```
 
 ## 3. Cash Out
 
+**Simple example (matching test-cash-out.js):**
+```bash
+curl -X POST \
+  -d '{"currency":"PHP","amount":"5","channelName":"INSTAPAY","channelSubject":"bpi","extendInfo":{"recipientName":"Rebecah Dausen","recipientAccountNumber":"0566698575"}}' \
+  "http://localhost:3002/id0001/cash-out"
+```
+
+**With internalOrderId:**
 ```bash
 curl -X POST \
   -d '{"internalOrderId":"1234","currency":"PHP","amount":"50","channelName":"SWIFTPAY_PESONET","channelSubject":"gcash","extendInfo":{"recipientName":"sandy-open-api-test","recipientAccountNumber":"123456789"}}' \
-  "http://localhost:3002/api/id0001/cash-out"
+  "http://localhost:3002/id0001/cash-out"
 ```
 
 **With variables:**
 ```bash
 BASE_URL="http://localhost:3002"
 curl -X POST \
-  -d '{"internalOrderId":"1234","currency":"PHP","amount":"50","channelName":"SWIFTPAY_PESONET","channelSubject":"gcash","extendInfo":{"recipientName":"sandy-open-api-test","recipientAccountNumber":"123456789"}}' \
-  "${BASE_URL}/api/id0001/cash-out"
+  -d '{"currency":"PHP","amount":"5","channelName":"INSTAPAY","channelSubject":"bpi","extendInfo":{"recipientName":"Rebecah Dausen","recipientAccountNumber":"0566698575"}}' \
+  "${BASE_URL}/id0001/cash-out"
 ```
 
 ## Single Line Commands (Copy-Paste Ready)
 
 ### Get Quote
 ```bash
-curl -X POST "http://localhost:3002/api/id0001/get-quote?sourceCurrency=XDC&targetCurrency=PHP&sourceAmount=50"
+curl -X POST "http://localhost:3002/id0001/get-quote?sourceCurrency=XDC&targetCurrency=PHP&sourceAmount=50"
 ```
 
 ### Accept Quote
 ```bash
-curl -X POST "http://localhost:3002/api/id0001/accept-quote?quoteId=20907530396610106886"
+curl -X POST "http://localhost:3002/id0001/accept-quote?quoteId=20907530396610106886"
 ```
 
 ### Cash Out
 ```bash
-curl -X POST -d '{"internalOrderId":"1234","currency":"PHP","amount":"50","channelName":"SWIFTPAY_PESONET","channelSubject":"gcash","extendInfo":{"recipientName":"sandy-open-api-test","recipientAccountNumber":"123456789"}}' "http://localhost:3002/api/id0001/cash-out"
+# Simple format (matching test-cash-out.js)
+curl -X POST -d '{"currency":"PHP","amount":"5","channelName":"INSTAPAY","channelSubject":"bpi","extendInfo":{"recipientName":"Rebecah Dausen","recipientAccountNumber":"0566698575"}}' "http://localhost:3002/id0001/cash-out"
 ```
 
 ## Production URLs (via Nginx)
 
 ### Get Quote
 ```bash
-curl -X POST "https://xdc.cash/api/id0001/get-quote?sourceCurrency=XDC&targetCurrency=PHP&sourceAmount=50"
+curl -X POST "https://xdc.cash/id0001/get-quote?sourceCurrency=XDC&targetCurrency=PHP&sourceAmount=50"
 ```
 
 ### Accept Quote
 ```bash
-curl -X POST "https://xdc.cash/api/id0001/accept-quote?quoteId=20907530396610106886"
+curl -X POST "https://xdc.cash/id0001/accept-quote?quoteId=20907530396610106886"
 ```
 
 ### Cash Out
 ```bash
-curl -X POST -d '{"internalOrderId":"1234","currency":"PHP","amount":"50","channelName":"SWIFTPAY_PESONET","channelSubject":"gcash","extendInfo":{"recipientName":"sandy-open-api-test","recipientAccountNumber":"123456789"}}' "https://xdc.cash/api/id0001/cash-out"
+curl -X POST -d '{"internalOrderId":"1234","currency":"PHP","amount":"50","channelName":"SWIFTPAY_PESONET","channelSubject":"gcash","extendInfo":{"recipientName":"sandy-open-api-test","recipientAccountNumber":"123456789"}}' "https://xdc.cash/id0001/cash-out"
 ```
 
 ## Notes
@@ -98,7 +107,7 @@ Save as `test-all.sh`:
 #!/bin/bash
 
 BASE_URL="http://localhost:3002"
-API_BASE="${BASE_URL}/api/id0001"
+API_BASE="${BASE_URL}/id0001"
 
 echo "Testing Get Quote..."
 curl -X POST "${API_BASE}/get-quote?sourceCurrency=XDC&targetCurrency=PHP&sourceAmount=50"

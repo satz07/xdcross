@@ -12,7 +12,7 @@ const axios = require('axios');
 // Configuration
 const BASE_URL = process.env.BASE_URL || 'http://localhost:3002';
 const PARTNER_ID = process.env.PARTNER_ID || 'id0001';
-const API_BASE = `${BASE_URL}/api/${PARTNER_ID}`;
+const API_BASE = `${BASE_URL}/${PARTNER_ID}`;
 
 // Test data - matches the axios example
 const testData = {

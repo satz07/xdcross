@@ -15,34 +15,30 @@ const QUOTE_DATA_FILE = path.join(process.cwd(), '.quote-data.json');
 
 /**
  * Get partner configuration from request
- * Extracts partner ID dynamically from URL path: /api/{partnerId}/...
+ * Extracts partner ID dynamically from URL path: /{partnerId}/...
  */
 function getPartnerFromRequest(req) {
   // Extract partner ID directly from URL path
-  // URL format: /api/id0001/get-quote -> extract 'id0001'
+  // URL format: /id0001/get-quote -> extract 'id0001'
   // Try multiple sources to extract partnerId from URL
   console.log("req-------------", req.params);
   let partnerId = req.params.partnerId;
-  
+
   // If not in params, extract directly from URL path
   if (!partnerId) {
     // Extract from req.path or req.originalUrl
-    // Format: /api/id0001/get-quote or /id0001/get-quote
+    // Format: /id0001/get-quote
     const urlPath = req.path || req.originalUrl || '';
     const pathParts = urlPath.split('/').filter(part => part); // Remove empty parts
-    
-    // Find partnerId - it should be after 'api' or be the first part
-    const apiIndex = pathParts.indexOf('api');
-    if (apiIndex >= 0 && pathParts[apiIndex + 1]) {
-      partnerId = pathParts[apiIndex + 1];
-    } else if (pathParts.length > 0) {
-      // If no 'api' found, take first part
+
+    // PartnerId is the first part of the path
+    if (pathParts.length > 0) {
       partnerId = pathParts[0];
     }
   }
-  
+
   if (!partnerId) {
-    throw new Error('Partner ID not found in URL path. Expected format: /api/{partnerId}/endpoint');
+    throw new Error('Partner ID not found in URL path. Expected format: /{partnerId}/endpoint');
   }
   
   const partner = getPartner(partnerId);
@@ -83,7 +79,7 @@ function loadQuoteData() {
 
 /**
  * Get Quote - Partner API
- * POST /api/{partnerId}/get-quote
+ * POST /{partnerId}/get-quote
  * 
  * Signature generation matches Postman pre-script exactly:
  * 1. Get query string from URL
@@ -332,7 +328,7 @@ router.post('/get-quote', async (req, res) => {
 
 /**
  * Accept Quote - Partner API
- * POST /api/{partnerId}/accept-quote
+ * POST /{partnerId}/accept-quote
  * 
  * Signature generation matches Postman pre-script exactly:
  * 1. Get query string from URL
@@ -479,7 +475,7 @@ router.post('/accept-quote', async (req, res) => {
 
 /**
  * Cash Out - Partner API
- * POST /api/{partnerId}/cash-out
+ * POST /{partnerId}/cash-out
  * 
  * Signature generation uses request body (not query string):
  * 1. Get raw request body
@@ -500,146 +496,63 @@ router.post('/cash-out', async (req, res) => {
     // var str_requestBody = pm.request.body.raw
     // In axios example: let data = JSON.stringify({...}); data: data
     // 
-    // IMPORTANT: Body must be a JSON string for signature generation
-    // and for axios request (matches test-cash-out.js logic)
+    // Simple approach (matching test-cash-out.js):
+    // 1. Use req.body (already parsed by express.json())
+    // 2. Stringify it once for signature generation
+    // 3. Use same stringified version for axios data
     
-    // Get request body as JSON string (for signature and axios data)
-    // Priority: Use raw body if available (exact format from client)
-    // Otherwise: Stringify req.body to get clean JSON string
-    let strRequestBody = req.rawBody;
+    // Get request body as JSON string (same as test-cash-out.js: JSON.stringify(testData))
+    const strRequestBody = JSON.stringify(req.body);
     
-    if (!strRequestBody) {
-      // No raw body - stringify req.body (same as test file: JSON.stringify(testData))
-      strRequestBody = JSON.stringify(req.body);
-    } else {
-      // Raw body exists - normalize it (parse and re-stringify to ensure clean format)
-      // This ensures consistent formatting without extra quotes or encoding
-      try {
-        const parsed = JSON.parse(strRequestBody);
-        strRequestBody = JSON.stringify(parsed); // Clean JSON string
-      } catch (e) {
-        // If parsing fails, use raw body as-is
-        console.log("Warning: Could not parse rawBody, using as-is");
-      }
-    }
-    
-    // Log body format (matching test-cash-out.js approach)
-    console.log('=== BODY FORMAT (matching test-cash-out.js) ===');
-    console.log('strRequestBody (for signature & axios data):', strRequestBody);
-    console.log('strRequestBody type:', typeof strRequestBody);
-    console.log('strRequestBody length:', strRequestBody.length);
-    console.log('req.rawBody exists:', !!req.rawBody);
-    if (req.rawBody) {
-      console.log('req.rawBody (raw):', req.rawBody);
-    }
-    console.log('req.body (parsed object):', JSON.stringify(req.body, null, 2));
-    console.log('================================================');
-    // let timestamp = (new Date()).getTime().toString();
     const timestamp = new Date().getTime().toString();
     
     // let path = "openapi/fiat/v1/cash-out";
     const path = "openapi/fiat/v1/cash-out";
     
+    // Generate signature (matching Postman pre-script)
     // let signature = CryptoJS.HmacSHA256(signatureBody, pm.environment.get("secret"))
     // signature = CryptoJS.enc.Hex.stringify(signature)
     const CryptoJS = require('crypto-js');
-    
-    console.log('=== Cash Out Request ===');
-    console.log('Request Body (parsed):', JSON.stringify(req.body, null, 2));
-    console.log('Request Body (stringified for signature):', strRequestBody);
-    console.log('Body length:', strRequestBody.length);
-    console.log('Timestamp:', timestamp);
-    
     let signature = CryptoJS.HmacSHA256(strRequestBody, secret);
     signature = CryptoJS.enc.Hex.stringify(signature);
-    
-    console.log('Signature:', signature);
-    console.log('');
 
     // Build URL with signature in query string (timestamp goes in header, not query)
-    // Using partner's base URL (abstracted from user)
     const url = `${baseUrl}/${path}?signature=${signature}`;
 
-    // Log the final request
-    console.log('=== FINAL REQUEST ===');
-    console.log('Final URL:', url);
-    console.log('Request Headers:', JSON.stringify({
-      'X-COINS-APIKEY': apiKey,
-      'timestamp': timestamp,
-      'Content-Type': 'application/json'
-    }, null, 2));
-    console.log('Request Body:', req.body);
-    console.log('==================================================');
-    console.log('');
-    
-    // Generate exact curl command for testing on different server
-    // Use req.body (parsed) and stringify it cleanly for display (signature still uses raw body)
-    // Ensure req.body is a proper object, not a string
-    let bodyForCurl = req.body;
-    if (typeof bodyForCurl === 'string') {
-      try {
-        bodyForCurl = JSON.parse(bodyForCurl);
-      } catch (e) {
-        console.log("Warning: req.body is string but not valid JSON");
-      }
-    }
-    const cleanBodyForCurl = JSON.stringify(bodyForCurl);
-    
-    // Debug: Check body structure
-    console.log('=== BODY DEBUG ===');
-    console.log('req.body type:', typeof req.body);
-    console.log('req.body:', req.body);
-    console.log('req.body keys:', Object.keys(req.body || {}));
-    console.log('cleanBodyForCurl:', cleanBodyForCurl);
-    console.log('==================');
-    
-    // Use single quotes around JSON body to avoid escaping issues
-    const curlCommand = `curl -X POST \\
-  -H "X-COINS-APIKEY: ${apiKey}" \\
-  -H "timestamp: ${timestamp}" \\
-  -H "Content-Type: application/json" \\
-  -d '${cleanBodyForCurl}' \\
-  "${url}"`;
-    
-    console.log('=== EXACT CURL COMMAND (for testing) ===');
-    console.log(curlCommand);
-    console.log('');
-    console.log('=== SINGLE LINE CURL (copy-paste ready) ===');
-    console.log(`curl -X POST -H "X-COINS-APIKEY: ${apiKey}" -H "timestamp: ${timestamp}" -H "Content-Type: application/json" -d '${cleanBodyForCurl}' "${url}"`);
-    console.log('==========================================');
+    // Log request details
+    console.log('=== Cash Out Request ===');
+    console.log('Body (for signature):', strRequestBody);
+    console.log('Timestamp:', timestamp);
+    console.log('Signature:', signature);
+    console.log('URL:', url);
     console.log('');
 
     // Make request to partner API (matching test-cash-out.js and axios example)
-    // This matches the exact format from test-cash-out.js:
-    // const data = JSON.stringify(testData);
-    // axios.post(url, data, { headers: {...} })
-    // 
-    // Or in axios.request format:
-    // let data = JSON.stringify({...});
-    // config = { method: 'post', url: '...', headers: {...}, data: data }
+    // Format matches: let data = JSON.stringify({...}); config = { data: data }
     const config = {
       method: 'post',
       maxBodyLength: Infinity,
-      url: url, // Format: https://api.pro.coins.ph/openapi/fiat/v1/cash-out?signature=...
+      url: url,
       headers: {
         'X-COINS-APIKEY': apiKey,
         'timestamp': timestamp,
         'Content-Type': 'application/json'
-        // Note: Cookie header is optional and not included
       },
-      data: strRequestBody, // JSON string (matches: let data = JSON.stringify({...}); data: data)
+      data: strRequestBody, // JSON string (same as test-cash-out.js)
       timeout: 30000
     };
 
-    // Log axios config (matching test-cash-out.js logging style)
-    console.log('=== AXIOS CONFIG (matching test-cash-out.js) ===');
-    console.log('Method:', config.method);
-    console.log('URL:', config.url);
-    console.log('Headers:', JSON.stringify(config.headers, null, 2));
-    console.log('Data (body):', config.data);
-    console.log('Data type:', typeof config.data);
-    console.log('Data length:', config.data ? config.data.length : 0);
-    console.log('==================================================');
+    // Generate curl command for testing
+    const curlCommand = `curl -X POST \\
+  -H "X-COINS-APIKEY: ${apiKey}" \\
+  -H "timestamp: ${timestamp}" \\
+  -H "Content-Type: application/json" \\
+  -d '${strRequestBody}' \\
+  "${url}"`;
+    
+    console.log('=== CURL COMMAND (for testing) ===');
+    console.log(curlCommand);
+    console.log('');
 
     const response = await axios.request(config);
 
