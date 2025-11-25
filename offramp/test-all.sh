@@ -3,11 +3,11 @@
 # Test script for all API endpoints
 # Usage: ./test-all.sh
 
-BASE_URL="http://localhost:3002"
-API_BASE="${BASE_URL}/id0001"
+#BASE_URL="http://localhost:3002"
+#API_BASE="${BASE_URL}/id0001"
 #BASE_URL="http://80.243.180.174:3002"
-#BASE_URL="https://xdc.cash/api"
-#API_BASE="${BASE_URL}/api/id0001"
+BASE_URL="https://xdc.cash/api"
+API_BASE="${BASE_URL}/id0001"
 
 echo "=========================================="
 echo "Testing All API Endpoints"
@@ -24,7 +24,7 @@ echo ""
 
 # Extract quoteId from get-quote response
 # Response structure: {"success":true,"data":{"status":0,"error":"OK","data":{"quoteId":"...",...}}}
-QUOTE_ID=$(echo "$GET_QUOTE_RESPONSE" | python3 -c "import sys, json; data = json.load(sys.stdin); print(data.get('data', {}).get('data', {}).get('quoteId', ''))" 2>/dev/null)
+#QUOTE_ID=$(echo "$GET_QUOTE_RESPONSE" | python3 -c "import sys, json; data = json.load(sys.stdin); print(data.get('data', {}).get('data', {}).get('quoteId', ''))" 2>/dev/null)
 
 if [ -z "$QUOTE_ID" ] || [ "$QUOTE_ID" == "None" ]; then
     echo "⚠️  Warning: Could not extract quoteId from get-quote response"
