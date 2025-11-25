@@ -15,30 +15,34 @@ const QUOTE_DATA_FILE = path.join(process.cwd(), '.quote-data.json');
 
 /**
  * Get partner configuration from request
- * Extracts partner ID dynamically from URL path: /{partnerId}/...
+ * Extracts partner ID dynamically from URL path: /api/{partnerId}/...
  */
 function getPartnerFromRequest(req) {
   // Extract partner ID directly from URL path
-  // URL format: /id0001/get-quote -> extract 'id0001'
+  // URL format: /api/id0001/get-quote -> extract 'id0001'
   // Try multiple sources to extract partnerId from URL
   console.log("req-------------", req.params);
   let partnerId = req.params.partnerId;
-
+  
   // If not in params, extract directly from URL path
   if (!partnerId) {
     // Extract from req.path or req.originalUrl
-    // Format: /id0001/get-quote
+    // Format: /api/id0001/get-quote or /id0001/get-quote
     const urlPath = req.path || req.originalUrl || '';
     const pathParts = urlPath.split('/').filter(part => part); // Remove empty parts
-
-    // PartnerId is the first part of the path
-    if (pathParts.length > 0) {
+    
+    // Find partnerId - it should be after 'api' or be the first part
+    const apiIndex = pathParts.indexOf('api');
+    if (apiIndex >= 0 && pathParts[apiIndex + 1]) {
+      partnerId = pathParts[apiIndex + 1];
+    } else if (pathParts.length > 0) {
+      // If no 'api' found, take first part
       partnerId = pathParts[0];
     }
   }
-
+  
   if (!partnerId) {
-    throw new Error('Partner ID not found in URL path. Expected format: /{partnerId}/endpoint');
+    throw new Error('Partner ID not found in URL path. Expected format: /api/{partnerId}/endpoint');
   }
   
   const partner = getPartner(partnerId);
@@ -79,7 +83,7 @@ function loadQuoteData() {
 
 /**
  * Get Quote - Partner API
- * POST /{partnerId}/get-quote
+ * POST /api/{partnerId}/get-quote
  * 
  * Signature generation matches Postman pre-script exactly:
  * 1. Get query string from URL
@@ -328,7 +332,7 @@ router.post('/get-quote', async (req, res) => {
 
 /**
  * Accept Quote - Partner API
- * POST /{partnerId}/accept-quote
+ * POST /api/{partnerId}/accept-quote
  * 
  * Signature generation matches Postman pre-script exactly:
  * 1. Get query string from URL
@@ -475,7 +479,7 @@ router.post('/accept-quote', async (req, res) => {
 
 /**
  * Cash Out - Partner API
- * POST /{partnerId}/cash-out
+ * POST /api/{partnerId}/cash-out
  * 
  * Signature generation uses request body (not query string):
  * 1. Get raw request body
@@ -573,6 +577,149 @@ router.post('/cash-out', async (req, res) => {
       });
     }
     
+    if (error.response) {
+      res.status(error.response.status).json({
+        success: false,
+        error: {
+          message: error.message,
+          status: error.response.status,
+          data: error.response.data
+        }
+      });
+    } else {
+      res.status(500).json({
+        success: false,
+        error: {
+          message: error.message,
+          status: 500
+        }
+      });
+    }
+  }
+});
+
+/**
+ * Get Account - Partner API
+ * GET /api/{partnerId}/account
+ * 
+ * Signature generation matches get-quote/accept-quote pattern:
+ * 1. Get query string from URL
+ * 2. Replace {{timestamp}} with actual timestamp
+ * 3. Remove &signature={{sign}} placeholder
+ * 4. Generate HMAC SHA256 signature
+ * 5. Add signature to request
+ */
+router.get('/account', async (req, res) => {
+  try {
+    // Get partner configuration (abstracts partner details from user)
+    const partner = getPartnerFromRequest(req);
+    const apiKey = partner.apiKey;
+    const secret = partner.secret;
+    const baseUrl = partner.baseUrl;
+
+    // Get the full URL with query string
+    const urlWithQuery = req.originalUrl || req.url;
+    const fullUrl = `${req.protocol}://${req.get('host')}${urlWithQuery}`;
+
+    // EXACT MATCH TO POSTMAN PRE-SCRIPT (same as get-quote):
+    const path = "openapi/v1/account";
+
+    // Generate timestamp
+    const timestamp = new Date().getTime().toString();
+
+    // Build string to sign - same logic as get-quote
+    const queryStartIndex = fullUrl.indexOf('?');
+    let param = queryStartIndex >= 0
+      ? fullUrl.substring(queryStartIndex + 1, fullUrl.length)
+      : '';
+
+    // Also try from req.originalUrl directly
+    const expressQueryString = req.originalUrl.includes('?')
+      ? req.originalUrl.substring(req.originalUrl.indexOf('?') + 1)
+      : '';
+
+    // Use the query string from the URL
+    let str = param || expressQueryString;
+
+    // Remove recvWindow if present (same as get-quote)
+    str = str.replace(/[&?]recvWindow=[^&]*/g, '');
+    str = str.replace(/recvWindow=[^&]*&?/g, '');
+    str = str.replace(/&recvWindow=[^&]*/g, '');
+    str = str.replace(/\?recvWindow=[^&]*/g, '?');
+    // Clean up any double ampersands
+    str = str.replace(/&&+/g, '&').replace(/^&|&$/g, '');
+
+    // Replace timestamp placeholder
+    str = str.replace("{{timestamp}}", timestamp);
+
+    // Remove signature placeholder
+    str = str.replace("&signature={{sign}}", "");
+    str = str.replace("signature={{sign}}", "");
+
+    // If timestamp wasn't in the original query string, add it
+    if (!str.includes('timestamp=')) {
+      str = str ? `${str}&timestamp=${timestamp}` : `timestamp=${timestamp}`;
+    }
+
+    // Generate signature
+    const CryptoJS = require('crypto-js');
+    let signature = CryptoJS.HmacSHA256(str, secret);
+    signature = CryptoJS.enc.Hex.stringify(signature);
+
+    // Build final URL with signature
+    const finalQueryString = str ? `${str}&signature=${signature}` : `signature=${signature}`;
+    const url = `${baseUrl}/${path}?${finalQueryString}`;
+
+    // Log the final request
+    console.log('');
+    console.log('=== ACCOUNT REQUEST ===');
+    console.log('Final URL:', url);
+    console.log('Request Headers:', JSON.stringify({
+      'X-COINS-APIKEY': apiKey
+    }, null, 2));
+    console.log('==================================================');
+    console.log('');
+
+    // Generate curl command for testing
+    const curlCommand = `curl -X GET \\
+  -H "X-COINS-APIKEY: ${apiKey}" \\
+  "${url}"`;
+
+    console.log('=== CURL COMMAND (for testing) ===');
+    console.log(curlCommand);
+    console.log('');
+
+    // Make request to partner API
+    const config = {
+      method: 'get',
+      maxBodyLength: Infinity,
+      url: url,
+      headers: {
+        'X-COINS-APIKEY': apiKey
+        // Note: Cookie header is optional and not included
+      },
+      timeout: 30000
+    };
+
+    const response = await axios.request(config);
+
+    // Return only the data - mask all partner details from end user
+    res.json({
+      success: true,
+      data: response.data
+    });
+  } catch (error) {
+    // Handle partner configuration errors
+    if (error.message && error.message.includes('Partner')) {
+      return res.status(400).json({
+        success: false,
+        error: {
+          message: error.message,
+          status: 400
+        }
+      });
+    }
+
     if (error.response) {
       res.status(error.response.status).json({
         success: false,
