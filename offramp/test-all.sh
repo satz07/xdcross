@@ -3,10 +3,11 @@
 # Test script for all API endpoints
 # Usage: ./test-all.sh
 
-#BASE_URL="http://localhost:3002"
+BASE_URL="http://localhost:3002"
+API_BASE="${BASE_URL}/id0001"
 #BASE_URL="http://80.243.180.174:3002"
-BASE_URL="https://xdc.cash"
-API_BASE="${BASE_URL}/api/id0001"
+#BASE_URL="https://xdc.cash/api"
+#API_BASE="${BASE_URL}/api/id0001"
 
 echo "=========================================="
 echo "Testing All API Endpoints"
@@ -16,8 +17,8 @@ echo ""
 # Test 1: Get Quote
 echo "1. Testing GET-QUOTE endpoint..."
 echo "----------------------------------------"
-#GET_QUOTE_RESPONSE=$(curl -s -X POST "${API_BASE}/get-quote?sourceCurrency=XDC&targetCurrency=PHP&sourceAmount=50")
-#echo "$GET_QUOTE_RESPONSE" | python3 -m json.tool 2>/dev/null || echo "$GET_QUOTE_RESPONSE"
+GET_QUOTE_RESPONSE=$(curl -s -X POST "${API_BASE}/get-quote?sourceCurrency=XDC&targetCurrency=PHP&sourceAmount=50")
+echo "$GET_QUOTE_RESPONSE" | python3 -m json.tool 2>/dev/null || echo "$GET_QUOTE_RESPONSE"
 echo ""
 echo ""
 
@@ -48,13 +49,22 @@ echo ""
 # Test 3: Cash Out
 echo "3. Testing CASH-OUT endpoint..."
 echo "----------------------------------------"
-CASH_OUT_RESPONSE=$(curl -s -X POST \
-  -H "Content-Type: application/json" \
-  -d '{"currency":"PHP","amount":"50","channelName":"INSTAPAY","channelSubject":"bpi","extendInfo":{"recipientName":"Rebecah Dausen","recipientAccountNumber":"0566698575"}}' \
-  "${API_BASE}/cash-out")
+#CASH_OUT_RESPONSE=$(curl -s -X POST \
+ # -H "Content-Type: application/json" \
+ # -d '{"currency":"PHP","amount":"50","channelName":"INSTAPAY","channelSubject":"bpi","extendInfo":{"recipientName":"Rebecah Dausen","recipientAccountNumber":"0566698575"}}' \
+#  "${API_BASE}/cash-out")
 echo "$CASH_OUT_RESPONSE" | python3 -m json.tool 2>/dev/null || echo "$CASH_OUT_RESPONSE"
 echo ""
 echo ""
+
+# Test 4: Get Account
+echo "4. Testing GET-ACCOUNT endpoint..."
+echo "----------------------------------------"
+ACCOUNT_RESPONSE=$(curl -s -X GET "${API_BASE}/account")
+echo "$ACCOUNT_RESPONSE" | python3 -m json.tool 2>/dev/null || echo "$ACCOUNT_RESPONSE"
+echo ""
+echo ""
+
 
 echo "=========================================="
 echo "Testing Complete"

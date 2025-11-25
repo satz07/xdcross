@@ -59,7 +59,7 @@ app.get('/health', (req, res) => {
 
 // Coins.ph API routes - dynamic partner ID from URL path
 // URL format: /api/{partnerId}/get-quote, /api/{partnerId}/accept-quote, etc.
-app.use('/api/:partnerId', coinsRoutes);
+app.use('/:partnerId', coinsRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
