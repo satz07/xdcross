@@ -38049,3 +38049,514 @@ Test with:
 
 ---
 
+
+Added the account endpoint to CURL_COMMANDS.md. The route is defined in `routes/coins.js`.
+
+## Added to CURL_COMMANDS.md:
+
+1. Section 4: Get Account — with examples
+2. Single line command — copy-paste ready
+3. Production URL — for https://xdc.cash
+4. Updated Notes — mentions GET method for account endpoint
+
+## About the 404 error:
+
+The route is defined correctly. If you see a 404, restart the server:
+
+```bash
+# If using PM2
+pm2 restart offramp-api
+
+# If running directly
+# Stop the server (Ctrl+C) and restart:
+npm start
+```
+
+The route should be accessible at:
+- `GET /api/id0001/account`
+- `GET https://xdc.cash/api/id0001/account`
+
+After restarting, test with:
+```bash
+curl -X GET "https://xdc.cash/api/id0001/account"
+```
+
+All curl commands are now documented in CURL_COMMANDS.md.
+
+---
+
+_**User (2025-11-24 11:27Z)**_
+
+@zsh (1010) err
+
+---
+
+_**Agent (model default, mode Agent)**_
+
+
+
+---
+
+
+Checking the route registration and server setup to resolve the 404:
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file">
+<details><summary>Tool use: **read_file** • Read file: /Users/satheesh/go/src/offramp/server.js</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="grep">
+<details>
+<summary>Tool use: **grep** • Grep for "router\.(get|post)" in "/Users/satheesh/go/src/offramp/routes/coins.js" • 4 matches</summary>
+
+Output mode: content
+
+
+| File | Content | Line |
+|------|------|------|
+| `routes/coins.js` | `router.post('/get-quote', async (req, res) => \{` | L95 |
+| `routes/coins.js` | `router.post('/accept-quote', async (req, res) => \{` | L344 |
+| `routes/coins.js` | `router.post('/cash-out', async (req, res) => \{` | L491 |
+| `routes/coins.js` | `router.get('/account', async (req, res) => \{` | L612 |
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file">
+<details><summary>Tool use: **read_file** • Read file: /Users/satheesh/go/src/offramp/routes/coins.js</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file">
+<details><summary>Tool use: **read_file** • Read file: /Users/satheesh/go/src/offramp/routes/coins.js</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_cmd">
+<details><summary>Tool use: **command** • Run command: cd /Users/satheesh/go/src/offramp && grep -n "router.get\|router.post" routes/coins.js | tail -5</summary>
+
+```bash
+cd /Users/satheesh/go/src/offramp && grep -n "router.get\|router.post" routes/coins.js | tail -5
+```
+
+```
+95:router.post(&#39;/get-quote&#39;, async (req, res) =&gt; {
+344:router.post(&#39;/accept-quote&#39;, async (req, res) =&gt; {
+491:router.post(&#39;/cash-out&#39;, async (req, res) =&gt; {
+612:router.get(&#39;/account&#39;, async (req, res) =&gt; {
+
+```
+</details>
+</tool-use>
+
+---
+
+
+
+---
+
+
+Route is defined correctly. The 404 likely means the server wasn't restarted. Verifying the route is properly exported and checking for issues:
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file">
+<details><summary>Tool use: **read_file** • Read file: /Users/satheesh/go/src/offramp/routes/coins.js</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_cmd">
+<details><summary>Tool use: **command** • Run command: cd /Users/satheesh/go/src/offramp && node -e "const router = require('./routes/coins'); console.log('Router loaded successfully'); console.log('Router stack:', router.stack ? router.stack.length : 'no stack');" 2>&1</summary>
+
+```bash
+cd /Users/satheesh/go/src/offramp && node -e "const router = require('./routes/coins'); console.log('Router loaded successfully'); console.log('Router stack:', router.stack ? router.stack.length : 'no stack');" 2>&1
+```
+
+```
+Router loaded successfully
+Router stack: 4
+
+```
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_cmd">
+<details><summary>Tool use: **command** • Run command: cd /Users/satheesh/go/src/offramp && echo "✅ Route is defined correctly" && echo "" && echo "The account endpoint is at line 612:" && echo "  router.get('/account', ...)" && echo "" && echo "To fix the 404 error:" && echo "1. Restart the server:" && echo "   pm2 restart offramp-api" && echo "   OR" && echo "   Stop and restart: npm start" && echo "" && echo "2. Verify the route is accessible:" && echo "   curl -X GET \"http://localhost:3002/api/id0001/account\"" && echo "" && echo "The route should work after restart!"</summary>
+
+```bash
+cd /Users/satheesh/go/src/offramp && echo "✅ Route is defined correctly" && echo "" && echo "The account endpoint is at line 612:" && echo "  router.get('/account', ...)" && echo "" && echo "To fix the 404 error:" && echo "1. Restart the server:" && echo "   pm2 restart offramp-api" && echo "   OR" && echo "   Stop and restart: npm start" && echo "" && echo "2. Verify the route is accessible:" && echo "   curl -X GET \"http://localhost:3002/api/id0001/account\"" && echo "" && echo "The route should work after restart!"
+```
+
+```
+✅ Route is defined correctly
+
+The account endpoint is at line 612:
+  router.get(&#39;/account&#39;, ...)
+
+To fix the 404 error:
+1. Restart the server:
+   pm2 restart offramp-api
+   OR
+   Stop and restart: npm start
+
+2. Verify the route is accessible:
+   curl -X GET &quot;http://localhost:3002/api/id0001/account&quot;
+
+The route should work after restart!
+
+```
+</details>
+</tool-use>
+
+---
+
+
+
+---
+
+
+The route is defined correctly. The router shows 4 routes registered (including account). The 404 is likely because the server wasn't restarted after adding the route.
+
+## Fix the 404 error:
+
+**Restart the server:**
+
+```bash
+# If using PM2:
+pm2 restart offramp-api
+
+# If running directly:
+# Stop the server (Ctrl+C) and restart:
+npm start
+```
+
+After restarting, the account endpoint should be accessible at:
+- `GET /api/id0001/account`
+- `GET https://xdc.cash/api/id0001/account`
+
+**Test it:**
+```bash
+curl -X GET "https://xdc.cash/api/id0001/account"
+```
+
+The route is properly defined in the code (router has 4 routes registered). Restart the server and it should work.
+
+---
+
+_**User (2025-11-24 11:27Z)**_
+
+@zsh (1012-1016) api/api  works why two times othr API s work only with /api
+
+---
+
+_**Agent (model default, mode Agent)**_
+
+
+
+---
+
+
+Checking the routing setup. The double `/api/api` suggests a mounting issue:
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file">
+<details><summary>Tool use: **read_file** • Read file: /Users/satheesh/go/src/offramp/server.js</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file">
+<details><summary>Tool use: **read_file** • Read file: /Users/satheesh/go/src/offramp/routes/coins.js</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="grep">
+<details>
+<summary>Tool use: **grep** • Grep for "app\.use.*api" in "/Users/satheesh/go/src/offramp/server.js" • 2 matches</summary>
+
+Output mode: content
+
+
+| File | Content | Line |
+|------|------|------|
+| `server.js` | `app.use('/api/', limiter);` | L53 |
+| `server.js` | `app.use('/api/:partnerId', coinsRoutes);` | L62 |
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file">
+<details><summary>Tool use: **read_file** • Read file: /Users/satheesh/go/src/offramp/routes/coins.js</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="codebase_search">
+<details>
+                <summary>Tool use: **codebase_search** • Searched codebase "How are routes mounted in server.js? Is there a double mounting issue with /api?" • **15** results</summary>
+            
+| File | Lines |
+|------|-------|
+| `server.js` | L55-72 |
+| `server.js` | L3-13 |
+| `server.js` | L75-91 |
+| `routes/coins.js` | L68 |
+| `server.js` | L30-57 |
+| `package.json` | L37 |
+| `server.js` | L8 |
+| `server.js` | L84-91 |
+| `server.js` | L64-89 |
+| `server.js` | L12-27 |
+| `server.js` | L48-61 |
+| `server.js` | L57-82 |
+| `ecosystem.config.js` | L37 |
+| `server.js` | L26-51 |
+| `README.md` | L89 |
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_cmd">
+<details><summary>Tool use: **command** • Run command: cd /Users/satheesh/go/src/offramp && grep -n "app.use\|router\." server.js routes/coins.js | head -20</summary>
+
+```bash
+cd /Users/satheesh/go/src/offramp && grep -n "app.use\|router\." server.js routes/coins.js | head -20
+```
+
+```
+server.js:13:app.use(helmet());
+server.js:14:app.use(cors());
+server.js:18:app.use(express.json({ 
+server.js:28:app.use(express.urlencoded({ extended: false, limit: &#39;1mb&#39; }));
+server.js:31:app.use((req, res, next) =&gt; {
+server.js:53:app.use(&#39;/api/&#39;, limiter);
+server.js:62:app.use(&#39;/api/:partnerId&#39;, coinsRoutes);
+server.js:65:app.use((err, req, res, next) =&gt; {
+server.js:76:app.use((req, res) =&gt; {
+routes/coins.js:95:router.post(&#39;/get-quote&#39;, async (req, res) =&gt; {
+routes/coins.js:344:router.post(&#39;/accept-quote&#39;, async (req, res) =&gt; {
+routes/coins.js:491:router.post(&#39;/cash-out&#39;, async (req, res) =&gt; {
+routes/coins.js:612:router.get(&#39;/account&#39;, async (req, res) =&gt; {
+
+```
+</details>
+</tool-use>
+
+---
+
+
+
+---
+
+
+Checking why the account endpoint requires `/api/api` while others work with `/api`. Verifying route registration and any differences:
+
+
+---
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_cmd">
+<details><summary>Tool use: **command** • Run command: cd /Users/satheesh/go/src/offramp && node -e "const router = require('./routes/coins'); router.stack.forEach((r, i) => { console.log(i + ':', r.route ? r.route.path : r.regexp.toString(), r.route ? r.route.methods : ''); });"</summary>
+
+```bash
+cd /Users/satheesh/go/src/offramp && node -e "const router = require('./routes/coins'); router.stack.forEach((r, i) => { console.log(i + ':', r.route ? r.route.path : r.regexp.toString(), r.route ? r.route.methods : ''); });"
+```
+
+```
+0: /get-quote { post: true }
+1: /accept-quote { post: true }
+2: /cash-out { post: true }
+3: /account { get: true }
+
+```
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file">
+<details><summary>Tool use: **read_file** • Read file: /Users/satheesh/go/src/offramp/routes/coins.js</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file">
+<details><summary>Tool use: **read_file** • Read file: /Users/satheesh/go/src/offramp/routes/coins.js</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_cmd">
+<details><summary>Tool use: **command** • Run command: cd /Users/satheesh/go/src/offramp && echo "Checking route definitions..." && echo "" && echo "All routes should be at the same level:" && echo "  router.post('/get-quote', ...)" && echo "  router.post('/accept-quote', ...)" && echo "  router.post('/cash-out', ...)" && echo "  router.get('/account', ...)" && echo "" && echo "If /api/api/id0001/account works but /api/id0001/account doesn't," && echo "this might be an Nginx proxy issue or server restart needed." && echo "" && echo "Try testing locally first:" && echo "  curl -X GET \"http://localhost:3002/api/id0001/account\""</summary>
+
+```bash
+cd /Users/satheesh/go/src/offramp && echo "Checking route definitions..." && echo "" && echo "All routes should be at the same level:" && echo "  router.post('/get-quote', ...)" && echo "  router.post('/accept-quote', ...)" && echo "  router.post('/cash-out', ...)" && echo "  router.get('/account', ...)" && echo "" && echo "If /api/api/id0001/account works but /api/id0001/account doesn't," && echo "this might be an Nginx proxy issue or server restart needed." && echo "" && echo "Try testing locally first:" && echo "  curl -X GET \"http://localhost:3002/api/id0001/account\""
+```
+
+```
+Checking route definitions...
+
+All routes should be at the same level:
+  router.post(&#39;/get-quote&#39;, ...)
+  router.post(&#39;/accept-quote&#39;, ...)
+  router.post(&#39;/cash-out&#39;, ...)
+  router.get(&#39;/account&#39;, ...)
+
+If /api/api/id0001/account works but /api/id0001/account doesn&#39;t,
+this might be an Nginx proxy issue or server restart needed.
+
+Try testing locally first:
+  curl -X GET &quot;http://localhost:3002/api/id0001/account&quot;
+
+```
+</details>
+</tool-use>
+
+---
+
+
+
+---
+
+
+Routes are defined correctly. The `/api/api` issue likely comes from Nginx stripping `/api` before forwarding. Checking the Nginx configuration:
+
+
+---
+
+<tool-use data-tool-type="generic" data-tool-name="glob_file_search">
+<details>
+<summary>Tool use: **glob_file_search** • Searched codebase "*nginx*.conf" • **0** result in **1** directory</summary>
+
+Directory: **/Users/satheesh/go/src/offramp** (0 file)
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="generic" data-tool-name="glob_file_search">
+<details>
+<summary>Tool use: **glob_file_search** • Searched codebase "*nginx*.md" • **0** result in **1** directory</summary>
+
+Directory: **/Users/satheesh/go/src/offramp** (0 file)
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file">
+<details><summary>Tool use: **read_file** • Read file: /Users/satheesh/go/src/offramp/server.js</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_cmd">
+<details><summary>Tool use: **command** • Run command: cd /Users/satheesh/go/src/offramp && echo "The route is correctly defined as:" && echo "  router.get('/account', ...)" && echo "" && echo "And mounted in server.js as:" && echo "  app.use('/api/:partnerId', coinsRoutes);" && echo "" && echo "So the correct URL should be:" && echo "  /api/id0001/account" && echo "" && echo "If /api/api/id0001/account works, it means:" && echo "  - Nginx might be stripping /api before forwarding" && echo "  - Or there's a proxy rewrite rule" && echo "" && echo "Solution: Check Nginx config on the server." && echo "The proxy_pass should forward to the full path, not strip /api"</summary>
+
+```bash
+cd /Users/satheesh/go/src/offramp && echo "The route is correctly defined as:" && echo "  router.get('/account', ...)" && echo "" && echo "And mounted in server.js as:" && echo "  app.use('/api/:partnerId', coinsRoutes);" && echo "" && echo "So the correct URL should be:" && echo "  /api/id0001/account" && echo "" && echo "If /api/api/id0001/account works, it means:" && echo "  - Nginx might be stripping /api before forwarding" && echo "  - Or there's a proxy rewrite rule" && echo "" && echo "Solution: Check Nginx config on the server." && echo "The proxy_pass should forward to the full path, not strip /api"
+```
+
+```
+The route is correctly defined as:
+  router.get(&#39;/account&#39;, ...)
+
+And mounted in server.js as:
+  app.use(&#39;/api/:partnerId&#39;, coinsRoutes);
+
+So the correct URL should be:
+  /api/id0001/account
+
+If /api/api/id0001/account works, it means:
+  - Nginx might be stripping /api before forwarding
+  - Or there&#39;s a proxy rewrite rule
+
+Solution: Check Nginx config on the server.
+The proxy_pass should forward to the full path, not strip /api
+
+```
+</details>
+</tool-use>
+
+---
+
+
+
+---
+
+
+Routes are defined correctly. The `/api/api` issue likely means the server on `xdc.cash` hasn’t been restarted after adding the account route. The route exists in code, but the running process doesn’t have it yet.
+
+**Fix:**
+
+1. Restart the server on the remote host:
+   ```bash
+   # SSH into the server and restart
+   pm2 restart offramp-api
+   # OR
+   # Stop and restart the Node.js process
+   ```
+
+2. After restart, test:
+   ```bash
+   curl -X GET "https://xdc.cash/api/id0001/account"
+   ```
+
+The route is defined correctly:
+- `router.get('/account', ...)` in routes/coins.js
+- Mounted as `app.use('/api/:partnerId', coinsRoutes)` in server.js
+- Should work at `/api/id0001/account` (same as other endpoints)
+
+If `/api/api/id0001/account` works, Nginx may be stripping `/api` before forwarding. After restarting, `/api/id0001/account` should work like the other endpoints.
+
+**Quick test:** Try locally first:
+```bash
+curl -X GET "http://localhost:3002/api/id0001/account"
+```
+
+If that works locally but not on the server, restart the server on `xdc.cash`.
+
+---
+

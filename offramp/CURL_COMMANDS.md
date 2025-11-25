@@ -57,18 +57,6 @@ curl -X POST \
   "${BASE_URL}/api/id0001/cash-out"
 ```
 
-## 4. Get Account
-
-```bash
-curl -X GET "http://localhost:3002/api/id0001/account"
-```
-
-**With variables:**
-```bash
-BASE_URL="http://localhost:3002"
-curl -X GET "${BASE_URL}/api/id0001/account"
-```
-
 ## Single Line Commands (Copy-Paste Ready)
 
 ### Get Quote
@@ -85,11 +73,6 @@ curl -X POST "http://localhost:3002/api/id0001/accept-quote?quoteId=209075303966
 ```bash
 # Simple format (matching test-cash-out.js)
 curl -X POST -d '{"currency":"PHP","amount":"5","channelName":"INSTAPAY","channelSubject":"bpi","extendInfo":{"recipientName":"Rebecah Dausen","recipientAccountNumber":"0566698575"}}' "http://localhost:3002/api/id0001/cash-out"
-```
-
-### Get Account
-```bash
-curl -X GET "http://localhost:3002/api/id0001/account"
 ```
 
 ## Production URLs (via Nginx)
@@ -109,16 +92,11 @@ curl -X POST "https://xdc.cash/api/id0001/accept-quote?quoteId=20907530396610106
 curl -X POST -d '{"internalOrderId":"1234","currency":"PHP","amount":"50","channelName":"SWIFTPAY_PESONET","channelSubject":"gcash","extendInfo":{"recipientName":"sandy-open-api-test","recipientAccountNumber":"123456789"}}' "https://xdc.cash/api/id0001/cash-out"
 ```
 
-### Get Account
-```bash
-curl -X GET "https://xdc.cash/api/id0001/account"
-```
-
 ## Notes
 
-- **No Content-Type header needed** - Server handles it automatically (except for cash-out which requires it)
+- **No Content-Type header needed** - Server handles it automatically
 - **Partner ID** (`id0001`) is extracted from URL path
-- **Methods**: Most endpoints use POST, account endpoint uses GET
+- **All endpoints use POST method**
 - **Signature generation is automatic** - No need to configure
 
 ## Testing Script
