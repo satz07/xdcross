@@ -31,18 +31,15 @@ All API requests use the production endpoint:
 https://xdc.cash
 ```
 
-**Path format:** `/api/{partnerId}/{endpoint}`
+**Path format:** `/api/{endpoint}` — e.g. `/api/get-quote`, `/api/onramp/quote`.
 
-| Partner ID | Service |
-|------------|---------|
-| `id0001` | Coins.ph (XDC ↔ PHP) |
-| `id0002` | Onramp.money (AED/INR ↔ USDC ↔ PHP) |
+**Reference ID:** Pass your reference ID in every request as `ref_id` (in the query string for GET, or in the request body for POST). Use the value provided to you when integrating.
 
 ---
 
 ## Authentication
 
-API authentication is handled automatically via partner configuration. Include your partner credentials when setting up the integration. No additional headers required for standard requests.
+API authentication is handled automatically. Include your `ref_id` (reference ID) and credentials when setting up the integration. No additional headers required for standard requests.
 
 **Content-Type:** `application/x-www-form-urlencoded` for most endpoints; `application/json` for Cash Out.
 

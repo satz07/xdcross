@@ -4,9 +4,9 @@ Combined endpoint that returns the final PHP amount for a given fiat amount (AED
 
 **Supported routes:** AED → PHP, INR → PHP (via USDC on XDC chain)
 
-**Endpoint:** `POST /api/id0002/getExchangeRate`
+**Endpoint:** `POST /api/getExchangeRate`
 
-**Base URL:** `https://xdc.cash`
+**Base URL:** `https://xdc.cash` — include `ref_id=<your_ref_id>` in the request body.
 
 ---
 
@@ -14,6 +14,7 @@ Combined endpoint that returns the final PHP amount for a given fiat amount (AED
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
+| ref_id | string | Yes | Your reference ID |
 | fromCurrency | string | Yes | `AED` or `INR` |
 | toCurrency | string | Yes | `PHP` |
 | fromAmount | string | Yes | Fiat amount to convert |
@@ -26,9 +27,9 @@ Combined endpoint that returns the final PHP amount for a given fiat amount (AED
 
 **cURL**
 ```bash
-curl -X POST "https://xdc.cash/api/id0002/getExchangeRate" \
+curl -X POST "https://xdc.cash/api/getExchangeRate" \
   -H "Content-Type: application/x-www-form-urlencoded" \
-  -d "fromCurrency=AED&toCurrency=PHP&fromAmount=200&chain=XDC&paymentMethodType=AED-BANK-TRANSFER"
+  -d "ref_id=<your_ref_id>&fromCurrency=AED&toCurrency=PHP&fromAmount=200&chain=XDC&paymentMethodType=AED-BANK-TRANSFER"
 ```
 
 **Request Body (form-urlencoded)**
@@ -46,9 +47,9 @@ paymentMethodType=AED-BANK-TRANSFER
 
 **cURL**
 ```bash
-curl -X POST "https://xdc.cash/api/id0002/getExchangeRate" \
+curl -X POST "https://xdc.cash/api/getExchangeRate" \
   -H "Content-Type: application/x-www-form-urlencoded" \
-  -d "fromCurrency=INR&toCurrency=PHP&fromAmount=1000&chain=XDC&paymentMethodType=UPI"
+  -d "ref_id=<your_ref_id>&fromCurrency=INR&toCurrency=PHP&fromAmount=1000&chain=XDC&paymentMethodType=UPI"
 ```
 
 ---

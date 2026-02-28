@@ -6,7 +6,7 @@
         <title>Coins.ph API · Offramp API</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
-        <meta name="generator" content="HonKit 6.1.6">
+        <meta name="generator" content="HonKit 4.0.8">
         <meta name="author" content="XDC Cash">
         
         
@@ -24,7 +24,7 @@
                 
             
                 
-                <link rel="stylesheet" href="gitbook/@honkit/honkit-plugin-fontsettings/website.css">
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-fontsettings/website.css">
                 
             
         
@@ -101,7 +101,20 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2" data-path="onramp-api.html">
+        <li class="chapter " data-level="1.2" data-path="api-reference.html">
+            
+                <a href="api-reference.html">
+            
+                    
+                    API Reference (cURL)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="onramp-api.html">
             
                 <a href="onramp-api.html">
             
@@ -114,7 +127,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3" data-path="offramp-api.html">
+        <li class="chapter " data-level="1.4" data-path="offramp-api.html">
             
                 <a href="offramp-api.html">
             
@@ -127,7 +140,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4" data-path="get-exchange-rate.html">
+        <li class="chapter " data-level="1.5" data-path="get-exchange-rate.html">
             
                 <a href="get-exchange-rate.html">
             
@@ -140,7 +153,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.5" data-path="coins-api.html">
+        <li class="chapter active" data-level="1.6" data-path="coins-api.html">
             
                 <a href="coins-api.html">
             
@@ -153,25 +166,12 @@
             
         </li>
     
-        <li class="chapter " data-level="1.6" data-path="quick-reference.html">
+        <li class="chapter " data-level="1.7" data-path="quick-reference.html">
             
                 <a href="quick-reference.html">
             
                     
                     Quick Reference
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.7" data-path="testing.html">
-            
-                <a href="testing.html">
-            
-                    
-                    Build & Publish
             
                 </a>
             
@@ -225,8 +225,8 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="coinsph-api">Coins.ph API</h1>
-<p>XDC ↔ PHP conversion via Coins.ph. Uses partner ID <code>id0001</code>.</p>
-<p><strong>Base URL:</strong> <code>https://xdc.cash/api/id0001</code></p>
+<p>XDC ↔ PHP conversion. Include <code>ref_id=&lt;your_ref_id&gt;</code> in every request (query or body).</p>
+<p><strong>Base URL:</strong> <code>https://xdc.cash/api</code></p>
 <hr></hr>
 <h2 id="get-quote">Get Quote</h2>
 <p><strong>Endpoint:</strong> <code>POST /get-quote</code></p>
@@ -262,7 +262,7 @@
 </tbody>
 </table>
 <p><strong>cURL</strong></p>
-<pre><code class="lang-bash">curl -X POST <span class="hljs-string">"https://xdc.cash/api/id0001/get-quote?sourceCurrency=XDC&amp;targetCurrency=PHP&amp;sourceAmount=50"</span>
+<pre><code class="lang-bash">curl -X POST <span class="hljs-string">"https://xdc.cash/api/get-quote?ref_id=&lt;your_ref_id&gt;&amp;sourceCurrency=XDC&amp;targetCurrency=PHP&amp;sourceAmount=50"</span>
 </code></pre>
 <p><strong>Response</strong></p>
 <pre><code class="lang-json">{
@@ -296,7 +296,7 @@
 </tbody>
 </table>
 <p><strong>cURL</strong></p>
-<pre><code class="lang-bash">curl -X POST <span class="hljs-string">"https://xdc.cash/api/id0001/accept-quote?quoteId=20907530396610106886"</span>
+<pre><code class="lang-bash">curl -X POST <span class="hljs-string">"https://xdc.cash/api/accept-quote?ref_id=&lt;your_ref_id&gt;&amp;quoteId=20907530396610106886"</span>
 </code></pre>
 <p><strong>Response</strong></p>
 <pre><code class="lang-json">{
@@ -371,9 +371,10 @@
 </tbody>
 </table>
 <p><strong>cURL</strong></p>
-<pre><code class="lang-bash">curl -X POST <span class="hljs-string">"https://xdc.cash/api/id0001/cash-out"</span> \
+<pre><code class="lang-bash">curl -X POST <span class="hljs-string">"https://xdc.cash/api/cash-out"</span> \
   -H <span class="hljs-string">"Content-Type: application/json"</span> \
   -d <span class="hljs-string">'{
+    "ref_id": "&lt;your_ref_id&gt;",
     "internalOrderId": "ord123",
     "currency": "PHP",
     "amount": "50",
@@ -397,7 +398,7 @@
 <h2 id="get-account">Get Account</h2>
 <p><strong>Endpoint:</strong> <code>GET /account</code></p>
 <p><strong>cURL</strong></p>
-<pre><code class="lang-bash">curl -X GET <span class="hljs-string">"https://xdc.cash/api/id0001/account"</span>
+<pre><code class="lang-bash">curl -X GET <span class="hljs-string">"https://xdc.cash/api/account?ref_id=&lt;your_ref_id&gt;"</span>
 </code></pre>
 <p><strong>Response</strong></p>
 <pre><code class="lang-json">{
@@ -449,7 +450,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Coins.ph API","level":"1.5","depth":1,"next":{"title":"Quick Reference","level":"1.6","depth":1,"path":"quick-reference.md","ref":"quick-reference.md","articles":[]},"previous":{"title":"Get Exchange Rate","level":"1.4","depth":1,"path":"get-exchange-rate.md","ref":"get-exchange-rate.md","articles":[]},"dir":"ltr"},"config":{"plugins":["livereload"],"root":".","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"XDC Cash","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Offramp API","language":"en","gitbook":"*","description":"API documentation for Offramp/XDC Cash integration"},"file":{"path":"coins-api.md","mtime":"2026-02-18T06:53:17.900Z","type":"markdown"},"gitbook":{"version":"6.1.6","time":"2026-02-18T06:54:52.708Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Coins.ph API","level":"1.6","depth":1,"next":{"title":"Quick Reference","level":"1.7","depth":1,"path":"quick-reference.md","ref":"quick-reference.md","articles":[]},"previous":{"title":"Get Exchange Rate","level":"1.5","depth":1,"path":"get-exchange-rate.md","ref":"get-exchange-rate.md","articles":[]},"dir":"ltr"},"config":{"plugins":["livereload"],"root":".","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"XDC Cash","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Offramp API","language":"en","gitbook":"*","description":"API documentation for Offramp/XDC Cash integration"},"file":{"path":"coins-api.md","mtime":"2026-02-28T20:21:18.742Z","type":"markdown"},"gitbook":{"version":"4.0.8","time":"2026-02-28T20:30:18.015Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
@@ -523,7 +524,7 @@
         
     
         
-        <script src="gitbook/@honkit/honkit-plugin-fontsettings/fontsettings.js"></script>
+        <script src="gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
         
     
 

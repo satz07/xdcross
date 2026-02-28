@@ -6,7 +6,7 @@
         <title>Welcome · Offramp API</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
-        <meta name="generator" content="HonKit 6.1.6">
+        <meta name="generator" content="HonKit 4.0.8">
         <meta name="author" content="XDC Cash">
         
         
@@ -24,7 +24,7 @@
                 
             
                 
-                <link rel="stylesheet" href="gitbook/@honkit/honkit-plugin-fontsettings/website.css">
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-fontsettings/website.css">
                 
             
         
@@ -56,7 +56,7 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="onramp-api.html" />
+    <link rel="next" href="api-reference.html" />
     
     
 
@@ -99,7 +99,20 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2" data-path="onramp-api.html">
+        <li class="chapter " data-level="1.2" data-path="api-reference.html">
+            
+                <a href="api-reference.html">
+            
+                    
+                    API Reference (cURL)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="onramp-api.html">
             
                 <a href="onramp-api.html">
             
@@ -112,7 +125,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3" data-path="offramp-api.html">
+        <li class="chapter " data-level="1.4" data-path="offramp-api.html">
             
                 <a href="offramp-api.html">
             
@@ -125,7 +138,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4" data-path="get-exchange-rate.html">
+        <li class="chapter " data-level="1.5" data-path="get-exchange-rate.html">
             
                 <a href="get-exchange-rate.html">
             
@@ -138,7 +151,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.5" data-path="coins-api.html">
+        <li class="chapter " data-level="1.6" data-path="coins-api.html">
             
                 <a href="coins-api.html">
             
@@ -151,25 +164,12 @@
             
         </li>
     
-        <li class="chapter " data-level="1.6" data-path="quick-reference.html">
+        <li class="chapter " data-level="1.7" data-path="quick-reference.html">
             
                 <a href="quick-reference.html">
             
                     
                     Quick Reference
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.7" data-path="testing.html">
-            
-                <a href="testing.html">
-            
-                    
-                    Build & Publish
             
                 </a>
             
@@ -241,28 +241,11 @@
 <h2 id="base-url">Base URL</h2>
 <p>All API requests use the production endpoint:</p>
 <pre><code>https://xdc.cash
-</code></pre><p><strong>Path format:</strong> <code>/api/{partnerId}/{endpoint}</code></p>
-<table>
-<thead>
-<tr>
-<th>Partner ID</th>
-<th>Service</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>id0001</code></td>
-<td>Coins.ph (XDC ↔ PHP)</td>
-</tr>
-<tr>
-<td><code>id0002</code></td>
-<td>Onramp.money (AED/INR ↔ USDC ↔ PHP)</td>
-</tr>
-</tbody>
-</table>
+</code></pre><p><strong>Path format:</strong> <code>/api/{endpoint}</code> — e.g. <code>/api/get-quote</code>, <code>/api/onramp/quote</code>.</p>
+<p><strong>Reference ID:</strong> Pass your reference ID in every request as <code>ref_id</code> (in the query string for GET, or in the request body for POST). Use the value provided to you when integrating.</p>
 <hr></hr>
 <h2 id="authentication">Authentication</h2>
-<p>API authentication is handled automatically via partner configuration. Include your partner credentials when setting up the integration. No additional headers required for standard requests.</p>
+<p>API authentication is handled automatically. Include your <code>ref_id</code> (reference ID) and credentials when setting up the integration. No additional headers required for standard requests.</p>
 <p><strong>Content-Type:</strong> <code>application/x-www-form-urlencoded</code> for most endpoints; <code>application/json</code> for Cash Out.</p>
 <hr></hr>
 <h2 id="quick-links">Quick Links</h2>
@@ -299,7 +282,7 @@
             
                 
                 
-                <a href="onramp-api.html" class="navigation navigation-next navigation-unique" aria-label="Next page: Onramp Operations">
+                <a href="api-reference.html" class="navigation navigation-next navigation-unique" aria-label="Next page: API Reference (cURL)">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -310,7 +293,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Welcome","level":"1.1","depth":1,"next":{"title":"Onramp Operations","level":"1.2","depth":1,"path":"onramp-api.md","ref":"onramp-api.md","articles":[]},"dir":"ltr"},"config":{"plugins":["livereload"],"root":".","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"XDC Cash","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Offramp API","language":"en","gitbook":"*","description":"API documentation for Offramp/XDC Cash integration"},"file":{"path":"README.md","mtime":"2026-02-18T06:51:55.463Z","type":"markdown"},"gitbook":{"version":"6.1.6","time":"2026-02-18T06:54:52.708Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Welcome","level":"1.1","depth":1,"next":{"title":"API Reference (cURL)","level":"1.2","depth":1,"path":"api-reference.md","ref":"api-reference.md","articles":[]},"dir":"ltr"},"config":{"plugins":["livereload"],"root":".","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"XDC Cash","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Offramp API","language":"en","gitbook":"*","description":"API documentation for Offramp/XDC Cash integration"},"file":{"path":"README.md","mtime":"2026-02-28T20:29:56.723Z","type":"markdown"},"gitbook":{"version":"4.0.8","time":"2026-02-28T20:30:18.015Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
@@ -384,7 +367,7 @@
         
     
         
-        <script src="gitbook/@honkit/honkit-plugin-fontsettings/fontsettings.js"></script>
+        <script src="gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
         
     
 

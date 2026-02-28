@@ -1,8 +1,8 @@
 # Coins.ph API
 
-XDC ↔ PHP conversion via Coins.ph. Uses partner ID `id0001`.
+XDC ↔ PHP conversion. Include `ref_id=<your_ref_id>` in every request (query or body).
 
-**Base URL:** `https://xdc.cash/api/id0001`
+**Base URL:** `https://xdc.cash/api`
 
 ---
 
@@ -20,7 +20,7 @@ XDC ↔ PHP conversion via Coins.ph. Uses partner ID `id0001`.
 
 **cURL**
 ```bash
-curl -X POST "https://xdc.cash/api/id0001/get-quote?sourceCurrency=XDC&targetCurrency=PHP&sourceAmount=50"
+curl -X POST "https://xdc.cash/api/get-quote?ref_id=<your_ref_id>&sourceCurrency=XDC&targetCurrency=PHP&sourceAmount=50"
 ```
 
 **Response**
@@ -48,7 +48,7 @@ curl -X POST "https://xdc.cash/api/id0001/get-quote?sourceCurrency=XDC&targetCur
 
 **cURL**
 ```bash
-curl -X POST "https://xdc.cash/api/id0001/accept-quote?quoteId=20907530396610106886"
+curl -X POST "https://xdc.cash/api/accept-quote?ref_id=<your_ref_id>&quoteId=20907530396610106886"
 ```
 
 **Response**
@@ -83,9 +83,10 @@ curl -X POST "https://xdc.cash/api/id0001/accept-quote?quoteId=20907530396610106
 
 **cURL**
 ```bash
-curl -X POST "https://xdc.cash/api/id0001/cash-out" \
+curl -X POST "https://xdc.cash/api/cash-out" \
   -H "Content-Type: application/json" \
   -d '{
+    "ref_id": "<your_ref_id>",
     "internalOrderId": "ord123",
     "currency": "PHP",
     "amount": "50",
@@ -116,7 +117,7 @@ curl -X POST "https://xdc.cash/api/id0001/cash-out" \
 
 **cURL**
 ```bash
-curl -X GET "https://xdc.cash/api/id0001/account"
+curl -X GET "https://xdc.cash/api/account?ref_id=<your_ref_id>"
 ```
 
 **Response**

@@ -1,6 +1,6 @@
 # Curl Commands for All Endpoints
 
-> **GitBook format:** See the `docs/` folder for a GitBook-ready version. Run `cd docs && gitbook serve` to preview, or connect the repo to [gitbook.com](https://gitbook.com).
+> **GitBook-style docs:** See the `docs/` folder. Run `npm run docs:serve` and open **http://localhost:4000** (or `npm run docs:serve:4001` if port 4000 is in use). The docs use `ref_id=<your_ref_id>` and do not expose partner names.
 
 ## Base URL
 Replace `BASE_URL` with your server URL:

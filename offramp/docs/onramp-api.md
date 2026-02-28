@@ -1,8 +1,8 @@
 # Onramp Operations
 
-Convert fiat (AED, INR) to USDC on the XDC chain. All endpoints use partner ID `id0002`.
+Convert fiat (AED, INR) to USDC on the XDC chain.
 
-**Base URL:** `https://xdc.cash/api/id0002`
+**Base URL:** `https://xdc.cash/api` — include `ref_id=<your_ref_id>` in every request (query or body).
 
 ---
 
@@ -21,12 +21,13 @@ Fetch conversion rate and quote for fiat → USDC.
 | fromAmount | string | Yes | Amount to convert |
 | chain | string | Yes | `XDC` |
 | paymentMethodType | string | Yes | `AED-BANK-TRANSFER` (UAE) or `UPI`, `IMPS` (India) |
+| ref_id | string | Yes | Your reference ID |
 
 **cURL**
 ```bash
-curl -X POST "https://xdc.cash/api/id0002/onramp/quote" \
+curl -X POST "https://xdc.cash/api/onramp/quote" \
   -H "Content-Type: application/x-www-form-urlencoded" \
-  -d "fromCurrency=AED&toCurrency=USDC&fromAmount=200&chain=XDC&paymentMethodType=AED-BANK-TRANSFER"
+  -d "ref_id=<your_ref_id>&fromCurrency=AED&toCurrency=USDC&fromAmount=200&chain=XDC&paymentMethodType=AED-BANK-TRANSFER"
 ```
 
 **Response**
@@ -79,9 +80,9 @@ Initiate an onramp transaction. Use values from the quote response.
 
 **cURL**
 ```bash
-curl -X POST "https://xdc.cash/api/id0002/onramp/createTransaction" \
+curl -X POST "https://xdc.cash/api/onramp/createTransaction" \
   -H "Content-Type: application/x-www-form-urlencoded" \
-  -d "chain=XDC&toCurrency=USDC&rate=3.7493&fromAmount=200&depositAddress=0x7eCd41036D5C0D25A8d1270e388ea240308d06Df&customerId=O2FYxMiaeX_79613&toAmount=51.1&fromCurrency=AED&paymentMethodType=AED-BANK-TRANSFER&merchantRecognitionId=ref123&fiatAccountId=2efc8ca96e833bbb6c0c06dd7c948b52"
+  -d "ref_id=<your_ref_id>&chain=XDC&toCurrency=USDC&rate=3.7493&fromAmount=200&depositAddress=0xYourWallet&customerId=YourCustomerId&toAmount=51.1&fromCurrency=AED&paymentMethodType=AED-BANK-TRANSFER&merchantRecognitionId=ref123&fiatAccountId=YourFiatAccountId"
 ```
 
 **Response**
@@ -118,9 +119,9 @@ Fetch a single onramp transaction by ID.
 
 **cURL**
 ```bash
-curl -X POST "https://xdc.cash/api/id0002/onramp/transaction" \
+curl -X POST "https://xdc.cash/api/onramp/transaction" \
   -H "Content-Type: application/x-www-form-urlencoded" \
-  -d "transactionId=1560780&customerId=O2FYxMiaeX_79613"
+  -d "ref_id=<your_ref_id>&transactionId=1560780&customerId=YourCustomerId"
 ```
 
 **Response**
@@ -159,9 +160,9 @@ List all onramp transactions for a customer.
 
 **cURL**
 ```bash
-curl -X POST "https://xdc.cash/api/id0002/onramp/allUserTransaction" \
+curl -X POST "https://xdc.cash/api/onramp/allUserTransaction" \
   -H "Content-Type: application/x-www-form-urlencoded" \
-  -d "customerId=O2FYxMiaeX_79613&page=1&pageSize=20"
+  -d "ref_id=<your_ref_id>&customerId=YourCustomerId&page=1&pageSize=20"
 ```
 
 **Response**
@@ -196,9 +197,9 @@ Update the merchant reference ID for an onramp transaction.
 
 **cURL**
 ```bash
-curl -X PUT "https://xdc.cash/api/id0002/onramp/referenceId" \
+curl -X PUT "https://xdc.cash/api/onramp/referenceId" \
   -H "Content-Type: application/x-www-form-urlencoded" \
-  -d "customerId=qA7M4kehLG_83597&transactionId=1562612&referenceId=TRN12345"
+  -d "ref_id=<your_ref_id>&customerId=YourCustomerId&transactionId=1562612&referenceId=TRN12345"
 ```
 
 **Response**
@@ -232,9 +233,9 @@ Fetch bank payment details for an onramp transaction (e.g. for bank transfer flo
 
 **cURL**
 ```bash
-curl -X POST "https://xdc.cash/api/id0002/bank/bankDetails" \
+curl -X POST "https://xdc.cash/api/bank/bankDetails" \
   -H "Content-Type: application/x-www-form-urlencoded" \
-  -d "customerId=O2FYxMiaeX_79613&fromCurrency=AED&transactionId=1545994&paymentMethodType=AED-BANK-TRANSFER"
+  -d "ref_id=<your_ref_id>&customerId=YourCustomerId&fromCurrency=AED&transactionId=1545994&paymentMethodType=AED-BANK-TRANSFER"
 ```
 
 **Response**

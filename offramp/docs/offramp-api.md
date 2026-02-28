@@ -1,8 +1,8 @@
 # Offramp Operations
 
-Convert USDC (XDC) to fiat (PHP). All endpoints use partner ID `id0002`.
+Convert USDC (XDC) to fiat (PHP).
 
-**Base URL:** `https://xdc.cash/api/id0002`
+**Base URL:** `https://xdc.cash/api` — include `ref_id=<your_ref_id>` in every request (query or body).
 
 ---
 
@@ -23,9 +23,9 @@ Fetch conversion rate and quote for USDC → PHP.
 
 **cURL**
 ```bash
-curl -X POST "https://xdc.cash/api/id0002/offramp/quote" \
+curl -X POST "https://xdc.cash/api/offramp/quote" \
   -H "Content-Type: application/x-www-form-urlencoded" \
-  -d "fromCurrency=USDC&toCurrency=PHP&fromAmount=5&chain=XDC"
+  -d "ref_id=<your_ref_id>&fromCurrency=USDC&toCurrency=PHP&fromAmount=5&chain=XDC"
 ```
 
 **Response**
@@ -76,9 +76,9 @@ Initiate an offramp (sell) transaction. Use values from the quote response.
 
 **cURL**
 ```bash
-curl -X POST "https://xdc.cash/api/id0002/offramp/createTransaction" \
+curl -X POST "https://xdc.cash/api/offramp/createTransaction" \
   -H "Content-Type: application/x-www-form-urlencoded" \
-  -d "chain=XDC&customerId=O2FYxMiaeX_79613&fiatAccountId=123456789&fromAmount=5&fromCurrency=USDC&rate=58.3023&toAmount=269.78&toCurrency=PHP&merchantRecognitionId=ref123"
+  -d "ref_id=<your_ref_id>&chain=XDC&customerId=YourCustomerId&fiatAccountId=123456789&fromAmount=5&fromCurrency=USDC&rate=58.3023&toAmount=269.78&toCurrency=PHP&merchantRecognitionId=ref123"
 ```
 
 **Response**
@@ -115,9 +115,9 @@ Fetch a single offramp transaction by ID.
 
 **cURL**
 ```bash
-curl -X POST "https://xdc.cash/api/id0002/offramp/transaction" \
+curl -X POST "https://xdc.cash/api/offramp/transaction" \
   -H "Content-Type: application/x-www-form-urlencoded" \
-  -d "customerId=3u1YBqhoi3_82586&transactionId=443468"
+  -d "ref_id=<your_ref_id>&customerId=YourCustomerId&transactionId=443468"
 ```
 
 **Response**
@@ -156,9 +156,9 @@ List all offramp transactions for a customer.
 
 **cURL**
 ```bash
-curl -X POST "https://xdc.cash/api/id0002/offramp/allUserTransaction" \
+curl -X POST "https://xdc.cash/api/offramp/allUserTransaction" \
   -H "Content-Type: application/x-www-form-urlencoded" \
-  -d "customerId=O2FYxMiaeX_79613&page=1&pageSize=20"
+  -d "ref_id=<your_ref_id>&customerId=YourCustomerId&page=1&pageSize=20"
 ```
 
 **Response**

@@ -6,7 +6,7 @@
         <title>Offramp Operations · Offramp API</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
-        <meta name="generator" content="HonKit 6.1.6">
+        <meta name="generator" content="HonKit 4.0.8">
         <meta name="author" content="XDC Cash">
         
         
@@ -24,7 +24,7 @@
                 
             
                 
-                <link rel="stylesheet" href="gitbook/@honkit/honkit-plugin-fontsettings/website.css">
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-fontsettings/website.css">
                 
             
         
@@ -101,7 +101,20 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2" data-path="onramp-api.html">
+        <li class="chapter " data-level="1.2" data-path="api-reference.html">
+            
+                <a href="api-reference.html">
+            
+                    
+                    API Reference (cURL)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="onramp-api.html">
             
                 <a href="onramp-api.html">
             
@@ -114,7 +127,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.3" data-path="offramp-api.html">
+        <li class="chapter active" data-level="1.4" data-path="offramp-api.html">
             
                 <a href="offramp-api.html">
             
@@ -127,7 +140,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4" data-path="get-exchange-rate.html">
+        <li class="chapter " data-level="1.5" data-path="get-exchange-rate.html">
             
                 <a href="get-exchange-rate.html">
             
@@ -140,7 +153,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.5" data-path="coins-api.html">
+        <li class="chapter " data-level="1.6" data-path="coins-api.html">
             
                 <a href="coins-api.html">
             
@@ -153,25 +166,12 @@
             
         </li>
     
-        <li class="chapter " data-level="1.6" data-path="quick-reference.html">
+        <li class="chapter " data-level="1.7" data-path="quick-reference.html">
             
                 <a href="quick-reference.html">
             
                     
                     Quick Reference
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.7" data-path="testing.html">
-            
-                <a href="testing.html">
-            
-                    
-                    Build & Publish
             
                 </a>
             
@@ -225,8 +225,8 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="offramp-operations">Offramp Operations</h1>
-<p>Convert USDC (XDC) to fiat (PHP). All endpoints use partner ID <code>id0002</code>.</p>
-<p><strong>Base URL:</strong> <code>https://xdc.cash/api/id0002</code></p>
+<p>Convert USDC (XDC) to fiat (PHP).</p>
+<p><strong>Base URL:</strong> <code>https://xdc.cash/api</code> — include <code>ref_id=&lt;your_ref_id&gt;</code> in every request (query or body).</p>
 <hr></hr>
 <h2 id="get-quote">Get Quote</h2>
 <p>Fetch conversion rate and quote for USDC → PHP.</p>
@@ -269,9 +269,9 @@
 </tbody>
 </table>
 <p><strong>cURL</strong></p>
-<pre><code class="lang-bash">curl -X POST <span class="hljs-string">"https://xdc.cash/api/id0002/offramp/quote"</span> \
+<pre><code class="lang-bash">curl -X POST <span class="hljs-string">"https://xdc.cash/api/offramp/quote"</span> \
   -H <span class="hljs-string">"Content-Type: application/x-www-form-urlencoded"</span> \
-  -d <span class="hljs-string">"fromCurrency=USDC&amp;toCurrency=PHP&amp;fromAmount=5&amp;chain=XDC"</span>
+  -d <span class="hljs-string">"ref_id=&lt;your_ref_id&gt;&amp;fromCurrency=USDC&amp;toCurrency=PHP&amp;fromAmount=5&amp;chain=XDC"</span>
 </code></pre>
 <p><strong>Response</strong></p>
 <pre><code class="lang-json">{
@@ -367,9 +367,9 @@
 </tbody>
 </table>
 <p><strong>cURL</strong></p>
-<pre><code class="lang-bash">curl -X POST <span class="hljs-string">"https://xdc.cash/api/id0002/offramp/createTransaction"</span> \
+<pre><code class="lang-bash">curl -X POST <span class="hljs-string">"https://xdc.cash/api/offramp/createTransaction"</span> \
   -H <span class="hljs-string">"Content-Type: application/x-www-form-urlencoded"</span> \
-  -d <span class="hljs-string">"chain=XDC&amp;customerId=O2FYxMiaeX_79613&amp;fiatAccountId=123456789&amp;fromAmount=5&amp;fromCurrency=USDC&amp;rate=58.3023&amp;toAmount=269.78&amp;toCurrency=PHP&amp;merchantRecognitionId=ref123"</span>
+  -d <span class="hljs-string">"ref_id=&lt;your_ref_id&gt;&amp;chain=XDC&amp;customerId=YourCustomerId&amp;fiatAccountId=123456789&amp;fromAmount=5&amp;fromCurrency=USDC&amp;rate=58.3023&amp;toAmount=269.78&amp;toCurrency=PHP&amp;merchantRecognitionId=ref123"</span>
 </code></pre>
 <p><strong>Response</strong></p>
 <pre><code class="lang-json">{
@@ -416,9 +416,9 @@
 </tbody>
 </table>
 <p><strong>cURL</strong></p>
-<pre><code class="lang-bash">curl -X POST <span class="hljs-string">"https://xdc.cash/api/id0002/offramp/transaction"</span> \
+<pre><code class="lang-bash">curl -X POST <span class="hljs-string">"https://xdc.cash/api/offramp/transaction"</span> \
   -H <span class="hljs-string">"Content-Type: application/x-www-form-urlencoded"</span> \
-  -d <span class="hljs-string">"customerId=3u1YBqhoi3_82586&amp;transactionId=443468"</span>
+  -d <span class="hljs-string">"ref_id=&lt;your_ref_id&gt;&amp;customerId=YourCustomerId&amp;transactionId=443468"</span>
 </code></pre>
 <p><strong>Response</strong></p>
 <pre><code class="lang-json">{
@@ -472,9 +472,9 @@
 </tbody>
 </table>
 <p><strong>cURL</strong></p>
-<pre><code class="lang-bash">curl -X POST <span class="hljs-string">"https://xdc.cash/api/id0002/offramp/allUserTransaction"</span> \
+<pre><code class="lang-bash">curl -X POST <span class="hljs-string">"https://xdc.cash/api/offramp/allUserTransaction"</span> \
   -H <span class="hljs-string">"Content-Type: application/x-www-form-urlencoded"</span> \
-  -d <span class="hljs-string">"customerId=O2FYxMiaeX_79613&amp;page=1&amp;pageSize=20"</span>
+  -d <span class="hljs-string">"ref_id=&lt;your_ref_id&gt;&amp;customerId=YourCustomerId&amp;page=1&amp;pageSize=20"</span>
 </code></pre>
 <p><strong>Response</strong></p>
 <pre><code class="lang-json">{
@@ -531,7 +531,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Offramp Operations","level":"1.3","depth":1,"next":{"title":"Get Exchange Rate","level":"1.4","depth":1,"path":"get-exchange-rate.md","ref":"get-exchange-rate.md","articles":[]},"previous":{"title":"Onramp Operations","level":"1.2","depth":1,"path":"onramp-api.md","ref":"onramp-api.md","articles":[]},"dir":"ltr"},"config":{"plugins":["livereload"],"root":".","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"XDC Cash","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Offramp API","language":"en","gitbook":"*","description":"API documentation for Offramp/XDC Cash integration"},"file":{"path":"offramp-api.md","mtime":"2026-02-18T06:52:49.842Z","type":"markdown"},"gitbook":{"version":"6.1.6","time":"2026-02-18T06:54:52.708Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Offramp Operations","level":"1.4","depth":1,"next":{"title":"Get Exchange Rate","level":"1.5","depth":1,"path":"get-exchange-rate.md","ref":"get-exchange-rate.md","articles":[]},"previous":{"title":"Onramp Operations","level":"1.3","depth":1,"path":"onramp-api.md","ref":"onramp-api.md","articles":[]},"dir":"ltr"},"config":{"plugins":["livereload"],"root":".","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"XDC Cash","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Offramp API","language":"en","gitbook":"*","description":"API documentation for Offramp/XDC Cash integration"},"file":{"path":"offramp-api.md","mtime":"2026-02-28T20:21:05.864Z","type":"markdown"},"gitbook":{"version":"4.0.8","time":"2026-02-28T20:30:18.015Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
@@ -605,7 +605,7 @@
         
     
         
-        <script src="gitbook/@honkit/honkit-plugin-fontsettings/fontsettings.js"></script>
+        <script src="gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
         
     
 

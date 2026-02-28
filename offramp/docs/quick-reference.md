@@ -1,27 +1,36 @@
 # Quick Reference
 
-Production curl commands. Base URL: `https://xdc.cash`
+Production base URL: `https://xdc.cash`. Replace `<your_ref_id>` with your reference ID in every request.
 
-## Onramp (id0002)
-
-| Endpoint | cURL |
-|----------|------|
-| Get Quote | `curl -X POST "https://xdc.cash/api/id0002/onramp/quote" -H "Content-Type: application/x-www-form-urlencoded" -d "fromCurrency=AED&toCurrency=USDC&fromAmount=200&chain=XDC&paymentMethodType=AED-BANK-TRANSFER"` |
-| Create Transaction | `curl -X POST "https://xdc.cash/api/id0002/onramp/createTransaction" -H "Content-Type: application/x-www-form-urlencoded" -d "chain=XDC&toCurrency=USDC&rate=3.7493&fromAmount=200&depositAddress=0x...&customerId=xxx&toAmount=51.1&fromCurrency=AED&paymentMethodType=AED-BANK-TRANSFER&fiatAccountId=xxx"` |
-| Get Transaction | `curl -X POST "https://xdc.cash/api/id0002/onramp/transaction" -H "Content-Type: application/x-www-form-urlencoded" -d "transactionId=1560780&customerId=xxx"` |
-| Update Reference ID | `curl -X PUT "https://xdc.cash/api/id0002/onramp/referenceId" -H "Content-Type: application/x-www-form-urlencoded" -d "customerId=xxx&transactionId=1562612&referenceId=TRN12345"` |
-
-## Offramp (id0002)
+## Convert / Coins
 
 | Endpoint | cURL |
 |----------|------|
-| Get Quote | `curl -X POST "https://xdc.cash/api/id0002/offramp/quote" -H "Content-Type: application/x-www-form-urlencoded" -d "fromCurrency=USDC&toCurrency=PHP&fromAmount=5&chain=XDC"` |
-| Create Transaction | `curl -X POST "https://xdc.cash/api/id0002/offramp/createTransaction" -H "Content-Type: application/x-www-form-urlencoded" -d "chain=XDC&customerId=xxx&fiatAccountId=123456789&fromAmount=5&fromCurrency=USDC&rate=58.3023&toAmount=269.78&toCurrency=PHP"` |
-| Get Transaction | `curl -X POST "https://xdc.cash/api/id0002/offramp/transaction" -H "Content-Type: application/x-www-form-urlencoded" -d "customerId=xxx&transactionId=443468"` |
+| Get Quote | `curl -X POST "https://xdc.cash/api/get-quote?ref_id=<your_ref_id>&sourceCurrency=XDC&targetCurrency=PHP&sourceAmount=50"` |
+| Accept Quote | `curl -X POST "https://xdc.cash/api/accept-quote?ref_id=<your_ref_id>&quoteId=QUOTE_ID"` |
+| Cash Out | `curl -X POST "https://xdc.cash/api/cash-out" -H "Content-Type: application/json" -d '{"ref_id":"<your_ref_id>","currency":"PHP","amount":"5",...}'` |
+| Account | `curl -X GET "https://xdc.cash/api/account?ref_id=<your_ref_id>"` |
+
+## Onramp
+
+| Endpoint | cURL |
+|----------|------|
+| Get Quote | `curl -X POST "https://xdc.cash/api/onramp/quote" -H "Content-Type: application/x-www-form-urlencoded" -d "ref_id=<your_ref_id>&fromCurrency=AED&toCurrency=USDC&fromAmount=200&chain=XDC&paymentMethodType=AED-BANK-TRANSFER"` |
+| Create Transaction | `curl -X POST "https://xdc.cash/api/onramp/createTransaction" -H "Content-Type: application/x-www-form-urlencoded" -d "ref_id=<your_ref_id>&chain=XDC&toCurrency=USDC&rate=3.7493&fromAmount=200&..."` |
+| Get Transaction | `curl -X POST "https://xdc.cash/api/onramp/transaction" -H "Content-Type: application/x-www-form-urlencoded" -d "ref_id=<your_ref_id>&transactionId=ID&customerId=CID"` |
+| Update Reference ID | `curl -X PUT "https://xdc.cash/api/onramp/referenceId" -H "Content-Type: application/x-www-form-urlencoded" -d "ref_id=<your_ref_id>&customerId=CID&transactionId=ID&referenceId=REF"` |
+
+## Offramp
+
+| Endpoint | cURL |
+|----------|------|
+| Get Quote | `curl -X POST "https://xdc.cash/api/offramp/quote" -H "Content-Type: application/x-www-form-urlencoded" -d "ref_id=<your_ref_id>&fromCurrency=USDC&toCurrency=PHP&fromAmount=5&chain=XDC"` |
+| Create Transaction | `curl -X POST "https://xdc.cash/api/offramp/createTransaction" -H "Content-Type: application/x-www-form-urlencoded" -d "ref_id=<your_ref_id>&chain=XDC&customerId=CID&fiatAccountId=FID&fromAmount=5&fromCurrency=USDC&rate=RATE&toAmount=AMT&toCurrency=PHP"` |
+| Get Transaction | `curl -X POST "https://xdc.cash/api/offramp/transaction" -H "Content-Type: application/x-www-form-urlencoded" -d "ref_id=<your_ref_id>&customerId=CID&transactionId=ID"` |
 
 ## Exchange Rate
 
 | Endpoint | cURL |
 |----------|------|
-| AED→PHP | `curl -X POST "https://xdc.cash/api/id0002/getExchangeRate" -H "Content-Type: application/x-www-form-urlencoded" -d "fromCurrency=AED&toCurrency=PHP&fromAmount=200&chain=XDC&paymentMethodType=AED-BANK-TRANSFER"` |
-| INR→PHP | `curl -X POST "https://xdc.cash/api/id0002/getExchangeRate" -H "Content-Type: application/x-www-form-urlencoded" -d "fromCurrency=INR&toCurrency=PHP&fromAmount=1000&chain=XDC&paymentMethodType=UPI"` |
+| AED→PHP | `curl -X POST "https://xdc.cash/api/getExchangeRate" -H "Content-Type: application/x-www-form-urlencoded" -d "ref_id=<your_ref_id>&fromCurrency=AED&toCurrency=PHP&fromAmount=200&chain=XDC&paymentMethodType=AED-BANK-TRANSFER"` |
+| INR→PHP | `curl -X POST "https://xdc.cash/api/getExchangeRate" -H "Content-Type: application/x-www-form-urlencoded" -d "ref_id=<your_ref_id>&fromCurrency=INR&toCurrency=PHP&fromAmount=1000&chain=XDC&paymentMethodType=UPI"` |
