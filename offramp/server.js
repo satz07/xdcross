@@ -6,7 +6,6 @@ require('dotenv').config();
 
 const coinsRoutes = require('./routes/coins');
 const onrampRoutes = require('./routes/onramp');
-const { getPartner } = require('./config/partners');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -59,37 +58,17 @@ app.get('/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
-// Partner API routes - dynamic partner ID from URL path
-// URL format: /api/{partnerId}/get-quote, /api/{partnerId}/accept-quote, etc.
-// Routes to appropriate partner router based on partnerId
-app.use('/api/:partnerId', (req, res, next) => {
-  const partnerId = req.params.partnerId;
-  
-  console.log('=== ROUTE DISPATCHER ===');
-  console.log('Partner ID from params:', partnerId);
-  console.log('Request path:', req.path);
-  console.log('Request originalUrl:', req.originalUrl);
-  console.log('Request method:', req.method);
-  
-  const partner = getPartner(partnerId);
-  
-  if (!partner) {
-    console.log(`Partner '${partnerId}' not found, passing to 404 handler`);
-    return next(); // Let 404 handler catch it
+// Partner API routes - partner ID via ref_id (query or body), not in URL path
+// URL format: /api/get-quote?ref_id=id0001&..., /api/onramp/quote with ref_id in body, etc.
+app.use('/api', (req, res, next) => {
+  req.partnerId = req.query.ref_id || (req.body && req.body.ref_id);
+  if (req.partnerId) {
+    console.log('ref_id (partner) from request:', req.partnerId);
   }
-  
-  console.log(`Partner '${partnerId}' found: ${partner.name}`);
-  
-  // Route to appropriate partner router based on partnerId
-  if (partnerId === 'id0002') {
-    console.log('Routing to onrampRoutes');
-    return onrampRoutes(req, res, next);
-  } else {
-    console.log('Routing to coinsRoutes');
-    // Default to coins router (for id0001 and other coins-based partners)
-    return coinsRoutes(req, res, next);
-  }
+  next();
 });
+app.use('/api', coinsRoutes);
+app.use('/api', onrampRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
@@ -115,8 +94,8 @@ app.use((req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
   console.log(`Health check: http://localhost:${PORT}/health`);
-  console.log(`API Routes: http://localhost:${PORT}/api/{partnerId}/...`);
-  console.log(`Example: http://localhost:${PORT}/api/id0001/get-quote`);
+  console.log(`API Routes: http://localhost:${PORT}/api/... (use ref_id in query or body)`);
+  console.log(`Example: http://localhost:${PORT}/api/get-quote?ref_id=id0001&sourceCurrency=XDC&targetCurrency=PHP&sourceAmount=50`);
 });
 
 module.exports = app;

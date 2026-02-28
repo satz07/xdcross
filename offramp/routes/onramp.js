@@ -9,44 +9,40 @@ const axios = require('axios');
 const { getPartner } = require('../config/partners');
 const { generateOnrampHeaders, extractBody } = require('../utils/signature-onramp');
 
+/** Body for external Onramp API (strip ref_id which is only for our routing). */
+function bodyForExternalApi(body) {
+  const b = { ...(body || {}) };
+  delete b.ref_id;
+  return b;
+}
+
 /**
  * Get partner configuration from request
- * Extracts partner ID dynamically from URL path: /api/{partnerId}/...
+ * Partner ID is taken from ref_id (query or body parameter).
+ * Returns { partner, partnerId } for use in internal API calls.
  */
 function getPartnerFromRequest(req) {
-  let partnerId = req.params.partnerId;
-  
+  const partnerId = req.partnerId || req.query.ref_id || (req.body && req.body.ref_id);
+
   if (!partnerId) {
-    const urlPath = req.path || req.originalUrl || '';
-    const pathParts = urlPath.split('/').filter(part => part);
-    
-    const apiIndex = pathParts.indexOf('api');
-    if (apiIndex >= 0 && pathParts[apiIndex + 1]) {
-      partnerId = pathParts[apiIndex + 1];
-    } else if (pathParts.length > 0) {
-      partnerId = pathParts[0];
-    }
+    throw new Error('ref_id is required. Pass ref_id in query or body (e.g. ref_id=id0002).');
   }
-  
-  if (!partnerId) {
-    throw new Error('Partner ID not found in URL path. Expected format: /api/{partnerId}/endpoint');
-  }
-  
+
   const partner = getPartner(partnerId);
-  
+
   if (!partner) {
     throw new Error(`Partner '${partnerId}' not found or not configured`);
   }
-  
-  console.log('Partner ID extracted from URL:', partnerId);
+
+  console.log('Partner ID from ref_id:', partnerId);
   console.log('Partner config:', { name: partner.name, baseUrl: partner.baseUrl });
-  
-  return partner;
+
+  return { partner, partnerId };
 }
 
 /**
  * Get Quote - Onramp API
- * POST /api/id0002/onramp/quote
+ * POST /api/onramp/quote (ref_id in query or body)
  * 
  * Endpoint: https://api.onramp.money/onramp/api/v2/whiteLabel/onramp/quote
  * Content-Type: application/x-www-form-urlencoded
@@ -63,7 +59,7 @@ router.post('/onramp/quote', async (req, res) => {
   
   try {
     // Get partner configuration
-    const partner = getPartnerFromRequest(req);
+    const { partner, partnerId } = getPartnerFromRequest(req);
     const apiKey = partner.apiKey;
     const secret = partner.secret;
     const baseUrl = partner.baseUrl;
@@ -80,8 +76,8 @@ router.post('/onramp/quote', async (req, res) => {
     console.log('Secret length:', secret ? secret.length : 0);
     console.log('===============================');
     
-    // Extract body from request
-    const body = extractBody(req);
+    // Extract body from request (ref_id stripped before forwarding to external API)
+    const body = bodyForExternalApi(extractBody(req));
 
     // Map unsupported payment methods for INR: Onramp API rejects INR-BANK-TRANSFER
     if (body.fromCurrency === 'INR' && body.paymentMethodType === 'INR-BANK-TRANSFER') {
@@ -171,7 +167,7 @@ router.post('/onramp/quote', async (req, res) => {
 
 /**
  * Create Transaction - Onramp API
- * POST /api/id0002/onramp/createTransaction
+ * POST /api/onramp/createTransaction (ref_id in query or body)
  * 
  * Endpoint: https://api.onramp.money/onramp/api/v2/whiteLabel/onramp/createTransaction
  * Content-Type: application/x-www-form-urlencoded
@@ -189,7 +185,7 @@ router.post('/onramp/createTransaction', async (req, res) => {
   
   try {
     // Get partner configuration
-    const partner = getPartnerFromRequest(req);
+    const { partner, partnerId } = getPartnerFromRequest(req);
     const apiKey = partner.apiKey;
     const secret = partner.secret;
     const baseUrl = partner.baseUrl;
@@ -207,7 +203,7 @@ router.post('/onramp/createTransaction', async (req, res) => {
     console.log('===============================');
     
     // Extract body from request
-    const body = extractBody(req);
+    const body = bodyForExternalApi(extractBody(req));
     
     // Validate required parameters for createTransaction
     const requiredParams = ['chain', 'fromCurrency', 'toCurrency', 'fromAmount', 'toAmount', 'rate', 'paymentMethodType', 'depositAddress', 'customerId'];
@@ -240,7 +236,7 @@ router.post('/onramp/createTransaction', async (req, res) => {
           chain: body.chain,
           paymentMethodType: body.paymentMethodType
         };
-        const quoteResponse = await callOnrampQuote(req.params.partnerId, quoteBody);
+        const quoteResponse = await callOnrampQuote(partnerId, quoteBody);
         if (quoteResponse?.status === 1 && quoteResponse?.data?.toAmount) {
           body.toAmount = quoteResponse.data.toAmount;
           toAmountNum = parseFloat(body.toAmount);
@@ -337,7 +333,7 @@ router.post('/onramp/createTransaction', async (req, res) => {
 
 /**
  * Get All User Transactions - Onramp API
- * POST /api/id0002/onramp/allUserTransaction
+ * POST /api/onramp/allUserTransaction (ref_id in query or body)
  * 
  * Endpoint: https://api.onramp.money/onramp/api/v2/whiteLabel/onramp/allUserTransaction
  * Content-Type: application/x-www-form-urlencoded
@@ -354,7 +350,7 @@ router.post('/onramp/allUserTransaction', async (req, res) => {
   
   try {
     // Get partner configuration
-    const partner = getPartnerFromRequest(req);
+    const { partner, partnerId } = getPartnerFromRequest(req);
     const apiKey = partner.apiKey;
     const secret = partner.secret;
     const baseUrl = partner.baseUrl;
@@ -372,7 +368,7 @@ router.post('/onramp/allUserTransaction', async (req, res) => {
     console.log('===============================');
     
     // Extract body from request
-    const body = extractBody(req);
+    const body = bodyForExternalApi(extractBody(req));
     
     // Generate signature and headers
     const headers = generateOnrampHeaders({ apiKey, secret, body });
@@ -452,7 +448,7 @@ router.post('/onramp/allUserTransaction', async (req, res) => {
 
 /**
  * Get Onramp Transaction - Onramp API
- * POST /api/id0002/onramp/transaction
+ * POST /api/onramp/transaction (ref_id in query or body)
  * 
  * Endpoint: https://api.onramp.money/onramp/api/v2/whiteLabel/onramp/transaction
  * Content-Type: application/x-www-form-urlencoded
@@ -460,7 +456,7 @@ router.post('/onramp/allUserTransaction', async (req, res) => {
  */
 router.post('/onramp/transaction', async (req, res) => {
   try {
-    const partner = getPartnerFromRequest(req);
+    const { partner, partnerId } = getPartnerFromRequest(req);
     const apiKey = partner.apiKey;
     const secret = partner.secret;
     const baseUrl = partner.baseUrl;
@@ -469,7 +465,7 @@ router.post('/onramp/transaction', async (req, res) => {
       throw new Error(`Missing credentials for partner '${partner.name}'. API Key: ${!!apiKey}, Secret: ${!!secret}`);
     }
 
-    const body = extractBody(req);
+    const body = bodyForExternalApi(extractBody(req));
     const headers = generateOnrampHeaders({ apiKey, secret, body });
     headers['Content-Type'] = 'application/x-www-form-urlencoded';
 
@@ -493,7 +489,7 @@ router.post('/onramp/transaction', async (req, res) => {
 
 /**
  * Update Onramp Reference ID - Onramp API
- * PUT /api/id0002/onramp/referenceId
+ * PUT /api/onramp/referenceId (ref_id in query or body)
  * 
  * Endpoint: https://api.onramp.money/onramp/api/v2/whiteLabel/onramp/referenceId
  * Content-Type: application/x-www-form-urlencoded
@@ -501,7 +497,7 @@ router.post('/onramp/transaction', async (req, res) => {
  */
 router.put('/onramp/referenceId', async (req, res) => {
   try {
-    const partner = getPartnerFromRequest(req);
+    const { partner, partnerId } = getPartnerFromRequest(req);
     const apiKey = partner.apiKey;
     const secret = partner.secret;
     const baseUrl = partner.baseUrl;
@@ -510,7 +506,7 @@ router.put('/onramp/referenceId', async (req, res) => {
       throw new Error(`Missing credentials for partner '${partner.name}'. API Key: ${!!apiKey}, Secret: ${!!secret}`);
     }
 
-    const body = extractBody(req);
+    const body = bodyForExternalApi(extractBody(req));
     const headers = generateOnrampHeaders({ apiKey, secret, body });
     headers['Content-Type'] = 'application/x-www-form-urlencoded';
 
@@ -534,7 +530,7 @@ router.put('/onramp/referenceId', async (req, res) => {
 
 /**
  * Get Bank Details - Onramp API
- * POST /api/id0002/bank/bankDetails
+ * POST /api/bank/bankDetails (ref_id in query or body)
  * 
  * Endpoint: https://api.onramp.money/onramp/api/v2/whiteLabel/bank/bankDetails
  * Content-Type: application/x-www-form-urlencoded
@@ -551,7 +547,7 @@ router.post('/bank/bankDetails', async (req, res) => {
   
   try {
     // Get partner configuration
-    const partner = getPartnerFromRequest(req);
+    const { partner, partnerId } = getPartnerFromRequest(req);
     const apiKey = partner.apiKey;
     const secret = partner.secret;
     const baseUrl = partner.baseUrl;
@@ -569,7 +565,7 @@ router.post('/bank/bankDetails', async (req, res) => {
     console.log('===============================');
     
     // Extract body from request
-    const body = extractBody(req);
+    const body = bodyForExternalApi(extractBody(req));
     
     // Generate signature and headers
     const headers = generateOnrampHeaders({ apiKey, secret, body });
@@ -649,7 +645,7 @@ router.post('/bank/bankDetails', async (req, res) => {
 
 /**
  * Get Offramp Quote - Onramp API
- * POST /api/id0002/offramp/quote
+ * POST /api/offramp/quote (ref_id in query or body)
  * 
  * Endpoint: https://api.onramp.money/onramp/api/v2/whiteLabel/offramp/quote
  * Content-Type: application/x-www-form-urlencoded
@@ -666,7 +662,7 @@ router.post('/offramp/quote', async (req, res) => {
   
   try {
     // Get partner configuration
-    const partner = getPartnerFromRequest(req);
+    const { partner, partnerId } = getPartnerFromRequest(req);
     const apiKey = partner.apiKey;
     const secret = partner.secret;
     const baseUrl = partner.baseUrl;
@@ -684,7 +680,7 @@ router.post('/offramp/quote', async (req, res) => {
     console.log('===============================');
     
     // Extract body from request
-    const body = extractBody(req);
+    const body = bodyForExternalApi(extractBody(req));
     
     // Generate signature and headers
     const headers = generateOnrampHeaders({ apiKey, secret, body });
@@ -764,7 +760,7 @@ router.post('/offramp/quote', async (req, res) => {
 
 /**
  * Create Offramp Transaction - Onramp API
- * POST /api/id0002/offramp/createTransaction
+ * POST /api/offramp/createTransaction (ref_id in query or body)
  * 
  * Endpoint: https://api.onramp.money/onramp/api/v2/whiteLabel/offramp/createTransaction
  * Content-Type: application/x-www-form-urlencoded
@@ -781,7 +777,7 @@ router.post('/offramp/createTransaction', async (req, res) => {
   
   try {
     // Get partner configuration
-    const partner = getPartnerFromRequest(req);
+    const { partner, partnerId } = getPartnerFromRequest(req);
     const apiKey = partner.apiKey;
     const secret = partner.secret;
     const baseUrl = partner.baseUrl;
@@ -799,7 +795,7 @@ router.post('/offramp/createTransaction', async (req, res) => {
     console.log('===============================');
     
     // Extract body from request
-    const body = extractBody(req);
+    const body = bodyForExternalApi(extractBody(req));
     
     // Generate signature and headers
     const headers = generateOnrampHeaders({ apiKey, secret, body });
@@ -879,7 +875,7 @@ router.post('/offramp/createTransaction', async (req, res) => {
 
 /**
  * Get All User Offramp Transactions - Onramp API
- * POST /api/id0002/offramp/allUserTransaction
+ * POST /api/offramp/allUserTransaction (ref_id in query or body)
  * 
  * Endpoint: https://api.onramp.money/onramp/api/v2/whiteLabel/offramp/allUserTransaction
  * Content-Type: application/x-www-form-urlencoded
@@ -896,7 +892,7 @@ router.post('/offramp/allUserTransaction', async (req, res) => {
   
   try {
     // Get partner configuration
-    const partner = getPartnerFromRequest(req);
+    const { partner, partnerId } = getPartnerFromRequest(req);
     const apiKey = partner.apiKey;
     const secret = partner.secret;
     const baseUrl = partner.baseUrl;
@@ -914,7 +910,7 @@ router.post('/offramp/allUserTransaction', async (req, res) => {
     console.log('===============================');
     
     // Extract body from request
-    const body = extractBody(req);
+    const body = bodyForExternalApi(extractBody(req));
     
     // Generate signature and headers
     const headers = generateOnrampHeaders({ apiKey, secret, body });
@@ -994,7 +990,7 @@ router.post('/offramp/allUserTransaction', async (req, res) => {
 
 /**
  * Get Offramp Transaction - Onramp API
- * POST /api/id0002/offramp/transaction
+ * POST /api/offramp/transaction (ref_id in query or body)
  * 
  * Endpoint: https://api.onramp.money/onramp/api/v2/whiteLabel/offramp/transaction
  * Content-Type: application/x-www-form-urlencoded
@@ -1002,7 +998,7 @@ router.post('/offramp/allUserTransaction', async (req, res) => {
  */
 router.post('/offramp/transaction', async (req, res) => {
   try {
-    const partner = getPartnerFromRequest(req);
+    const { partner, partnerId } = getPartnerFromRequest(req);
     const apiKey = partner.apiKey;
     const secret = partner.secret;
     const baseUrl = partner.baseUrl;
@@ -1011,7 +1007,7 @@ router.post('/offramp/transaction', async (req, res) => {
       throw new Error(`Missing credentials for partner '${partner.name}'. API Key: ${!!apiKey}, Secret: ${!!secret}`);
     }
 
-    const body = extractBody(req);
+    const body = bodyForExternalApi(extractBody(req));
     const headers = generateOnrampHeaders({ apiKey, secret, body });
     headers['Content-Type'] = 'application/x-www-form-urlencoded';
 
@@ -1038,10 +1034,10 @@ router.post('/offramp/transaction', async (req, res) => {
  */
 async function callOnrampQuote(partnerId, body) {
   const port = process.env.PORT || 3000;
-  const url = `http://localhost:${port}/api/${partnerId}/onramp/quote`;
-  
+  const url = `http://localhost:${port}/api/onramp/quote`;
+  const bodyWithRef = { ...body, ref_id: partnerId };
   try {
-    const response = await axios.post(url, new URLSearchParams(body), {
+    const response = await axios.post(url, new URLSearchParams(bodyWithRef), {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
       },
@@ -1061,10 +1057,10 @@ async function callOnrampQuote(partnerId, body) {
  */
 async function callOfframpQuote(partnerId, body) {
   const port = process.env.PORT || 3000;
-  const url = `http://localhost:${port}/api/${partnerId}/offramp/quote`;
-  
+  const url = `http://localhost:${port}/api/offramp/quote`;
+  const bodyWithRef = { ...body, ref_id: partnerId };
   try {
-    const response = await axios.post(url, new URLSearchParams(body), {
+    const response = await axios.post(url, new URLSearchParams(bodyWithRef), {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
       },
@@ -1081,7 +1077,7 @@ async function callOfframpQuote(partnerId, body) {
 
 /**
  * Get Combined Exchange Rate - AED to PHP via USDC
- * POST /api/id0002/getExchangeRate
+ * POST /api/getExchangeRate (ref_id in query or body)
  * 
  * This endpoint combines onramp (AED → USDC) and offramp (USDC → PHP) quotes
  * to show the final PHP amount a user will receive for a given AED amount.
@@ -1099,7 +1095,7 @@ router.post('/getExchangeRate', async (req, res) => {
   
   try {
     // Get partner configuration
-    const partner = getPartnerFromRequest(req);
+    const { partner, partnerId } = getPartnerFromRequest(req);
     const apiKey = partner.apiKey;
     const secret = partner.secret;
     
@@ -1109,7 +1105,7 @@ router.post('/getExchangeRate', async (req, res) => {
     }
     
     // Extract body from request
-    const body = extractBody(req);
+    const body = bodyForExternalApi(extractBody(req));
     
     // Validate required parameters
     const { fromCurrency, toCurrency, fromAmount, chain, paymentMethodType } = body;
@@ -1143,7 +1139,6 @@ router.post('/getExchangeRate', async (req, res) => {
         paymentMethodType: paymentMethodType || defaultPaymentMethod
     };
 
-    const partnerId = req.params.partnerId;
     const onrampQuote = await callOnrampQuote(partnerId, onrampBody);
 
     if (!onrampQuote || onrampQuote.status !== 1 || !onrampQuote.data) {

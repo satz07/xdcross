@@ -16,46 +16,24 @@ const QUOTE_DATA_FILE = path.join(process.cwd(), '.quote-data.json');
 
 /**
  * Get partner configuration from request
- * Extracts partner ID dynamically from URL path: /api/{partnerId}/...
+ * Partner ID is taken from ref_id (query or body parameter).
  */
 function getPartnerFromRequest(req) {
-  // Extract partner ID directly from URL path
-  // URL format: /api/id0001/get-quote -> extract 'id0001'
-  // Try multiple sources to extract partnerId from URL
-  console.log("req-------------", req.params);
-  let partnerId = req.params.partnerId;
-  
-  // If not in params, extract directly from URL path
+  const partnerId = req.partnerId || req.query.ref_id || (req.body && req.body.ref_id);
+
   if (!partnerId) {
-    // Extract from req.path or req.originalUrl
-    // Format: /api/id0001/get-quote or /id0001/get-quote
-    const urlPath = req.path || req.originalUrl || '';
-    const pathParts = urlPath.split('/').filter(part => part); // Remove empty parts
-    
-    // Find partnerId - it should be after 'api' or be the first part
-    const apiIndex = pathParts.indexOf('api');
-    if (apiIndex >= 0 && pathParts[apiIndex + 1]) {
-      partnerId = pathParts[apiIndex + 1];
-    } else if (pathParts.length > 0) {
-      // If no 'api' found, take first part
-      partnerId = pathParts[0];
-    }
+    throw new Error('ref_id is required. Pass ref_id in query or body (e.g. ref_id=id0001).');
   }
 
-  
-  if (!partnerId) {
-    throw new Error('Partner ID not found in URL path. Expected format: /api/{partnerId}/endpoint');
-  }
-  
   const partner = getPartner(partnerId);
-  
+
   if (!partner) {
     throw new Error(`Partner '${partnerId}' not found or not configured`);
   }
-  
-  console.log('Partner ID extracted from URL:', partnerId);
+
+  console.log('Partner ID from ref_id:', partnerId);
   console.log('Partner config:', { name: partner.name, baseUrl: partner.baseUrl });
-  
+
   return partner;
 }
 
@@ -85,7 +63,7 @@ function loadQuoteData() {
 
 /**
  * Get Quote - Partner API
- * POST /api/{partnerId}/get-quote
+ * POST /api/get-quote (ref_id in query or body)
  * 
  * Signature generation matches Postman pre-script exactly:
  * 1. Get query string from URL
@@ -334,7 +312,7 @@ router.post('/get-quote', async (req, res) => {
 
 /**
  * Accept Quote - Partner API
- * POST /api/{partnerId}/accept-quote
+ * POST /api/accept-quote (ref_id in query or body)
  * 
  * Signature generation matches Postman pre-script exactly:
  * 1. Get query string from URL
@@ -481,7 +459,7 @@ router.post('/accept-quote', async (req, res) => {
 
 /**
  * Cash Out - Partner API
- * POST /api/{partnerId}/cash-out
+ * POST /api/cash-out (ref_id in query or body)
  * 
  * Signature generation uses request body (not query string):
  * 1. Get raw request body
@@ -503,12 +481,14 @@ router.post('/cash-out', async (req, res) => {
     // In axios example: let data = JSON.stringify({...}); data: data
     // 
     // Simple approach (matching test-cash-out.js):
-    // 1. Use req.body (already parsed by express.json())
+    // 1. Use req.body (already parsed by express.json()); omit ref_id when forwarding to external API
+    const bodyForApi = { ...req.body };
+    delete bodyForApi.ref_id;
     // 2. Stringify it once for signature generation
     // 3. Use same stringified version for axios data
     
     // Get request body as JSON string (same as test-cash-out.js: JSON.stringify(testData))
-    const strRequestBody = JSON.stringify(req.body);
+    const strRequestBody = JSON.stringify(bodyForApi);
     
     const timestamp = new Date().getTime().toString();
     
@@ -602,7 +582,7 @@ router.post('/cash-out', async (req, res) => {
 
 /**
  * Get Account - Partner API
- * GET /api/{partnerId}/account
+ * GET /api/account (ref_id in query)
  * 
  * Signature generation matches get-quote/accept-quote pattern:
  * 1. Get query string from URL
