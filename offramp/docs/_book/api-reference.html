@@ -59,7 +59,7 @@
     <link rel="next" href="onramp-api.html" />
     
     
-    <link rel="prev" href="./" />
+    <link rel="prev" href="AUTH.html" />
     
 
     </head>
@@ -101,7 +101,20 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.2" data-path="api-reference.html">
+        <li class="chapter " data-level="1.2" data-path="AUTH.html">
+            
+                <a href="AUTH.html">
+            
+                    
+                    Authentication (API key)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.3" data-path="api-reference.html">
             
                 <a href="api-reference.html">
             
@@ -114,7 +127,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3" data-path="onramp-api.html">
+        <li class="chapter " data-level="1.4" data-path="onramp-api.html">
             
                 <a href="onramp-api.html">
             
@@ -127,7 +140,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4" data-path="offramp-api.html">
+        <li class="chapter " data-level="1.5" data-path="offramp-api.html">
             
                 <a href="offramp-api.html">
             
@@ -140,7 +153,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.5" data-path="get-exchange-rate.html">
+        <li class="chapter " data-level="1.6" data-path="get-exchange-rate.html">
             
                 <a href="get-exchange-rate.html">
             
@@ -153,7 +166,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.6" data-path="coins-api.html">
+        <li class="chapter " data-level="1.7" data-path="coins-api.html">
             
                 <a href="coins-api.html">
             
@@ -166,7 +179,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.7" data-path="quick-reference.html">
+        <li class="chapter " data-level="1.8" data-path="quick-reference.html">
             
                 <a href="quick-reference.html">
             
@@ -226,6 +239,19 @@
                                 
                                 <h1 id="api-reference-curl">API Reference (cURL)</h1>
 <p>Use this page as a copy-paste reference for all API endpoints. Replace placeholders with your values.</p>
+<hr></hr>
+<h2 id="authentication-api-key">Authentication (API key)</h2>
+<p>If the server has <strong>API key authentication</strong> enabled, every request must include a valid key in one of these headers:</p>
+<ul>
+<li><strong><code>X-API-Key: &lt;your-api-key&gt;</code></strong></li>
+<li><strong><code>Authorization: Bearer &lt;your-api-key&gt;</code></strong></li>
+</ul>
+<p>Example:</p>
+<pre><code class="lang-bash">curl -X POST <span class="hljs-string">"<span class="hljs-variable">${BASE_URL}</span>/api/get-quote?ref_id=&lt;your_ref_id&gt;&amp;sourceCurrency=XDC&amp;targetCurrency=PHP&amp;sourceAmount=50"</span> \
+  -H <span class="hljs-string">"X-API-Key: &lt;your-api-key&gt;"</span>
+</code></pre>
+<p>Full setup, multiple keys, and error responses: <a href="AUTH.html">Authentication (API key)</a>.</p>
+<hr></hr>
 <p><strong>Placeholders</strong></p>
 <table>
 <thead>
@@ -243,9 +269,13 @@
 <td><code>ref_id=&lt;your_ref_id&gt;</code></td>
 <td>Your reference ID (query or body). Required on every request.</td>
 </tr>
+<tr>
+<td><code>&lt;your-api-key&gt;</code></td>
+<td>Your API key (required if the server has API key auth enabled). Send in <code>X-API-Key</code> or <code>Authorization: Bearer</code> header.</td>
+</tr>
 </tbody>
 </table>
-<p>Use the <code>ref_id</code> value provided to you when integrating.</p>
+<p>Use the <code>ref_id</code> and API key values provided to you when integrating.</p>
 <hr></hr>
 <h2 id="base-url">Base URL</h2>
 <ul>
@@ -256,44 +286,53 @@
 <hr></hr>
 <h2 id="convert--coins-get-quote-accept-quote-cash-out-account">Convert / Coins (Get Quote, Accept Quote, Cash Out, Account)</h2>
 <h3 id="get-quote">Get Quote</h3>
-<pre><code class="lang-bash">curl -X POST <span class="hljs-string">"<span class="hljs-variable">${BASE_URL}</span>/api/get-quote?ref_id=&lt;your_ref_id&gt;&amp;sourceCurrency=XDC&amp;targetCurrency=PHP&amp;sourceAmount=50"</span>
+<pre><code class="lang-bash">curl -X POST <span class="hljs-string">"<span class="hljs-variable">${BASE_URL}</span>/api/get-quote?ref_id=&lt;your_ref_id&gt;&amp;sourceCurrency=XDC&amp;targetCurrency=PHP&amp;sourceAmount=50"</span> \
+  -H <span class="hljs-string">"X-API-Key: &lt;your-api-key&gt;"</span>
 </code></pre>
 <h3 id="accept-quote">Accept Quote</h3>
 <p>Replace <code>QUOTE_ID</code> with the <code>quoteId</code> from the get-quote response.</p>
-<pre><code class="lang-bash">curl -X POST <span class="hljs-string">"<span class="hljs-variable">${BASE_URL}</span>/api/accept-quote?ref_id=&lt;your_ref_id&gt;&amp;quoteId=QUOTE_ID"</span>
+<pre><code class="lang-bash">curl -X POST <span class="hljs-string">"<span class="hljs-variable">${BASE_URL}</span>/api/accept-quote?ref_id=&lt;your_ref_id&gt;&amp;quoteId=QUOTE_ID"</span> \
+  -H <span class="hljs-string">"X-API-Key: &lt;your-api-key&gt;"</span>
 </code></pre>
 <h3 id="cash-out">Cash Out</h3>
 <pre><code class="lang-bash">curl -X POST <span class="hljs-string">"<span class="hljs-variable">${BASE_URL}</span>/api/cash-out"</span> \
+  -H <span class="hljs-string">"X-API-Key: &lt;your-api-key&gt;"</span> \
   -H <span class="hljs-string">"Content-Type: application/json"</span> \
   -d <span class="hljs-string">'{"ref_id":"&lt;your_ref_id&gt;","currency":"PHP","amount":"5","channelName":"INSTAPAY","channelSubject":"bpi","extendInfo":{"recipientName":"Name","recipientAccountNumber":"1234567890"}}'</span>
 </code></pre>
 <h3 id="get-account">Get Account</h3>
-<pre><code class="lang-bash">curl -X GET <span class="hljs-string">"<span class="hljs-variable">${BASE_URL}</span>/api/account?ref_id=&lt;your_ref_id&gt;"</span>
+<pre><code class="lang-bash">curl -X GET <span class="hljs-string">"<span class="hljs-variable">${BASE_URL}</span>/api/account?ref_id=&lt;your_ref_id&gt;"</span> \
+  -H <span class="hljs-string">"X-API-Key: &lt;your-api-key&gt;"</span>
 </code></pre>
 <hr></hr>
 <h2 id="onramp-quote-create-transaction-transactions">Onramp (Quote, Create Transaction, Transactions)</h2>
 <h3 id="get-quote">Get Quote</h3>
 <pre><code class="lang-bash">curl -X POST <span class="hljs-string">"<span class="hljs-variable">${BASE_URL}</span>/api/onramp/quote"</span> \
+  -H <span class="hljs-string">"X-API-Key: &lt;your-api-key&gt;"</span> \
   -H <span class="hljs-string">"Content-Type: application/x-www-form-urlencoded"</span> \
   -d <span class="hljs-string">"ref_id=&lt;your_ref_id&gt;&amp;fromCurrency=AED&amp;toCurrency=USDC&amp;fromAmount=200&amp;chain=XDC&amp;paymentMethodType=AED-BANK-TRANSFER"</span>
 </code></pre>
 <h3 id="create-transaction">Create Transaction</h3>
 <pre><code class="lang-bash">curl -X POST <span class="hljs-string">"<span class="hljs-variable">${BASE_URL}</span>/api/onramp/createTransaction"</span> \
+  -H <span class="hljs-string">"X-API-Key: &lt;your-api-key&gt;"</span> \
   -H <span class="hljs-string">"Content-Type: application/x-www-form-urlencoded"</span> \
   -d <span class="hljs-string">"ref_id=&lt;your_ref_id&gt;&amp;chain=XDC&amp;toCurrency=USDC&amp;rate=3.7493&amp;fromAmount=200&amp;depositAddress=0xYourWallet&amp;customerId=YourCustomerId&amp;toAmount=51.1&amp;fromCurrency=AED&amp;paymentMethodType=AED-BANK-TRANSFER&amp;merchantRecognitionId=ref&amp;fiatAccountId=YourFiatAccountId"</span>
 </code></pre>
 <h3 id="get-all-user-transactions">Get All User Transactions</h3>
 <pre><code class="lang-bash">curl -X POST <span class="hljs-string">"<span class="hljs-variable">${BASE_URL}</span>/api/onramp/allUserTransaction"</span> \
+  -H <span class="hljs-string">"X-API-Key: &lt;your-api-key&gt;"</span> \
   -H <span class="hljs-string">"Content-Type: application/x-www-form-urlencoded"</span> \
   -d <span class="hljs-string">"ref_id=&lt;your_ref_id&gt;&amp;customerId=YourCustomerId&amp;page=1&amp;pageSize=20"</span>
 </code></pre>
 <h3 id="get-transaction">Get Transaction</h3>
 <pre><code class="lang-bash">curl -X POST <span class="hljs-string">"<span class="hljs-variable">${BASE_URL}</span>/api/onramp/transaction"</span> \
+  -H <span class="hljs-string">"X-API-Key: &lt;your-api-key&gt;"</span> \
   -H <span class="hljs-string">"Content-Type: application/x-www-form-urlencoded"</span> \
   -d <span class="hljs-string">"ref_id=&lt;your_ref_id&gt;&amp;transactionId=TRANSACTION_ID&amp;customerId=YourCustomerId"</span>
 </code></pre>
 <h3 id="update-reference-id">Update Reference ID</h3>
 <pre><code class="lang-bash">curl -X PUT <span class="hljs-string">"<span class="hljs-variable">${BASE_URL}</span>/api/onramp/referenceId"</span> \
+  -H <span class="hljs-string">"X-API-Key: &lt;your-api-key&gt;"</span> \
   -H <span class="hljs-string">"Content-Type: application/x-www-form-urlencoded"</span> \
   -d <span class="hljs-string">"ref_id=&lt;your_ref_id&gt;&amp;customerId=YourCustomerId&amp;transactionId=TRANSACTION_ID&amp;referenceId=YourRef"</span>
 </code></pre>
@@ -301,33 +340,39 @@
 <h2 id="offramp-quote-create-transaction-transactions">Offramp (Quote, Create Transaction, Transactions)</h2>
 <h3 id="get-quote">Get Quote</h3>
 <pre><code class="lang-bash">curl -X POST <span class="hljs-string">"<span class="hljs-variable">${BASE_URL}</span>/api/offramp/quote"</span> \
+  -H <span class="hljs-string">"X-API-Key: &lt;your-api-key&gt;"</span> \
   -H <span class="hljs-string">"Content-Type: application/x-www-form-urlencoded"</span> \
   -d <span class="hljs-string">"ref_id=&lt;your_ref_id&gt;&amp;fromCurrency=USDC&amp;toCurrency=PHP&amp;fromAmount=5&amp;chain=XDC"</span>
 </code></pre>
 <h3 id="create-transaction">Create Transaction</h3>
 <pre><code class="lang-bash">curl -X POST <span class="hljs-string">"<span class="hljs-variable">${BASE_URL}</span>/api/offramp/createTransaction"</span> \
+  -H <span class="hljs-string">"X-API-Key: &lt;your-api-key&gt;"</span> \
   -H <span class="hljs-string">"Content-Type: application/x-www-form-urlencoded"</span> \
   -d <span class="hljs-string">"ref_id=&lt;your_ref_id&gt;&amp;chain=XDC&amp;customerId=YourCustomerId&amp;fiatAccountId=123456789&amp;fromAmount=5&amp;fromCurrency=USDC&amp;rate=58.3023&amp;toAmount=269.78&amp;toCurrency=PHP&amp;merchantRecognitionId=ref"</span>
 </code></pre>
 <h3 id="get-transaction">Get Transaction</h3>
 <pre><code class="lang-bash">curl -X POST <span class="hljs-string">"<span class="hljs-variable">${BASE_URL}</span>/api/offramp/transaction"</span> \
+  -H <span class="hljs-string">"X-API-Key: &lt;your-api-key&gt;"</span> \
   -H <span class="hljs-string">"Content-Type: application/x-www-form-urlencoded"</span> \
   -d <span class="hljs-string">"ref_id=&lt;your_ref_id&gt;&amp;customerId=YourCustomerId&amp;transactionId=TRANSACTION_ID"</span>
 </code></pre>
 <h3 id="get-all-user-transactions">Get All User Transactions</h3>
 <pre><code class="lang-bash">curl -X POST <span class="hljs-string">"<span class="hljs-variable">${BASE_URL}</span>/api/offramp/allUserTransaction"</span> \
+  -H <span class="hljs-string">"X-API-Key: &lt;your-api-key&gt;"</span> \
   -H <span class="hljs-string">"Content-Type: application/x-www-form-urlencoded"</span> \
   -d <span class="hljs-string">"ref_id=&lt;your_ref_id&gt;&amp;customerId=YourCustomerId&amp;page=1&amp;pageSize=20"</span>
 </code></pre>
 <hr></hr>
 <h2 id="get-combined-exchange-rate-eg-aed-→-php">Get Combined Exchange Rate (e.g. AED → PHP)</h2>
 <pre><code class="lang-bash">curl -X POST <span class="hljs-string">"<span class="hljs-variable">${BASE_URL}</span>/api/getExchangeRate"</span> \
+  -H <span class="hljs-string">"X-API-Key: &lt;your-api-key&gt;"</span> \
   -H <span class="hljs-string">"Content-Type: application/x-www-form-urlencoded"</span> \
   -d <span class="hljs-string">"ref_id=&lt;your_ref_id&gt;&amp;fromCurrency=AED&amp;toCurrency=PHP&amp;fromAmount=200&amp;chain=XDC&amp;paymentMethodType=AED-BANK-TRANSFER"</span>
 </code></pre>
 <hr></hr>
 <h2 id="bank-details">Bank Details</h2>
 <pre><code class="lang-bash">curl -X POST <span class="hljs-string">"<span class="hljs-variable">${BASE_URL}</span>/api/bank/bankDetails"</span> \
+  -H <span class="hljs-string">"X-API-Key: &lt;your-api-key&gt;"</span> \
   -H <span class="hljs-string">"Content-Type: application/x-www-form-urlencoded"</span> \
   -d <span class="hljs-string">"ref_id=&lt;your_ref_id&gt;&amp;customerId=YourCustomerId&amp;fromCurrency=AED&amp;transactionId=TRANSACTION_ID&amp;paymentMethodType=AED-BANK-TRANSFER"</span>
 </code></pre>
@@ -335,6 +380,7 @@
 <h2 id="notes">Notes</h2>
 <ul>
 <li><strong>ref_id</strong> (reference ID) is required on every request (query or body). Use the value provided to you when integrating.</li>
+<li><strong>API key:</strong> If the server requires it, send <code>X-API-Key</code> or <code>Authorization: Bearer &lt;key&gt;</code> on every request. See <a href="AUTH.html">Authentication (API key)</a>.</li>
 <li><strong>Content-Type:</strong> <code>application/x-www-form-urlencoded</code> for most POST endpoints; <code>application/json</code> for Cash Out.</li>
 <li><strong>Methods:</strong> Most endpoints use POST; Account uses GET.</li>
 </ul>
@@ -365,7 +411,7 @@
 
             
                 
-                <a href="./" class="navigation navigation-prev " aria-label="Previous page: Welcome">
+                <a href="AUTH.html" class="navigation navigation-prev " aria-label="Previous page: Authentication (API key)">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
@@ -381,7 +427,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"API Reference (cURL)","level":"1.2","depth":1,"next":{"title":"Onramp Operations","level":"1.3","depth":1,"path":"onramp-api.md","ref":"onramp-api.md","articles":[]},"previous":{"title":"Welcome","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[]},"dir":"ltr"},"config":{"plugins":["livereload"],"root":".","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"XDC Cash","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Offramp API","language":"en","gitbook":"*","description":"API documentation for Offramp/XDC Cash integration"},"file":{"path":"api-reference.md","mtime":"2026-02-28T20:29:59.680Z","type":"markdown"},"gitbook":{"version":"4.0.8","time":"2026-02-28T20:30:18.015Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"API Reference (cURL)","level":"1.3","depth":1,"next":{"title":"Onramp Operations","level":"1.4","depth":1,"path":"onramp-api.md","ref":"onramp-api.md","articles":[]},"previous":{"title":"Authentication (API key)","level":"1.2","depth":1,"path":"AUTH.md","ref":"AUTH.md","articles":[]},"dir":"ltr"},"config":{"plugins":["livereload"],"root":".","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"XDC Cash","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Offramp API","language":"en","gitbook":"*","description":"API documentation for Offramp/XDC Cash integration"},"file":{"path":"api-reference.md","mtime":"2026-02-28T21:10:56.161Z","type":"markdown"},"gitbook":{"version":"4.0.8","time":"2026-02-28T21:44:37.023Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

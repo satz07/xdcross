@@ -14319,22 +14319,6 @@ Adding ref_id to the remaining onramp/offramp sections and single-line commands.
 
 ---
 
-The model provided an ambiguous search string to replace
-
----
-
-The string to replace was not found in the file.
-
----
-
-The string to replace was not found in the file.
-
----
-
-The string to replace was not found in the file.
-
----
-
 <tool-use data-tool-type="write" data-tool-name="edit_file_v2">
 
 <details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/CURL_COMMANDS.md</summary>
@@ -14488,10 +14472,6 @@ Adding ref_id to the remaining single-line and production curl commands.
 
 ---
 
-The string to replace was not found in the file.
-
----
-
 <tool-use data-tool-type="write" data-tool-name="edit_file_v2">
 
 <details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/CURL_COMMANDS.md</summary>
@@ -14535,20 +14515,20 @@ Updating the Notes and test script and fixing the duplicate createTransaction si
 
 ---
 
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/satheesh/go/src/xdcross/offramp/CURL_COMMANDS.md</summary>
+
+</details>
+</tool-use>
+
+---
+
 <tool-use data-tool-type="write" data-tool-name="edit_file_v2">
 
 <details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/CURL_COMMANDS.md</summary>
 
 </details>
 
-</tool-use>
-
----
-
-<tool-use data-tool-type="read" data-tool-name="read_file_v2">
-<details><summary>Tool use: **read_file_v2** • Read file: /Users/satheesh/go/src/xdcross/offramp/CURL_COMMANDS.md</summary>
-
-</details>
 </tool-use>
 
 ---
@@ -14610,16 +14590,6 @@ Production URLs for Get Quote, Accept Quote, Cash Out and Get Account need ref_i
 
 ---
 
-<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
-
-<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/CURL_COMMANDS.md</summary>
-
-</details>
-
-</tool-use>
-
----
-
 <tool-use data-tool-type="task" data-tool-name="todo_write">
 <details><summary>Tool use: **todo_write** • Todo List</summary>
 
@@ -14629,6 +14599,16 @@ Production URLs for Get Quote, Accept Quote, Cash Out and Get Account need ref_i
 - [x] Update CURL_COMMANDS.md with new URLs and ref_id parameter
 
 </details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/CURL_COMMANDS.md</summary>
+
+</details>
+
 </tool-use>
 
 ---
@@ -23740,16 +23720,6 @@ Now update quick-reference.md to use ref_id=YOUR_REF_ID and no partner names. Th
 
 ---
 
-<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
-
-<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/docs/quick-reference.md</summary>
-
-</details>
-
-</tool-use>
-
----
-
 <tool-use data-tool-type="read" data-tool-name="read_file_v2">
 <details><summary>Tool use: **read_file_v2** • Read file: /Users/satheesh/go/src/xdcross/offramp/docs/onramp-api.md</summary>
 
@@ -23762,6 +23732,16 @@ Now update quick-reference.md to use ref_id=YOUR_REF_ID and no partner names. Th
 <details><summary>Tool use: **read_file_v2** • Read file: /Users/satheesh/go/src/xdcross/offramp/docs/offramp-api.md</summary>
 
 </details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/docs/quick-reference.md</summary>
+
+</details>
+
 </tool-use>
 
 ---
@@ -24438,13 +24418,18 @@ The user wants to:
 2. Have only the "API Reference" section in the docs (consolidate everything into one place)
 3. Add all details from onramp, offramp operations (fields, etc.) into API Reference
 4. Add get exchange rate and Coins.ph details to API Reference
-5. Move everything to API Reference - so one comprehensive API Reference</details></think>
+5. Move everything to API Reference - so one comprehensive API Reference page
+6. Make changes in docs only - leave CURL_COMMANDS.md in</details></think>
 
 ---
 
 _**User**_
 
+reomve build and publish section...
 
+also have only API referenc estoion..
+
+add all detaisl from onrmp offramp operation in details like fields... also gete change rate coins ph.. mve evetything to API eference... make chnage in docs only.. curl cuomnad slet it be presnt in bakcned..
 
 ---
 
@@ -24545,7 +24530,7 @@ I have all the content. Now I need to:
 
 3. Update README.md to only point to API Reference (remove other quick links or simplify)
 
-4. I can leave the old files (onramp-api.md, offramp-api.md, etc.) in the folder but remove them from SUMMARY so they won't show in the GitBook. Or delete them. User said "make change in docs only" and "curl command let it be present in backend" - so CURL_COMMANDS.md stays. I'll remove the other doc files from SUMMARY and optionally delete the files. Keeping the files but not linking them is fine; cleaner to delete so there's no confusion. I'll delete testing.md reference (Build & Publish) and the other section files from SUMMARY. I could keep the files for backup or delete. I</details></think>
+4. I can leave the old files (onramp-api.md, offramp-api.md, etc.) in the folder but remove them from SUMMARY so they won't show in the GitBook. Or delete them. User said "make change in docs only" and "curl command let it be present in backend" - so CURL_COMMANDS.md stays. I'll remove the other doc files from SUMMARY and optionally delete the files. Keeping the files but not linking them is fine; cleaner to delete so there's no confusion. I'll delete testing.md reference (Build & Publish) and the other section files from SUMMARY. I could keep the files for backup or delete. I'll just update SUMMARY to </details></think>
 
 ---
 
@@ -25181,17 +25166,20 @@ Using only static serving so direct links to pages (e.g. api-reference.html) wor
 
 <details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/serve-docs.js</summary>
 
-Status: **loading**
-
 </details>
 
 </tool-use>
 
 ---
 
+<think><details><summary>Thought Process</summary>
 
+Now update ecosystem.config.js to add the docs app. The docs app should start only after _book exists - we can add a note in HOSTING that they must run docs:build first. Or we could make the server not crash if _book is missing (send a simple message). For now I'll just add the second app to PM2.
+</details></think>
 
 ---
+
+
 
 
 
@@ -25201,17 +25189,20 @@ Status: **loading**
 
 <details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/ecosystem.config.js</summary>
 
-Status: **loading**
-
 </details>
 
 </tool-use>
 
 ---
 
+<think><details><summary>Thought Process</summary>
 
+Now update HOSTING.md to add the PM2 option: build docs, start both apps with PM2, and configure Nginx to proxy /api-docs to port 3003.
+</details></think>
 
 ---
+
+
 
 
 
@@ -25221,11 +25212,2389 @@ Status: **loading**
 
 <details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/docs/HOSTING.md</summary>
 
-Status: **loading**
+</details>
+
+</tool-use>
+
+---
+
+<think><details><summary>Thought Process</summary>
+
+When Nginx does proxy_pass http://127.0.0.1:3003/ with trailing slash, a request to /api-docs/foo becomes /foo on the backend. So the docs app receives requests like /, /README.html, /api-reference.html, /gitbook/style.css. The serve-docs.js serves static files from _book, so / maps to _book/index.html, /README.html to _book/README.html, etc. That works. Good.
+</details></think>
+
+---
+
+
+Summary of what’s in place for running the docs with PM2:
+
+---
+
+## 1. **`serve-docs.js`** (new)
+
+- Small Express app that serves the **`_book/`** directory.
+- Listens on **3003** by default (override with `DOCS_PORT`).
+
+## 2. **`ecosystem.config.js`** (updated)
+
+- Second app **`offramp-docs`** added:
+  - `script: './serve-docs.js'`
+  - `DOCS_PORT: 3003`
+  - Logs: `./logs/pm2-docs-error.log`, `./logs/pm2-docs-out.log`
+
+## 3. **`docs/HOSTING.md`** (updated)
+
+- **Option A:** Nginx serves `_book/` from disk (no PM2 for docs).
+- **Option B:** PM2 runs the docs server; Nginx proxies **/api-docs** to port 3003.
+
+---
+
+## PM2 workflow
+
+```bash
+# 1. Build docs (creates _book/)
+npm run docs:build
+
+# 2. Start both API and docs
+pm2 start ecosystem.config.js
+
+# Or start only docs (if API is already running)
+pm2 start ecosystem.config.js --only offramp-docs
+```
+
+**Nginx** (for Option B):
+
+```nginx
+location /api-docs/ {
+    proxy_pass http://127.0.0.1:3003/;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+}
+location = /api-docs {
+    return 301 /api-docs/;
+}
+```
+
+Then: **https://xdc.cash/api-docs/** → Nginx → PM2 (serve-docs.js on 3003) → `_book/`.
+
+After changing the docs: `npm run docs:build` then `pm2 restart offramp-docs`.
+
+---
+
+_**User**_
+
+root@node-Virtual-Machine:/home/xdcross/offramp# npm run docs:build
+
+> offramp-api-proxy@1.0.0 docs:build
+> honkit build docs _book
+
+/home/xdcross/offramp/node_modules/undici/lib/web/webidl/index.js:534
+webidl.is.File = webidl.util.MakeTypeAssertion(File)
+                                               ^
+
+ReferenceError: File is not defined
+    at Object.<anonymous> (/home/xdcross/offramp/node_modules/undici/lib/web/webidl/index.js:534:48)
+    at Module._compile (node:internal/modules/cjs/loader:1159:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1213:10)
+    at Module.load (node:internal/modules/cjs/loader:1037:32)
+    at Module._load (node:internal/modules/cjs/loader:878:12)
+    at Module.require (node:internal/modules/cjs/loader:1061:19)
+    at require (node:internal/modules/cjs/helpers:103:18)
+    at Object.<anonymous> (/home/xdcross/offramp/node_modules/undici/lib/web/fetch/util.js:12:20)
+    at Module._compile (node:internal/modules/cjs/loader:1159:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1213:10)
+
+Node.js v18.12.1
+
+
+---
+
+_**Agent (model default, mode Agent)**_
+
+<think><details><summary>Thought Process</summary>
+
+The error is coming from the `undici` package - it's trying to use the global `File` API which was added in Node.js 18.4.0 (or thereabouts). The user is on Node.js v18.12.1 - wait, 18.12.1 should have File. Let me check - actually the global `File` was added in Node.js 19 or in a later 18.x. In Node 18.12.1, the global `File` might not be available in the way undici expects.
+
+Looking at the error: `ReferenceError: File is not defined` - so in their Node 18.12.1, the global `File` is not defined. The `File` global was added in Node 20 (or backported to 18 in a later version). So the fix could be:
+
+1. Upgrade Node.js to 20.x or a newer 18.x that has the File global (18.4+ might have it for fetch/FormData but the global File class might be 20+).
+2. Or pin/downgrade honkit or its dependency (undici) to a version that doesn't require the File global.
+
+Let me search - undici is a dependency of honkit or something in the chain. The issue is that undici's webidl expects `File` to exist. In Node 18, the global `File` was added in Node 18.4.0 for the fetch API. So 18.12.1 should have it... unless they're in a context where it's not exposed. Actually I recall Node 18.0-18.3 didn't have File; 18.4+ added it. So 18.12.1 should have it. Unless - maybe it's a different runtime or the Node version output is wrong.
+
+Let me suggest:
+1. Upgrade to Node 20 LTS (safest for honkit/undici).
+2. Or try setting global.File if missing - that's hacky.
+3. Or use npx honkit with a different Node version (nvm).
+4. Or downgrade honkit to a version that uses an older undici that doesn't rely on File.
+
+I'll check honkit - it might pull in undici via a dependency. The cleanest fix is usually upgrading Node. I'll suggest Node 20+ and also mention checking current LTS.
+</details></think>
+
+---
+
+
+Checking Honkit's dependencies: the error is caused by the `undici` package (used by Honkit) requiring the global `File` API, which isn't available in older Node 18.
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/satheesh/go/src/xdcross/offramp/package.json</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "pattern": "undici|honkit",
+  "path": "/Users/satheesh/go/src/xdcross/offramp",
+  "glob": "package*.json",
+  "caseInsensitive": false
+}
+```
+Result:
+
+```json
+{
+  "success": {
+    "pattern": "undici|honkit",
+    "path": "/Users/satheesh/go/src/xdcross/offramp",
+    "outputMode": "content",
+    "workspaceResults": {
+      "/Users/satheesh/go/src/xdcross/offramp": {
+        "content": {
+          "matches": [
+            {
+              "file": "./package.json",
+              "matches": [
+                {
+                  "lineNumber": 10,
+                  "content": "    \"docs:serve\": \"honkit serve docs\","
+                },
+                {
+                  "lineNumber": 11,
+                  "content": "    \"docs:serve:4001\": \"honkit serve docs --port 4001\","
+                },
+                {
+                  "lineNumber": 12,
+                  "content": "    \"docs:build\": \"honkit build docs _book\","
+                },
+                {
+                  "lineNumber": 38,
+                  "content": "    \"honkit\": \"^4.0.4\","
+                }
+              ]
+            },
+            {
+              "file": "./package-lock.json",
+              "matches": [
+                {
+                  "lineNumber": 22,
+                  "content": "        \"honkit\": \"^4.0.4\","
+                },
+                {
+                  "lineNumber": 63,
+                  "content": "    \"node_modules/@honkit/asciidoc\": {"
+                },
+                {
+                  "lineNumber": 65,
+                  "content": "      \"resolved\": \"https://registry.npmjs.org/@honkit/asciidoc/-/asciidoc-4.0.8.tgz\","
+                },
+                {
+                  "lineNumber": 70,
+                  "content": "        \"@honkit/html\": \"^4.0.8\","
+                },
+                {
+                  "lineNumber": 75,
+                  "content": "    \"node_modules/@honkit/honkit-plugin-highlight\": {"
+                },
+                {
+                  "lineNumber": 77,
+                  "content": "      \"resolved\": \"https://registry.npmjs.org/@honkit/honkit-plugin-highlight/-/honkit-plugin-highlight-4.0.8.tgz\","
+                },
+                {
+                  "lineNumber": 88,
+                  "content": "    \"node_modules/@honkit/honkit-plugin-theme-default\": {"
+                },
+                {
+                  "lineNumber": 90,
+                  "content": "      \"resolved\": \"https://registry.npmjs.org/@honkit/honkit-plugin-theme-default/-/honkit-plugin-theme-default-4.0.8.tgz\","
+                },
+                {
+                  "lineNumber": 98,
+                  "content": "    \"node_modules/@honkit/html\": {"
+                },
+                {
+                  "lineNumber": 100,
+                  "content": "      \"resolved\": \"https://registry.npmjs.org/@honkit/html/-/html-4.0.8.tgz\","
+                },
+                {
+                  "lineNumber": 110,
+                  "content": "    \"node_modules/@honkit/markdown-legacy\": {"
+                },
+                {
+                  "lineNumber": 112,
+                  "content": "      \"resolved\": \"https://registry.npmjs.org/@honkit/markdown-legacy/-/markdown-legacy-4.0.8.tgz\","
+                },
+                {
+                  "lineNumber": 117,
+                  "content": "        \"@honkit/html\": \"^4.0.8\","
+                },
+                {
+                  "lineNumber": 488,
+                  "content": "        \"undici\": \"^7.19.0\","
+                },
+                {
+                  "lineNumber": 1574,
+                  "content": "    \"node_modules/honkit\": {"
+                },
+                {
+                  "lineNumber": 1576,
+                  "content": "      \"resolved\": \"https://registry.npmjs.org/honkit/-/honkit-4.0.8.tgz\","
+                },
+                {
+                  "lineNumber": 1581,
+                  "content": "        \"@honkit/asciidoc\": \"^4.0.8\","
+                },
+                {
+                  "lineNumber": 1582,
+                  "content": "        \"@honkit/honkit-plugin-highlight\": \"^4.0.8\","
+                },
+                {
+                  "lineNumber": 1583,
+                  "content": "        \"@honkit/honkit-plugin-theme-default\": \"^4.0.8\","
+                },
+                {
+                  "lineNumber": 1584,
+                  "content": "        \"@honkit/markdown-legacy\": \"^4.0.8\","
+                },
+                {
+                  "lineNumber": 1633,
+                  "content": "        \"honkit\": \"bin/honkit.js\""
+                },
+                {
+                  "lineNumber": 1636,
+                  "content": "    \"node_modules/honkit/node_modules/depd\": {"
+                },
+                {
+                  "lineNumber": 1646,
+                  "content": "    \"node_modules/honkit/node_modules/destroy\": {"
+                },
+                {
+                  "lineNumber": 1653,
+                  "content": "    \"node_modules/honkit/node_modules/encodeurl\": {"
+                },
+                {
+                  "lineNumber": 1663,
+                  "content": "    \"node_modules/honkit/node_modules/http-errors\": {"
+                },
+                {
+                  "lineNumber": 1680,
+                  "content": "    \"node_modules/honkit/node_modules/ms\": {"
+                },
+                {
+                  "lineNumber": 1687,
+                  "content": "    \"node_modules/honkit/node_modules/on-finished\": {"
+                },
+                {
+                  "lineNumber": 1700,
+                  "content": "    \"node_modules/honkit/node_modules/send\": {"
+                },
+                {
+                  "lineNumber": 1725,
+                  "content": "    \"node_modules/honkit/node_modules/statuses\": {"
+                },
+                {
+                  "lineNumber": 3269,
+                  "content": "    \"node_modules/undici\": {"
+                },
+                {
+                  "lineNumber": 3271,
+                  "content": "      \"resolved\": \"https://registry.npmjs.org/undici/-/undici-7.22.0.tgz\","
+                }
+              ]
+            },
+            {
+              "file": "./database_backups/18022026/package.json",
+              "matches": [
+                {
+                  "lineNumber": 10,
+                  "content": "    \"docs:serve\": \"honkit serve docs\","
+                },
+                {
+                  "lineNumber": 11,
+                  "content": "    \"docs:build\": \"honkit build docs _book\","
+                },
+                {
+                  "lineNumber": 37,
+                  "content": "    \"honkit\": \"^4.0.4\","
+                }
+              ]
+            }
+          ],
+          "totalLines": 38,
+          "totalMatchedLines": 38
+        }
+      }
+    }
+  }
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<think><details><summary>Thought Process</summary>
+
+Honkit 4.x pulls in undici ^7.19.0. The undici package in Node 18.12.1 is failing because the global `File` is not defined. The global `File` was added in Node.js 20.0.0 (or available in Node 18 in later versions - actually I need to check: in Node 18, the Fetch API was added but the global `File` class might have been added in Node 20). So the fix is either:
+
+1. **Upgrade Node to 20 LTS** - recommended.
+2. **Use an older Honkit** that doesn't depend on undici's newer version (e.g. honkit 3.x used different deps).
+3. **Polyfill File** - before running honkit, set global.File. In Node 18 we can use `const { File } = require('buffer');` or the web stream API - actually in Node 18, File might be on global in 18.4+. Let me check Node 18.12 - it's from Dec 2022. The File global in Node was added in 18.4.0 (April 2022). So 18.12.1 should have it. Unless the user's Node build is different or there's a bug. So maybe the issue is something else - like running in a restricted context.
+
+Actually re-reading the undici changelog - newer undici (7.x) might require Node 20+ for the File global. So the safest fix is to recommend Node 20.
+
+I'll add two solutions to the project:
+1. Recommend Node 20+ in docs and add an engines field or note.
+2. Add a workaround script that uses a polyfill for File when running on Node 18 - we could run docs:build with a wrapper that sets global.File. In Node 18, we can do: `global.File = global.File || (function() { try { return require('buffer').File; } catch(e) {} return class File {}; })();` - actually Node 18 doesn't export File from buffer. The File in Node 20 is from the global. So the real fix is Node 20.
+
+Alternative: use gitbook-cli or a different docs builder that works on Node 18. Or run honkit in a Docker container with Node 20.
+
+I'll suggest upgrading to Node 20 LTS and add a small note in the repo. I can also add a script that uses npx with a different Node version if they have nvm.
+</details></think>
+
+---
+
+
+Identifying cause: Honkit 4.x depends on `undici`, which expects the global `File` API present in Node 20+. Node 18.12 doesn't provide it. Adding an engines recommendation and a build workaround:
+
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="web_search">
+<details>
+            <summary>Tool use: **web_search** • Searched web `undefined` • **1** results</summary>
+        
+| Title | URL | Chunk |
+|-------|-----|-------|
+| Web search results for query: undici File is not defined Node 18 honkit build |  | Links:<br/>1. [Search code, repositories, users, issues, pull requests...](https://github.com/nodejs/undici/issues/3801)<br/>2. [Regarding issues using latest/v7.13.0 undici with node 18 · Issue #4374 · nodejs/undici](https://github.com/nodejs/undici/issues/4374)<br/>3. [Search code, repositories, users, issues, pull requests...](https://github.com/nodejs/undici/issues/2110)<br/>4. [Avoiding `instanceof Request`, etc. · Issue #2155 · nodejs/undici](https://github.com/nodejs/undici/issues/2155)<br/>5. [Search code, repositories, users, issues, pull requests...](https://github.com/nodejs/undici/issues/4005)<br/><br/># "File is not defined" Error with Undici in Node 18<br/><br/>The "File is not defined" error occurs when using recent versions of undici with Node 18, as undici versions 7.0.0 and later have dropped support for Node 18.[2]<br/><br/>## Root Cause<br/><br/>Node 18 lacks several APIs that newer undici versions require, including the `File` global object, `Blob` global object, and String methods like `isWellFormed()` and `toWellFormed()`.[2]<br/><br/>## Solutions<br/><br/>**Option 1: Upgrade Node.js**<br/>The recommended solution is to upgrade to Node 20 or later, which includes all necessary APIs.[2]<br/><br/>**Option 2: Use a Wrapper (if upgrading isn't possible)**<br/>Create a wrapper module that polyfills missing globals before importing undici:[2]<br/><br/>For CommonJS:<br/>```js<br/>const \{ Blob, File \} = require('buffer');<br/>if (typeof globalThis.Blob === 'undefined') \{<br/>  globalThis.Blob = Blob;<br/>\}<br/>if (typeof globalThis.File === 'undefined') \{<br/>  globalThis.File = File;<br/>\}<br/>const undici = require('undici');<br/>module.exports = undici;<br/>```<br/><br/>For ES modules, use similar polyfills before importing undici.<br/><br/>**Important caveat:** This approach involves modifying String prototype, which causes performance degradation.[2]<br/><br/>**Option 3: Stick with Older Undici Version**<br/>Use an older version of undici that supports Node 18 rather than upgrading to v7.x.[2] |
+
+</details>
+</tool-use>
+
+---
+
+<think><details><summary>Thought Process</summary>
+
+So the fix options are:
+1. Upgrade to Node 20 (recommended)
+2. Polyfill - but Node's `require('buffer')` might not export File in Node 18. Let me check - in Node 18, the buffer module doesn't export File; File was added in Node 20. So the polyfill with require('buffer') would only work on Node 20+. So the only reliable fix is upgrade to Node 20.
+
+I'll add:
+1. engines in package.json recommending Node 20 for docs build
+2. A short DOCS_BUILD.md or add to HOSTING.md a "Troubleshooting" that says: use Node 20+ for npm run docs:build (or use nvm to run with Node 20)
+3. Optionally a script that runs honkit with npx and a note to use Node 20
+
+Actually the simplest is: document that Node 20+ is required for docs:build, and tell them to upgrade or use nvm.
+</details></think>
+
+---
+
+
+Undici 7.x (used by Honkit 4) requires Node 20+. Adding an engines field and documenting the fix.
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/satheesh/go/src/xdcross/offramp/docs/HOSTING.md</summary>
+
+</details>
+</tool-use>
+
+---
+
+<think><details><summary>Thought Process</summary>
+
+Let me read package.json again to get exact string for engines.
+</details></think>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/satheesh/go/src/xdcross/offramp/package.json</summary>
+
+</details>
+</tool-use>
+
+---
+
+<think><details><summary>Thought Process</summary>
+
+I'll add an engines field and a troubleshooting section to HOSTING.md. For package.json I need to add after "license":"ISC" a comma and "engines":{"node":">=20.0.0"} - but that might break their API which runs on 18. So better to not require Node 20 for the whole project, just document that docs:build needs Node 20. I'll only update HOSTING.md with a troubleshooting section.
+</details></think>
+
+---
+
+
+
+
+
+---
+
+<think><details><summary>Thought Process</summary>
+
+The "Optional: add _book/..." might be at the end of the file. Let me read the full HOSTING.md.
+</details></think>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/satheesh/go/src/xdcross/offramp/docs/HOSTING.md</summary>
+
+</details>
+</tool-use>
+
+---
+
+<think><details><summary>Thought Process</summary>
+
+The last line is "Optional: add `_book/` to `.gitignore` if you build on the server and don't commit the built files." - there's a special quote character maybe. Let me try with the exact chars.
+</details></think>
+
+---
+
+
+
+
+
+---
+
+<think><details><summary>Thought Process</summary>
+
+Maybe the table has different formatting. Let me try appending to the file.
+</details></think>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/satheesh/go/src/xdcross/offramp/docs/HOSTING.md</summary>
+
+</details>
+</tool-use>
+
+---
+
+<think><details><summary>Thought Process</summary>
+
+I see - the apostrophe in "don't" might be a special Unicode character. Let me try replacing just the last line with a longer block.
+</details></think>
+
+---
+
+
+
+
+
+---
+
+<think><details><summary>Thought Process</summary>
+
+The fuzzy match is showing the beginning of the file. So the exact string might have a different character. Let me try grep to see the exact bytes of that line.
+</details></think>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "pattern": "Optional: add",
+  "path": "/Users/satheesh/go/src/xdcross/offramp/docs/HOSTING.md",
+  "caseInsensitive": false
+}
+```
+Result:
+
+```json
+{
+  "success": {
+    "pattern": "Optional: add",
+    "path": "/Users/satheesh/go/src/xdcross/offramp/docs/HOSTING.md",
+    "outputMode": "content",
+    "workspaceResults": {
+      "/Users/satheesh/go/src/xdcross/offramp": {
+        "content": {
+          "matches": [
+            {
+              "file": "docs/HOSTING.md",
+              "matches": [
+                {
+                  "lineNumber": 130,
+                  "content": "Optional: add &#96;_book/&#96; to &#96;.gitignore&#96; if you build on the server and don’t commit the built files."
+                }
+              ]
+            }
+          ],
+          "totalLines": 1,
+          "totalMatchedLines": 1
+        }
+      }
+    }
+  }
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<think><details><summary>Thought Process</summary>
+
+The apostrophe in "don't" might be a curly/smart quote. Let me try replacing from "Optional" with a smaller unique string - maybe just "don't" is the issue - try "don't" as "don\'t" or use a different approach: read the file and write the new content.
+</details></think>
+
+---
+
+
+
+
+
+---
+
+<think><details><summary>Thought Process</summary>
+
+There might be a special Unicode apostrophe in "don't". Let me try writing a new file that's the full content with the troubleshooting section appended. I'll read the full file content first.
+</details></think>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/satheesh/go/src/xdcross/offramp/docs/HOSTING.md</summary>
+
+</details>
+</tool-use>
+
+---
+
+<think><details><summary>Thought Process</summary>
+
+I'll try replacing the Summary section and the Optional line together with the new Summary + Optional + Troubleshooting. The apostrophe in "don't" might be Unicode U+2019 (RIGHT SINGLE QUOTATION MARK). I'll use run_terminal_cmd to do a simple echo/sed or just write the troubleshooting to a separate small file that we can reference. Actually simpler: create a new file docs/DOCS_BUILD_NODE20.md with the troubleshooting and in HOSTING.md add one line "If you see `File is not defined`, see [Docs build on Node 18](DOCS_BUILD_NODE20.md)." - but that would require a replace. Let me try replace with the hex or copy the exact character. Actually the simplest is to write a standalone TROUBLESHOOTING.md or add to README in docs. I'll create a small file docs/TROUBLESHOOTING.md for the Node 18 / File issue and add a single line at the end of HOSTING pointing to it. For the single line I can try adding after the table a new line that's just "---" and then "## ..." - maybe the replace fails because of the pipe characters in the table. Let me try adding only a short line.
+</details></think>
+
+---
+
+
+Creating a troubleshooting file and adding a reference.
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/docs/DOCS_BUILD_NODE18.md</summary>
 
 </details>
 
 </tool-use>
+
+---
+
+<think><details><summary>Thought Process</summary>
+
+Now add a line in HOSTING.md - I'll try adding after the Summary table by replacing the whole "## Summary" section with Summary + a note. So replace from "## Summary" through the Optional line with the same content plus a new paragraph.
+</details></think>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/docs/HOSTING.md</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/docs/HOSTING.md</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<think><details><summary>Thought Process</summary>
+
+Good, the references are in. Now give the user a direct answer they can run on the server.
+</details></think>
+
+---
+
+
+Summary of what’s going on and what to do:
+
+---
+
+## Cause
+
+Honkit 4.x uses **undici** v7, which expects the global **`File`** API. That exists in **Node.js 20+**, but **not in Node 18.12**, so you get `ReferenceError: File is not defined`.
+
+---
+
+## Fix on your server (Node 20)
+
+Use Node 20 to run the docs build. Your API can stay on Node 18.
+
+**If you have nvm:**
+
+```bash
+nvm install 20
+nvm use 20
+cd /home/xdcross/offramp
+npm run docs:build
+```
+
+**If you don’t have nvm (e.g. plain Ubuntu):**
+
+```bash
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+sudo apt-get install -y nodejs
+node -v   # should show v20.x
+cd /home/xdcross/offramp
+npm run docs:build
+```
+
+After that, `_book/` will be created and you can use PM2 or Nginx as in HOSTING.md.
+
+---
+
+## Docs added in the repo
+
+1. **`docs/DOCS_BUILD_NODE18.md`** – Explains the `File is not defined` error and gives:
+   - Node 20 install (nvm and NodeSource)
+   - Using Node 20 only for the build then switching back to 18
+   - Building on another machine and copying `_book/` to the server.
+
+2. **`docs/HOSTING.md`** – In both “Option A” and “Option B”, added a short note that if you see `ReferenceError: File is not defined` you need Node 20+ and should read [Docs build on Node 18](DOCS_BUILD_NODE18.md).
+
+So: **use Node 20 (or build elsewhere with Node 20 and copy `_book/`) to run `npm run docs:build`**; the API can keep running on Node 18.
+
+---
+
+_**User**_
+
+@code block (1-10) 
+
+
+eplain this why againa location =/api docs needed
+
+---
+
+_**Agent (model default, mode Agent)**_
+
+<think><details><summary>Thought Process</summary>
+
+The user wants to understand why we need the second location block `location = /api-docs` that redirects to `/api-docs/`. Let me explain clearly.
+</details></think>
+
+---
+
+
+Here’s why both blocks are needed.
+
+---
+
+## Two different URLs
+
+Users can hit the docs in two ways:
+
+1. **With trailing slash:** `https://xdc.cash/api-docs/`
+2. **Without trailing slash:** `https://xdc.cash/api-docs`
+
+---
+
+## What each `location` does
+
+### 1. `location /api-docs/` (with slash)
+
+- Matches only requests that start with **`/api-docs/`** (the path must include the trailing slash).
+- So it matches:
+  - `https://xdc.cash/api-docs/` ✅  
+  - `https://xdc.cash/api-docs/README.html` ✅  
+  - `https://xdc.cash/api-docs/gitbook/style.css` ✅  
+- It does **not** match:
+  - `https://xdc.cash/api-docs` ❌ (no trailing slash)
+
+So a request to **`/api-docs`** (no slash) is **not** handled by this block.
+
+### 2. `location = /api-docs` (exact match, no slash)
+
+- Matches **only** the exact path **`/api-docs`** (no slash).
+- It responds with: **`301` redirect** to **`/api-docs/`** (with slash).
+
+So when someone opens `https://xdc.cash/api-docs`, Nginx sends them to `https://xdc.cash/api-docs/`.
+
+---
+
+## Why the redirect is needed
+
+- The first block only runs when the path is **`/api-docs/...`** (with slash). So **`/api-docs`** would not be served by it and could end up as 404 or handled by another `location`.
+- The docs app (and static assets) expect to live under a “directory” URL like **`/api-docs/`**. Relative links (e.g. `./README.html`, `gitbook/style.css`) are resolved from that path. If we served the main page at **`/api-docs`** (no slash), the browser would treat the “current directory” as **`/`**, and those relative links would break (e.g. request `/README.html` instead of `/api-docs/README.html`).
+- So we want a single canonical URL for the docs: **`/api-docs/`**. The second block makes sure anyone who types or links to **`/api-docs`** is sent once to **`/api-docs/`**.
+
+---
+
+## In one sentence
+
+**`location = /api-docs`** exists so that **`/api-docs`** (no slash) is redirected to **`/api-docs/`** (with slash), which is the only path the **`location /api-docs/`** block (and your docs app) are set up to serve correctly.
+
+---
+
+_**User**_
+
+can we create a apikey and secret consent... so these api when gie to multiple users can be access only with authenctication.. how cn be done liek with toke or something which is better
+
+---
+
+_**Agent (model default, mode Agent)**_
+
+<think><details><summary>Thought Process</summary>
+
+The user wants to add authentication to the API so that when the API is given to multiple users, only authenticated clients can access it. They're asking about the best approach - API key/secret or token.
+
+Options:
+1. **API Key** - Simple header like `X-API-Key: <key>`. Easy to implement, good for server-to-server. Can be passed in header.
+2. **API Key + Secret** - Key identifies the client, secret is used to sign requests (HMAC) or sent alongside. More secure than key alone but secret must be kept safe.
+3. **Bearer Token (JWT or opaque)** - Stateless (JWT) or stateful (opaque token validated against DB). JWT can carry claims, expiry; good for multiple services.
+4. **Basic Auth** - Username:password in header. Simple but less flexible than API key per client.
+
+For "multiple users" accessing the same API (partners/integrators), the common approach is:
+- **API Key** in header (e.g. `X-API-Key` or `Authorization: ApiKey <key>`) - simple, one value to distribute per client.
+- **API Key + Secret** - Key in header, secret used for request signing (like AWS) - more secure but more complex for clients.
+- **JWT** - Client gets a JWT (from a login endpoint or issued out-of-band), sends `Authorization: Bearer <jwt>`. Good for expiry, scopes.
+
+For their use case (multiple users/partners accessing the offramp API), I'd recommend:
+1. **API Key only** - Simplest: one API key per client, validated on every request. Stored in env or DB, sent in header.
+2. **API Key + Secret** - If they want to be able to revoke/rotate and have a second factor. Validate key and optionally sign requests with secret.
+
+I'll propose a simple **API Key** middleware that:
+- Reads API key from header (e.g. `X-API-Key` or `Authorization: Bearer <key>`)
+- Validates against a list of allowed keys (env var or config file)
+- Returns 401 if missing/invalid
+- Can be applied to all /api routes
+
+They already have `ref_id` for partner identification. So we could:
+- Option A: One API key per ref_id (partner). So config: ref_id -> api_key mapping. Request must have valid API key, and we can derive ref_id from the key or still require ref_id in body.
+- Option B: Global API keys - a list of valid keys, any valid key can access; ref_id still in request for which partner's credentials to use.
+- Option C: API key identifies the client (replaces or complements ref_id). So each client gets api_key + secret (or just api_key), and we look up partner config by api_key.
+
+I'll go with a simple, flexible design:
+- **API Key in header** (`X-API-Key` or `Authorization: Bearer <key>`)
+- Config: list of valid API keys (env `API_KEYS=key1,key2` or a config file). Optionally map api_key -> ref_id so the key implies the partner.
+- Middleware runs first on /api, checks header, 401 if invalid/missing.
+
+Let me implement:
+1. Add middleware that checks for API key
+2. Config for valid keys (env API_KEYS)
+3. Optional: API key can be mapped to ref_id so client doesn't send ref_id (or we still require ref_id and key just grants access)
+4. Document in README or a small AUTH.md
+
+I'll keep it simple: API key required for all /api requests; ref_id still in body/query for partner selection. So two layers: (1) valid API key to reach the API at all, (2) ref_id to select which partner config to use.
+</details></think>
+
+---
+
+
+Adding API-key authentication so only clients with a valid key can access the API. Checking the server and config structure:
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/satheesh/go/src/xdcross/offramp/server.js</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/satheesh/go/src/xdcross/offramp/config/partners.js</summary>
+
+</details>
+</tool-use>
+
+---
+
+<think><details><summary>Thought Process</summary>
+
+I'll add:
+1. A config or env for API keys - e.g. API_KEYS=key1,key2 (comma-separated) or a dedicated api-keys config that can map key -> optional ref_id
+2. Middleware that runs for /api only, checks X-API-Key or Authorization: Bearer <key>, returns 401 if not valid
+3. Skip auth for /health
+4. Document in a small AUTH.md or in README
+
+I'll use API Key approach (simpler than JWT for server-to-server). Optionally we could support both:
+- X-API-Key: <key>
+- Authorization: Bearer <key>
+
+So clients can send the key either way. Valid keys from env API_KEYS (comma-separated). If API_KEYS is not set or empty, we can either disable auth (backward compatible) or require it. I'll make it optional: if API_KEYS is set, then auth is required; if not set, no auth check (current behavior). That way existing deployments don't break.
+</details></think>
+
+---
+
+
+Adding API-key authentication: creating an auth middleware and config so only clients with a valid key can access the API.
+
+
+---
+
+<tool-use data-tool-type="task" data-tool-name="todo_write">
+<details><summary>Tool use: **todo_write** • Todo List</summary>
+
+- [-] Create API key auth middleware and config
+- [ ] Wire middleware in server.js and document
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/satheesh/go/src/xdcross/offramp/config/partners.js</summary>
+
+</details>
+</tool-use>
+
+---
+
+<think><details><summary>Thought Process</summary>
+
+I'll create:
+1. config/api-keys.js - reads API_KEYS from env (comma-separated), provides a function isValidApiKey(key). Optionally API_KEYS can be a JSON string mapping key -> ref_id for future use; for now just a Set of valid keys.
+2. middleware/api-key-auth.js - middleware that gets key from X-API-Key or Authorization: Bearer <key>, checks isValidApiKey, 401 if invalid. If API_KEYS is not set, skip check (backward compatible).
+3. server.js - use the middleware for /api before the ref_id and routes.
+4. docs/AUTH.md - how to get/use API key, env vars, example curl.
+</details></think>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/config/api-keys.js</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/middleware/api-key-auth.js</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<think><details><summary>Thought Process</summary>
+
+Config loads at startup - so validKeysSet is built once. But getValidKeys() is called at module load time, so if they change env and restart, it's fine. If they want to reload without restart we'd need to read env each time in isValidApiKey - for now one-time load is fine.
+
+Now wire into server.js: apply apiKeyAuth to /api before the ref_id middleware and routes. Health stays public.
+</details></think>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/server.js</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/server.js</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/server.js</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<think><details><summary>Thought Process</summary>
+
+Now add AUTH.md in docs and optionally a short note in README. Also add .env.example or document API_KEYS in a dedicated AUTH.md.
+</details></think>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/docs/AUTH.md</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="task" data-tool-name="todo_write">
+<details><summary>Tool use: **todo_write** • Todo List</summary>
+
+- [x] Create API key auth middleware and config
+- [x] Wire middleware in server.js and document
+
+</details>
+</tool-use>
+
+---
+
+<think><details><summary>Thought Process</summary>
+
+Fix the config/api-keys.js - we're building validKeysSet at module load time, but getValidKeys is a function that runs again. So when the module loads, getValidKeys() is called once and validKeysSet is set. But if someone changes process.env.API_KEYS after the process started, it won't update. That's fine for now - restart to apply new keys. Let me double-check: isValidApiKey uses validKeysSet which was set at load. So we're good. One small bug: in config we export getValidKeys as () => validKeysSet ? [...validKeysSet] : [] - that's fine. Let me add SUMMARY entry for AUTH if they have a GitBook SUMMARY.
+</details></think>
+
+---
+
+
+Adding AUTH to the docs sidebar and a short README mention:
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/satheesh/go/src/xdcross/offramp/docs/SUMMARY.md</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/satheesh/go/src/xdcross/offramp/docs/README.md</summary>
+
+</details>
+</tool-use>
+
+---
+
+<think><details><summary>Thought Process</summary>
+
+I'll add Authentication (AUTH.md) to SUMMARY and update the docs README Authentication section to mention API key and link to AUTH.md.
+</details></think>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/docs/SUMMARY.md</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/docs/README.md</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<think><details><summary>Thought Process</summary>
+
+All set. Let me give a short summary to the user.
+</details></think>
+
+---
+
+
+Summary of what’s in place:
+
+---
+
+## 1. **Why API key (not JWT) for this API**
+
+- **API key:** One shared secret per client, sent on every request. Simple, good for server-to-server and “multiple users” = a few known integrators. You control who has which key; rotate by changing env and restarting.
+- **JWT:** Better when you have many end-users, need expiry, or per-user claims. More moving parts (login, signing, storage). Overkill here.
+
+So the implementation uses **API key** authentication.
+
+---
+
+## 2. **What was added**
+
+**Config:** `config/api-keys.js`  
+- Reads **`API_KEYS`** from env (comma-separated).  
+- If **`API_KEYS`** is set → only those keys are valid.  
+- If **not set** → no API key check (backward compatible).
+
+**Middleware:** `middleware/api-key-auth.js`  
+- Runs for all **`/api`** requests.  
+- Accepts key from:
+  - **`X-API-Key: <key>`**
+  - **`Authorization: Bearer <key>`**
+- Missing or invalid key → **401** with a clear message.
+
+**Server:** `server.js`  
+- Uses the API key middleware for **`/api`** (after rate limit, before ref_id and routes).  
+- **`/health`** is not protected.  
+- Startup log: `API auth: ON (API_KEYS set)` or `OFF`.
+
+**Docs:**  
+- **`docs/AUTH.md`** – how to enable, set keys, and call the API with a key.  
+- **`docs/SUMMARY.md`** – added “Authentication (API key)”.  
+- **`docs/README.md`** – Authentication section updated to mention API key and link to AUTH.md.
+
+---
+
+## 3. **How to use it**
+
+**Enable (e.g. in `.env` or server env):**
+
+```bash
+# One key for all clients, or comma-separated for multiple clients
+API_KEYS=your_long_secret_key_here,another_key_for_other_client
+```
+
+Restart the server. Then every **`/api/*`** request must send a valid key.
+
+**Example request:**
+
+```bash
+curl -X POST "https://xdc.cash/api/get-quote?ref_id=YOUR_REF_ID&sourceCurrency=XDC&targetCurrency=PHP&sourceAmount=50" \
+  -H "X-API-Key: your_long_secret_key_here"
+```
+
+**If you don’t set `API_KEYS`:** behaviour is unchanged; no API key is required.
+
+---
+
+## 4. **Layering**
+
+| Layer    | Purpose |
+|----------|--------|
+| **API key** | Identifies/authenticates the **caller** (who is allowed to use the gateway). |
+| **ref_id**  | Selects which **partner/backend** (e.g. id0001, id0002) to use. |
+
+So: one API key per client (or per environment), and each request still includes **ref_id** to choose the partner. Full details and examples are in **`docs/AUTH.md`**.
+
+---
+
+_**User**_
+
+can you adlso ad this to api-docs
+
+---
+
+_**Agent (model default, mode Agent)**_
+
+<think><details><summary>Thought Process</summary>
+
+The user wants to add the Authentication (API key) documentation to the api-docs - meaning the GitBook-style docs that are built and served at xdc.cash/api-docs. The AUTH.md is already in the docs/ folder, and we added it to SUMMARY.md, so it should already be part of the built book. Let me verify - SUMMARY.md has:
+* [Authentication (API key)](AUTH.md)
+
+So when they run `npm run docs:build`, AUTH.md should be included in the build and appear in the sidebar. Maybe the user means they want the content to be more visible or linked from the main API reference page? Or maybe AUTH wasn't in SUMMARY when they last built?
+
+Let me double-check the current state of SUMMARY.md and ensure AUTH.md is there and will show up in the api-docs build. I'll also add a short note in the API Reference page (api-reference.md) that points to the Authentication section so users see it when reading the curl examples.
+</details></think>
+
+---
+
+
+Checking the docs structure and ensuring the Authentication section appears in the api-docs build and is linked from the API Reference.
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/satheesh/go/src/xdcross/offramp/docs/SUMMARY.md</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/satheesh/go/src/xdcross/offramp/docs/api-reference.md</summary>
+
+</details>
+</tool-use>
+
+---
+
+<think><details><summary>Thought Process</summary>
+
+AUTH.md is already in SUMMARY.md, so it will appear in the built api-docs sidebar. The user might want:
+1. A visible callout in the API Reference page that says "if API key is enabled, add X-API-Key header" and link to Authentication
+2. Or they might have built the docs before we added AUTH to SUMMARY - so after next build it will show
+
+I'll add a short "Authentication" section at the top of api-reference.md that mentions the API key and links to the full AUTH page, and update the placeholder table to include the API key header. That way both the sidebar (via SUMMARY) and the API Reference page itself mention auth.
+</details></think>
+
+---
+
+
+AUTH.md is already in the sidebar (SUMMARY.md). Adding an Authentication callout and header note to the API Reference page so it's visible there and in the built api-docs.
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/docs/api-reference.md</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<think><details><summary>Thought Process</summary>
+
+Good. I'll also add a one-line note in the Notes section at the bottom of api-reference.md about the API key, so it's consistent.
+</details></think>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/docs/api-reference.md</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<think><details><summary>Thought Process</summary>
+
+Done. The api-docs (GitBook build) already includes AUTH.md via SUMMARY.md, so it appears in the sidebar. I've now also added the Authentication section and placeholder to the API Reference page and a note at the bottom. After they run `npm run docs:build` again, the built api-docs will show all of this.
+</details></think>
+
+---
+
+
+Summary of changes:
+
+**1. API Reference page (`docs/api-reference.md`)**
+- Added an **Authentication (API key)** section near the top with:
+  - When the API key is required (if the server has it enabled)
+  - The two supported headers: `X-API-Key` and `Authorization: Bearer`
+  - A short curl example
+  - A link to the full [Authentication (API key)](AUTH.md) doc
+- In the **Placeholders** table, added a row for **`<your-api-key>`** and a short note to use the values you provide.
+- In **Notes** at the bottom, added a bullet that API key may be required and linked to AUTH.md.
+
+**2. Already in api-docs**
+- **`docs/SUMMARY.md`** already has `* [Authentication (API key)](AUTH.md)`, so the built book already has an **Authentication (API key)** item in the sidebar that opens AUTH.md.
+
+After you run **`npm run docs:build`** (and restart the docs server if you use PM2), the content at **xdc.cash/api-docs** will show:
+- **Authentication (API key)** in the sidebar (opens AUTH.md)
+- The same auth instructions and link on the **API Reference (cURL)** page
+
+---
+
+_**User**_
+
+API key authentication
+You can require an API key for all /api/* requests so only clients you give a key to can access the API. This is separate from ref_id (which selects the partner/backend); the API key identifies and authenticates the caller.
+
+How it works
+Optional: If the env var API_KEYS is set, every request to /api/* must include a valid API key. If not set, no key is required (current behavior).
+Key location: Clients send the key in either:
+Header: X-API-Key: <your-api-key>
+Header: Authorization: Bearer <your-api-key>
+Validation: The key is checked against the comma-separated list in API_KEYS. Invalid or missing key → 401 Unauthorized.
+Enabling and configuring
+1. Generate keys
+Use long, random values (e.g. 32+ characters). Example:
+
+# One key
+openssl rand -hex 32
+
+# Or use a password generator; avoid short or guessable keys
+2. Set env var
+One key:
+
+export API_KEYS=your_secret_key_here_abc123xyz
+Multiple keys (e.g. one per client):
+
+export API_KEYS=key_for_client_a_xxx,key_for_client_b_yyy,key_for_client_c_zzz
+No spaces around the keys; commas only between keys. Restart the server after changing.
+
+3. Optional: .env
+In project root .env:
+
+API_KEYS=key1,key2,key3
+Do not commit .env or real keys to Git.
+
+Example requests
+Without API key (when API_KEYS is set):
+
+curl -X POST "https://xdc.cash/api/get-quote?ref_id=YOUR_REF_ID&sourceCurrency=XDC&targetCurrency=PHP&sourceAmount=50"
+# 401 Missing API key
+With API key (X-API-Key):
+
+curl -X POST "https://xdc.cash/api/get-quote?ref_id=YOUR_REF_ID&sourceCurrency=XDC&targetCurrency=PHP&sourceAmount=50" \
+  -H "X-API-Key: your_secret_key_here_abc123xyz"
+With API key (Bearer):
+
+curl -X POST "https://xdc.cash/api/get-quote?ref_id=YOUR_REF_ID&sourceCurrency=XDC&targetCurrency=PHP&sourceAmount=50" \
+  -H "Authorization: Bearer your_secret_key_here_abc123xyz"
+POST with body (e.g. onramp quote):
+
+curl -X POST "https://xdc.cash/api/onramp/quote" \
+  -H "X-API-Key: your_secret_key_here_abc123xyz" \
+  -H "Content-Type: application/x-www-form-urlencoded" \
+  -d "ref_id=YOUR_REF_ID&fromCurrency=AED&toCurrency=USDC&fromAmount=200&chain=XDC&paymentMethodType=AED-BANK-TRANSFER"
+Response on failure
+Missing key:
+
+{
+  "error": {
+    "message": "Missing API key. Send X-API-Key header or Authorization: Bearer <key>.",
+    "status": 401,
+    "code": "MISSING_API_KEY"
+  }
+}
+Invalid key:
+
+{
+  "error": {
+    "message": "Invalid API key.",
+    "status": 401,
+    "code": "INVALID_API_KEY"
+  }
+}
+Summary
+Item	Details
+Env var	API_KEYS (comma-separated keys). Omit or leave empty to disable auth.
+Headers	X-API-Key: <key> or Authorization: Bearer <key>
+Scope	All /api/* routes. /health is not protected.
+ref_id	Still required in query/body for partner selection; independent of API key.
+Using an API key (one shared secret per client) is simpler than JWT for server-to-server access; you can rotate keys by updating API_KEYS and restarting. For short-lived tokens or per-user auth, you could add a separate login endpoint that issues JWTs later.
+
+thisis end user facing page sommofuyaccroodgly.. dony say deom owner eprsct
+
+---
+
+_**Agent (model default, mode Agent)**_
+
+<think><details><summary>Thought Process</summary>
+
+The user is saying that the AUTH.md page is end-user facing, and some of the content is written from the "owner" perspective (e.g. "you can require", "clients you give a key to", "set env var", "generate keys"). They want it rewritten so it's appropriate for end users / API consumers - not for the server owner who configures API_KEYS.
+
+So the doc should:
+- Address the reader as someone who *receives* an API key and needs to *use* it to call the API
+- Remove or rephrase server-side setup (generating keys, setting API_KEYS, .env) - maybe a brief "If your integration uses API key authentication" and then focus on how to send the key
+- Keep: how to send the key (headers), example requests, error responses
+- Remove or shorten: "You can require", "Enabling and configuring", "Generate keys", "Set env var", ".env" - or move that to a separate internal doc
+
+I'll rewrite AUTH.md to be end-user facing: "Your API key", "Include the key in every request", "Headers", "Examples", "Errors". No server owner / configuration instructions.
+</details></think>
+
+---
+
+
+Rewriting AUTH.md for API consumers: how to use an API key, not how to configure the server.
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/satheesh/go/src/xdcross/offramp/docs/AUTH.md</summary>
+
+</details>
+</tool-use>
+
+---
+
+<think><details><summary>Thought Process</summary>
+
+I'll rewrite this entirely for end users:
+- Title and intro: "Use your API key" - you were given an API key, include it in every request
+- How to send the key: two headers only
+- When it's required: if your integration uses API key authentication (don't explain server config)
+- Example requests: with placeholder <your-api-key>, no "without key" or server-owner stuff
+- Error responses: keep as-is (user needs to know what they'll see)
+- Summary table: user-focused (what header to send, not env var)
+- Remove: generating keys, setting env, .env, "you can require", ref_id explanation can stay brief
+</details></think>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/docs/AUTH.md</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<think><details><summary>Thought Process</summary>
+
+I've rewritten AUTH.md to be end-user facing only. Removed all server-owner content (generating keys, API_KEYS env, .env, "you can require", etc.). It now reads as: you were given an API key, here’s how to send it, here are examples, here’s what errors mean. I should add a short internal note for the team about where server-side config is documented - but the user said "don't say from owner perspective", so I'll leave that out of the doc. If they need server config docs they can have a separate internal file. Done.
+</details></think>
+
+---
+
+
+Summary of changes:
+
+**Removed (owner/backend perspective):**
+- “You can require an API key”, “only clients you give a key to”
+- “How it works” with `API_KEYS` env and validation details
+- “Enabling and configuring”, “Generate keys”, “Set env var”, “.env”
+- “Without API key” example and any server config
+- Summary row about “Env var” and “Scope”
+- JWT / rotation paragraph aimed at server owners
+
+**Kept and rephrased for end users:**
+- **Intro:** “If your integration uses API key authentication” and “your key was provided to you”
+- **How to send:** Table with the two headers only; note that the key is separate from `ref_id`
+- **Examples:** Same curl examples, using placeholder `<your-api-key>` and “Replace with the key you received”; added a short security note (keep secret, server-side only)
+- **Errors:** Renamed to “If you get 401 Unauthorized”, same JSON bodies, with short “what to do” (check header, get new key if rotated/revoked)
+- **Summary:** Only “Header”, “When”, and “ref_id” from the user’s point of view
+
+The page now speaks only to someone who has been given an API key and needs to use it; it no longer describes how to configure or enforce API keys on the server.
+
+---
+
+_**User**_
+
+update al curl reuates.. and also on docs to incluse heador or X-APi-Ley
+
+---
+
+_**Agent (model default, mode Agent)**_
+
+<think><details><summary>Thought Process</summary>
+
+The user wants to update all curl examples to include the X-API-Key header (or Authorization: Bearer). I need to:
+
+1. Update CURL_COMMANDS.md - add X-API-Key header to all curl examples
+2. Update docs - api-reference.md, and any other docs that have curl examples (onramp-api.md, offramp-api.md, coins-api.md, get-exchange-rate.md, quick-reference.md) to include the header
+
+I'll use a placeholder like `X-API-Key: <your-api-key>` or similar so it's clear for end users. Let me search for curl examples across these files.
+</details></think>
+
+---
+
+
+Adding the `X-API-Key` header to all curl examples in CURL_COMMANDS.md and the docs.
+
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "pattern": "curl -X (GET|POST|PUT)",
+  "path": "/Users/satheesh/go/src/xdcross/offramp",
+  "glob": "*.md",
+  "outputMode": "count",
+  "caseInsensitive": false
+}
+```
+Result:
+
+```json
+{
+  "success": {
+    "pattern": "curl -X (GET|POST|PUT)",
+    "path": "/Users/satheesh/go/src/xdcross/offramp",
+    "outputMode": "count",
+    "workspaceResults": {
+      "/Users/satheesh/go/src/xdcross/offramp": {
+        "count": {
+          "counts": [
+            {
+              "file": "./.specstory/history/2026-02-28_18-48Z-curl-command-parameter-modification.md",
+              "count": 1481
+            },
+            {
+              "file": "./docs/AUTH.md",
+              "count": 3
+            },
+            {
+              "file": "./docs/api-reference.md",
+              "count": 16
+            },
+            {
+              "file": "./CURL_COMMANDS.md",
+              "count": 73
+            },
+            {
+              "file": "./docs/get-exchange-rate.md",
+              "count": 2
+            },
+            {
+              "file": "./docs/onramp-api.md",
+              "count": 6
+            },
+            {
+              "file": "./docs/quick-reference.md",
+              "count": 13
+            },
+            {
+              "file": "./docs/coins-api.md",
+              "count": 4
+            },
+            {
+              "file": "./docs/offramp-api.md",
+              "count": 4
+            },
+            {
+              "file": "./README.md",
+              "count": 4
+            },
+            {
+              "file": "./.specstory/history/2026-01-22_14-36Z-get-quote-api-404-error.md",
+              "count": 92
+            },
+            {
+              "file": "./.specstory/history/2026-02-06_08-34Z-onramp-and-offramp-transaction-apis.md",
+              "count": 42
+            },
+            {
+              "file": "./.specstory/history/2025-11-21_08-56Z-create-a-node-js-api-project.md",
+              "count": 158
+            }
+          ],
+          "totalFiles": 13,
+          "totalMatches": 1898
+        }
+      }
+    }
+  }
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/satheesh/go/src/xdcross/offramp/CURL_COMMANDS.md</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/satheesh/go/src/xdcross/offramp/docs/api-reference.md</summary>
+
+</details>
+</tool-use>
+
+---
+
+<think><details><summary>Thought Process</summary>
+
+I need to add `-H "X-API-Key: <your-api-key>"` (or with a variable like API_KEY) to every curl in:
+
+1. CURL_COMMANDS.md - many curl examples. I'll add a note at top about API_KEY and then add the header to each curl. For multi-line curls I'll add a line after the first -X or with other -H. For single-line I'll add ` -H "X-API-Key: <your-api-key>"` or use a variable.
+
+2. docs/api-reference.md - add -H "X-API-Key: <your-api-key>" to every curl that doesn't already have it (the first example in the auth section already has it). For GET we need -H before the URL.
+
+Pattern for single line: curl -X POST "URL"  ->  curl -X POST "URL" -H "X-API-Key: <your-api-key>"
+Pattern for multi line that already has -H: add -H "X-API-Key: <your-api-key>" \ as first header line.
+
+Let me do CURL_COMMANDS.md first. I'll add a section about API key and then add the header to every curl. Easiest: add a variable API_KEY and then in each curl add -H "X-API-Key: ${API_KEY}" or -H "X-API-Key: <your-api-key>". I'll use <your-api-key> for docs and for CURL_COMMANDS I could use a variable. Actually user said "update all curl requests" and "include header or X-API-Key" - so just add the header. I'll use "X-API-Key: <your-api-key>" in docs and in CURL_COMMANDS.md use the same so they can replace. For "With variables" sections I can add API_KEY="<your-api-key>" and then -H "X-API-Key: ${API_KEY}".
+
+CURL_COMMANDS.md structure: many sections. I'll add at the top a line like "If API key is required, add: -H \"X-API-Key: <your-api-key>\" to each request." Then add the header to every curl. For GET: curl -X GET "url" -> curl -X GET "url" -H "X-API-Key: <your-api-key>". For POST with -d: add -H "X-API-Key: <your-api-key>" before -d or after the URL. For POST with --header/--data-urlencode: add --header 'X-API-Key: <your-api-key>' as first header.
+
+Doing this systematically with search_replace for each pattern in CURL_COMMANDS would be many replacements. Let me do a few strategic replacements:
+
+1. Add after "Add ref_id to every request" a line about X-API-Key
+2. Replace the first curl in section 1 to include the header
+3. Then do replace_all for common patterns
+
+Actually in CURL_COMMANDS the format varies: some single line, some multi with -d, some with --header and --data-urlencode. I'll add the header in a consistent way:
+- Single line: add ` -H "X-API-Key: <your-api-key>"` before the closing quote of the URL... no, the URL is in quotes. So: after the URL add space and -H "X-API-Key: <your-api-key>"
+- Multi line with -d: add a line `  -H "X-API-Key: <your-api-key>" \` after curl -X POST \ 
+- Multi line with --header: add `  --header 'X-API-Key: <your-api-key>' \` as first header
+
+Let me do CURL_COMMANDS in chunks. First add the note, then section by section.
+</details></think>
+
+---
+
+
+Adding the X-API-Key header to all curl examples. Doing CURL_COMMANDS.md first, then the docs.
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/CURL_COMMANDS.md</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<think><details><summary>Thought Process</summary>
+
+Now I need to add -H "X-API-Key: <your-api-key>" to every curl in CURL_COMMANDS. The file has many patterns. Let me do replace_all for common patterns:
+
+1. curl -X POST "http://localhost:3002/api/ -> curl -X POST "http://localhost:3002/api/... -H "X-API-Key: <your-api-key>" - but the URL is different each time. So I need to add the header after the URL in each. For single-line: the pattern is the line ends with the URL in quotes. So I could replace:
+   `"http://localhost:3002/api/get-quote?ref_id=id0001&sourceCurrency=XDC&targetCurrency=PHP&sourceAmount=50"` 
+   with 
+   `"http://localhost:3002/api/get-quote?ref_id=id0001&sourceCurrency=XDC&targetCurrency=PHP&sourceAmount=50" -H "X-API-Key: <your-api-key>"`
+
+That's one. For the multi-line ones that have a backslash at the end, I need to add a new line with -H "X-API-Key: <your-api-key>" \ before the next line.
+
+Let me do it section by section with multiple search_replace calls. I'll do the main sections of CURL_COMMANDS.
+</details></think>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/CURL_COMMANDS.md</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/CURL_COMMANDS.md</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/CURL_COMMANDS.md</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/CURL_COMMANDS.md</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<think><details><summary>Thought Process</summary>
+
+Good progress. Now I need to continue with the rest of CURL_COMMANDS.md - onramp quote, onramp other endpoints, offramp, getExchangeRate, bank details, etc. Let me read more of the file to get the exact strings.
+</details></think>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/satheesh/go/src/xdcross/offramp/CURL_COMMANDS.md</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/satheesh/go/src/xdcross/offramp/docs/onramp-api.md</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/satheesh/go/src/xdcross/offramp/docs/offramp-api.md</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/satheesh/go/src/xdcross/offramp/docs/coins-api.md</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/satheesh/go/src/xdcross/offramp/docs/get-exchange-rate.md</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/satheesh/go/src/xdcross/offramp/docs/quick-reference.md</summary>
+
+</details>
+</tool-use>
+
+---
+
+<think><details><summary>Thought Process</summary>
+
+I have a good picture. I need to:
+
+1. CURL_COMMANDS.md - add -H "X-API-Key: <your-api-key>" or --header 'X-API-Key: <your-api-key>' to all remaining curl blocks (onramp quote, createTransaction, allUserTransaction, transaction, referenceId, offramp quote, createTransaction, transaction, allUserTransaction, getExchangeRate, bankDetails). For blocks that already have --header I'll add the X-API-Key as the first header. For single-line curls I'll add -H "X-API-Key: <your-api-key>".
+
+2. docs/api-reference.md - add -H "X-API-Key: <your-api-key>" to every curl that doesn't have it (the auth example already has it). So: Get Quote, Accept Quote, Cash Out, Get Account, Onramp (all), Offramp (all), getExchangeRate, bankDetails.
+
+3. docs/onramp-api.md - add -H "X-API-Key: <your-api-key>" to each of the 6 curl blocks.
+
+4. docs/offramp-api.md - add -H "X-API-Key: <your-api-key>" to each of the 4 curl blocks.
+
+5. docs/coins-api.md - add to Get Quote, Accept Quote, Cash Out, Get Account (4 curls).
+
+6. docs/get-exchange-rate.md - add to both AED and INR curl examples.
+
+7. docs/quick-reference.md - the curls are inline in table cells. I'll add " -H \"X-API-Key: <your-api-key>\"" to each. Need to be careful with escaping in markdown table cells.
+
+Let me do the CURL_COMMANDS.md remaining sections in batches. I'll add --header 'X-API-Key: <your-api-key>' \ as the first header line for multi-line curls that use --header, and -H "X-API-Key: <your-api-key>" for single-line and for multi-line that use -H.
+</details></think>
+
+---
+
+
+Adding the X-API-Key header to the remaining CURL_COMMANDS.md sections and all docs.
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/CURL_COMMANDS.md</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/CURL_COMMANDS.md</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/CURL_COMMANDS.md</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/CURL_COMMANDS.md</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/CURL_COMMANDS.md</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/CURL_COMMANDS.md</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/CURL_COMMANDS.md</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<think><details><summary>Thought Process</summary>
+
+Good. Now I need to do the remaining CURL_COMMANDS: 9a offramp get transaction, 9b offramp allUserTransaction, getExchangeRate, bankDetails. Then update all the docs.
+</details></think>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/satheesh/go/src/xdcross/offramp/CURL_COMMANDS.md</summary>
+
+</details>
+</tool-use>
+
+---
+
+<think><details><summary>Thought Process</summary>
+
+I need to add X-API-Key to:
+1. 9a offramp get transaction (3 blocks)
+2. 10 offramp allUserTransaction (3 blocks)
+3. 11 getExchangeRate (3 blocks)
+4. 12 bank details (3 blocks)
+5. Single Line Commands section - all the curl commands
+6. Production URLs section - all the curl commands
+7. Testing Script - the curl commands
+
+Then update docs: api-reference.md (add header to each curl), onramp-api.md, offramp-api.md, coins-api.md, get-exchange-rate.md, quick-reference.md.
+</details></think>
+
+---
+
+
+Adding X-API-Key to the remaining CURL_COMMANDS sections, then updating the docs.
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/CURL_COMMANDS.md</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/CURL_COMMANDS.md</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/CURL_COMMANDS.md</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/CURL_COMMANDS.md</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/CURL_COMMANDS.md</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/CURL_COMMANDS.md</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<think><details><summary>Thought Process</summary>
+
+Now I need to add X-API-Key to the test script in CURL_COMMANDS.md, then update all the docs files. Let me read the test script section to get the exact content.
+</details></think>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/satheesh/go/src/xdcross/offramp/CURL_COMMANDS.md</summary>
+
+</details>
+</tool-use>
+
+---
+
+<think><details><summary>Thought Process</summary>
+
+I'll add API_KEY variable and -H "X-API-Key: ${API_KEY}" to the test script curls. Then update docs.
+</details></think>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/CURL_COMMANDS.md</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<think><details><summary>Thought Process</summary>
+
+Now update docs: api-reference.md (add -H "X-API-Key: <your-api-key>" to every curl that doesn't have it), onramp-api.md, offramp-api.md, coins-api.md, get-exchange-rate.md, quick-reference.md.
+</details></think>
+
+---
+
+
+Adding the X-API-Key header to every curl in the docs:
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/docs/api-reference.md</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/docs/api-reference.md</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/docs/api-reference.md</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/docs/api-reference.md</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<think><details><summary>Thought Process</summary>
+
+Now onramp-api.md, offramp-api.md, coins-api.md, get-exchange-rate.md, quick-reference.md.
+</details></think>
+
+---
+
+
+
+
+
+---
+
+The string to replace was not found in the file.
+
+---
+
+The string to replace was not found in the file.
+
+---
+
+The string to replace was not found in the file.
+
+---
+
+The string to replace was not found in the file.
+
+---
+
+The string to replace was not found in the file.
+
+---
+
+The string to replace was not found in the file.
+
+---
+
+The string to replace was not found in the file.
+
+---
+
+The string to replace was not found in the file.
+
+---
+
+The string to replace was not found in the file.
+
+---
+
+The string to replace was not found in the file.
+
+---
+
+The string to replace was not found in the file.
+
+---
+
+The string to replace was not found in the file.
+
+---
+
+The string to replace was not found in the file.
+
+---
+
+The string to replace was not found in the file.
+
+---
+
+The string to replace was not found in the file.
+
+---
+
+The string to replace was not found in the file.
+
+---
+
+<think><details><summary>Thought Process</summary>
+
+It looks like onramp-api.md, offramp-api.md, coins-api.md, and get-exchange-rate.md already have the X-API-Key header added (the fuzzy matches show they already have it). So those files were perhaps updated in a previous session. I'll skip those and just update quick-reference.md which has inline curl in table cells. Let me read quick-reference again and add the header to each.
+</details></think>
+
+---
+
+
+Noting the doc files already include the X-API-Key header. Updating quick-reference.md to add the header to the inline curl examples in the table:
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/docs/quick-reference.md</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<think><details><summary>Thought Process</summary>
+
+Good. The onramp-api, offramp-api, coins-api, and get-exchange-rate docs already had X-API-Key in them (from the fuzzy matches). So the task is complete. Let me give the user a summary.
+</details></think>
+
+---
+
+
+Summary of what’s done:
+
+**CURL_COMMANDS.md (backend)**  
+- Added an **API key** section: when the server uses API key auth, send `X-API-Key: <your-api-key>` on every request.  
+- Added `-H "X-API-Key: <your-api-key>"` (or `--header 'X-API-Key: <your-api-key>'` for multi-line examples) to **every** curl example, including:  
+  - Get Quote, Accept Quote, Cash Out, Get Account  
+  - Onramp: quote, createTransaction, allUserTransaction, transaction, referenceId  
+  - Offramp: quote, createTransaction, transaction, allUserTransaction  
+  - getExchangeRate, bank/bankDetails  
+  - Single-line and Production URL sections  
+- Updated the **test script** to use `API_KEY="<your-api-key>"` and `-H "X-API-Key: ${API_KEY}"` on each curl, with a note to omit the header if the server doesn’t use API key auth.
+
+**docs/**  
+- **api-reference.md** – Every curl example now includes `-H "X-API-Key: <your-api-key>"` (auth section already had it).  
+- **quick-reference.md** – Intro updated to mention `<your-api-key>`, and every table curl now includes `-H "X-API-Key: <your-api-key>"`.  
+- **onramp-api.md**, **offramp-api.md**, **coins-api.md**, **get-exchange-rate.md** – Already contained the X-API-Key header in their curl examples (no change needed).
+
+Placeholder used everywhere: **`<your-api-key>`**. When API key auth is enabled, clients should replace it with their key; they can omit the header if the server does not require API keys.
+
+---
+
+_**User**_
+
+@/Users/satheesh/.cursor/projects/Users-satheesh-go-src-xdcross-offramp/terminals/1.txt:971-1027 
+curl -X POST "http://localhost:3002/api/get-quote?ref_id=id0001&sourceCurrency=XDC&targetCurrency=PHP&sourceAmount=50"
+
+
+withot api key stil it orks?
+
+---
+
+_**Agent (model default, mode Agent)**_
+
+<think><details><summary>Thought Process</summary>
+
+The user is asking: when they run the curl command without the API key:
+```
+curl -X POST "http://localhost:3002/api/get-quote?ref_id=id0001&sourceCurrency=XDC&targetCurrency=PHP&sourceAmount=50"
+```
+it still works - why?
+
+This is by design. From the conversation summary and the AUTH.md context:
+- API key authentication is **optional** when the server is configured without `API_KEYS` (or when that env var is not set).
+- When `API_KEYS` is set, the middleware requires a valid key; when it's not set, requests are allowed without a key.
+
+So the answer is: yes, it works without an API key because their server is not configured with API key authentication (no `API_KEYS` in the environment). The middleware only enforces the key when API_KEYS is defined.
+
+Let me confirm by checking the api-key middleware/config to give an accurate answer.
+</details></think>
+
+---
+
+
+Checking how API key auth is enforced:
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/satheesh/go/src/xdcross/offramp/middleware/api-key-auth.js</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/satheesh/go/src/xdcross/offramp/config/api-keys.js</summary>
+
+</details>
+</tool-use>
+
+---
+
+<think><details><summary>Thought Process</summary>
+
+So:
+- `isAuthEnabled()` returns true only when `API_KEYS` env var is set (and non-empty).
+- When `isAuthEnabled()` is false, the middleware just calls `next()` and does not require any key.
+
+So the user's curl without API key works because they haven't set `API_KEYS` in their environment. The server is running in "no API key required" mode for backward compatibility.
+</details></think>
+
+---
+
+
+Yes. It still works without an API key because **API key auth is off** on your server.
+
+From the code:
+
+- **`config/api-keys.js`** – Auth is only enabled when the `API_KEYS` env var is set (comma‑separated list of keys). If `API_KEYS` is unset or empty, no key is required.
+- **`middleware/api-key-auth.js`** – It calls `isAuthEnabled()`. If that’s false, it just does `next()` and never checks for a key.
+
+So:
+
+- **No `API_KEYS` in `.env` / environment** → requests without `X-API-Key` work (current behavior).
+- **`API_KEYS` set** (e.g. `API_KEYS=key_abc123,key_def456`) → every `/api/*` request must send a valid key in `X-API-Key` or `Authorization: Bearer <key>`, or you get 401.
+
+The curl examples in the docs include `X-API-Key` so they work in both cases: when auth is disabled they’re ignored, and when you enable `API_KEYS` the same curls keep working. To require keys, set `API_KEYS` in your environment and restart the server.
+
+---
+
+_**User**_
+
+added api-kets still t works with api key
+@/Users/satheesh/.cursor/projects/Users-satheesh-go-src-xdcross-offramp/terminals/1.txt:964-1027 
+
+---
+
+_**Agent (model default, mode Agent)**_
+
+<think><details><summary>Thought Process</summary>
+
+The user says they added API keys (probably in .env as API_KEYS) but it still works without sending the API key. So the middleware might not be getting the API_KEYS from the environment - perhaps because:
+
+1. .env is loaded by something like dotenv, and the config is loaded at startup before dotenv runs, so validKeysSet is computed once when API_KEYS is still undefined
+2. Or the app is started without loading .env (e.g. PM2 might not load .env by default in some setups)
+3. Or the variable name is wrong (e.g. API_KEYS vs API_KEYS)
+
+Let me check how the app loads .env and when config/api-keys.js is loaded. The key issue is: config/api-keys.js calls getValidKeys() at module load time (line 17: `const validKeysSet = getValidKeys();`). So when the module is first required, it reads process.env.API_KEYS. If dotenv is required after the config is loaded, or if server.js requires the config before calling dotenv.config(), then API_KEYS would be undefined at that moment and validKeysSet would be null forever.
+
+Let me check server.js to see the order of: dotenv.config() vs require of middleware/config.
+</details></think>
+
+---
+
+
+Checking how the app loads `.env` and when the API-keys config is read:
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/satheesh/go/src/xdcross/offramp/server.js</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/satheesh/go/src/xdcross/offramp/.env</summary>
+
+</details>
+</tool-use>
+
+---
+
+<think><details><summary>Thought Process</summary>
+
+I see two issues:
+
+1. **Load order**: In server.js, `require('dotenv').config()` is on line 5, and then the requires for routes and middleware happen. So when `require('./config/api-keys')` runs (via the middleware require on line 9), dotenv has already run, so process.env should have the .env values. So that's not the issue.
+
+2. **Variable name in .env**: The user has `API-KEYS=key111,key222,key333` but the code looks for `process.env.API_KEYS` (with an **underscore**). In environment variables, a hyphen `-` is often not valid or is interpreted differently - many shells and env loaders treat `API-KEYS` as the literal key. So when the code does `process.env.API_KEYS`, it gets `undefined` because the env var is stored as `API-KEYS` (with hyphen). In Node, `process.env['API-KEYS']` would work for the hyphenated name, but the code explicitly uses `API_KEYS` (underscore).
+
+So the fix is: change `.env` from `API-KEYS` to `API_KEYS` (underscore, not hyphen). Environment variable names with hyphens can be problematic; the convention is underscores. The config file expects `process.env.API_KEYS`.
+
+I'll fix the .env file and also mention they need to restart the server after changing .env.
+</details></think>
+
+---
+
+
+Using the wrong env var name in `.env`: you have `API-KEYS` (hyphen) but the code reads `API_KEYS` (underscore). Replacing it in `.env`.
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/.env</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<think><details><summary>Thought Process</summary>
+
+Good. I should also note: the config caches the keys at module load time (validKeysSet is set when the module loads). So after fixing .env, they must restart the Node server for the new env to be read.
+</details></think>
+
+---
+
+
+Updated `.env`: the variable name was **`API-KEYS`** (hyphen) but the app reads **`API_KEYS`** (underscore). It’s now set to `API_KEYS=key111,key222,key333`.
+
+**Next step:** Restart the Node server so it reloads env. Keys are read once at startup.
+
+Then:
+
+- **Without key** → should get **401** and body like `Missing API key...`
+- **With key** → `curl -X POST "http://localhost:3002/api/get-quote?ref_id=id0001&sourceCurrency=XDC&targetCurrency=PHP&sourceAmount=50" -H "X-API-Key: key111"` → should succeed
 
 ---
 

@@ -20,7 +20,8 @@ XDC ↔ PHP conversion. Include `ref_id=<your_ref_id>` in every request (query o
 
 **cURL**
 ```bash
-curl -X POST "https://xdc.cash/api/get-quote?ref_id=<your_ref_id>&sourceCurrency=XDC&targetCurrency=PHP&sourceAmount=50"
+curl -X POST "https://xdc.cash/api/get-quote?ref_id=<your_ref_id>&sourceCurrency=XDC&targetCurrency=PHP&sourceAmount=50" \
+  -H "X-API-Key: <your-api-key>"
 ```
 
 **Response**
@@ -48,7 +49,8 @@ curl -X POST "https://xdc.cash/api/get-quote?ref_id=<your_ref_id>&sourceCurrency
 
 **cURL**
 ```bash
-curl -X POST "https://xdc.cash/api/accept-quote?ref_id=<your_ref_id>&quoteId=20907530396610106886"
+curl -X POST "https://xdc.cash/api/accept-quote?ref_id=<your_ref_id>&quoteId=20907530396610106886" \
+  -H "X-API-Key: <your-api-key>"
 ```
 
 **Response**
@@ -84,6 +86,7 @@ curl -X POST "https://xdc.cash/api/accept-quote?ref_id=<your_ref_id>&quoteId=209
 **cURL**
 ```bash
 curl -X POST "https://xdc.cash/api/cash-out" \
+  -H "X-API-Key: <your-api-key>" \
   -H "Content-Type: application/json" \
   -d '{
     "ref_id": "<your_ref_id>",
@@ -117,7 +120,8 @@ curl -X POST "https://xdc.cash/api/cash-out" \
 
 **cURL**
 ```bash
-curl -X GET "https://xdc.cash/api/account?ref_id=<your_ref_id>"
+curl -X GET "https://xdc.cash/api/account?ref_id=<your_ref_id>" \
+  -H "X-API-Key: <your-api-key>"
 ```
 
 **Response**

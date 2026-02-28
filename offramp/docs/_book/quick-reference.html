@@ -99,7 +99,20 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2" data-path="api-reference.html">
+        <li class="chapter " data-level="1.2" data-path="AUTH.html">
+            
+                <a href="AUTH.html">
+            
+                    
+                    Authentication (API key)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="api-reference.html">
             
                 <a href="api-reference.html">
             
@@ -112,7 +125,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3" data-path="onramp-api.html">
+        <li class="chapter " data-level="1.4" data-path="onramp-api.html">
             
                 <a href="onramp-api.html">
             
@@ -125,7 +138,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4" data-path="offramp-api.html">
+        <li class="chapter " data-level="1.5" data-path="offramp-api.html">
             
                 <a href="offramp-api.html">
             
@@ -138,7 +151,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.5" data-path="get-exchange-rate.html">
+        <li class="chapter " data-level="1.6" data-path="get-exchange-rate.html">
             
                 <a href="get-exchange-rate.html">
             
@@ -151,7 +164,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.6" data-path="coins-api.html">
+        <li class="chapter " data-level="1.7" data-path="coins-api.html">
             
                 <a href="coins-api.html">
             
@@ -164,7 +177,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.7" data-path="quick-reference.html">
+        <li class="chapter active" data-level="1.8" data-path="quick-reference.html">
             
                 <a href="quick-reference.html">
             
@@ -223,7 +236,7 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="quick-reference">Quick Reference</h1>
-<p>Production base URL: <code>https://xdc.cash</code>. Replace <code>&lt;your_ref_id&gt;</code> with your reference ID in every request.</p>
+<p>Production base URL: <code>https://xdc.cash</code>. Replace <code>&lt;your_ref_id&gt;</code> with your reference ID and <code>&lt;your-api-key&gt;</code> with your API key (when required) in every request.</p>
 <h2 id="convert--coins">Convert / Coins</h2>
 <table>
 <thead>
@@ -235,19 +248,19 @@
 <tbody>
 <tr>
 <td>Get Quote</td>
-<td><code>curl -X POST "https://xdc.cash/api/get-quote?ref_id=&lt;your_ref_id&gt;&amp;sourceCurrency=XDC&amp;targetCurrency=PHP&amp;sourceAmount=50"</code></td>
+<td><code>curl -X POST "https://xdc.cash/api/get-quote?ref_id=&lt;your_ref_id&gt;&amp;sourceCurrency=XDC&amp;targetCurrency=PHP&amp;sourceAmount=50" -H "X-API-Key: &lt;your-api-key&gt;"</code></td>
 </tr>
 <tr>
 <td>Accept Quote</td>
-<td><code>curl -X POST "https://xdc.cash/api/accept-quote?ref_id=&lt;your_ref_id&gt;&amp;quoteId=QUOTE_ID"</code></td>
+<td><code>curl -X POST "https://xdc.cash/api/accept-quote?ref_id=&lt;your_ref_id&gt;&amp;quoteId=QUOTE_ID" -H "X-API-Key: &lt;your-api-key&gt;"</code></td>
 </tr>
 <tr>
 <td>Cash Out</td>
-<td><code>curl -X POST "https://xdc.cash/api/cash-out" -H "Content-Type: application/json" -d '{"ref_id":"&lt;your_ref_id&gt;","currency":"PHP","amount":"5",...}'</code></td>
+<td><code>curl -X POST "https://xdc.cash/api/cash-out" -H "X-API-Key: &lt;your-api-key&gt;" -H "Content-Type: application/json" -d '{"ref_id":"&lt;your_ref_id&gt;","currency":"PHP","amount":"5",...}'</code></td>
 </tr>
 <tr>
 <td>Account</td>
-<td><code>curl -X GET "https://xdc.cash/api/account?ref_id=&lt;your_ref_id&gt;"</code></td>
+<td><code>curl -X GET "https://xdc.cash/api/account?ref_id=&lt;your_ref_id&gt;" -H "X-API-Key: &lt;your-api-key&gt;"</code></td>
 </tr>
 </tbody>
 </table>
@@ -262,19 +275,19 @@
 <tbody>
 <tr>
 <td>Get Quote</td>
-<td><code>curl -X POST "https://xdc.cash/api/onramp/quote" -H "Content-Type: application/x-www-form-urlencoded" -d "ref_id=&lt;your_ref_id&gt;&amp;fromCurrency=AED&amp;toCurrency=USDC&amp;fromAmount=200&amp;chain=XDC&amp;paymentMethodType=AED-BANK-TRANSFER"</code></td>
+<td><code>curl -X POST "https://xdc.cash/api/onramp/quote" -H "X-API-Key: &lt;your-api-key&gt;" -H "Content-Type: application/x-www-form-urlencoded" -d "ref_id=&lt;your_ref_id&gt;&amp;fromCurrency=AED&amp;toCurrency=USDC&amp;fromAmount=200&amp;chain=XDC&amp;paymentMethodType=AED-BANK-TRANSFER"</code></td>
 </tr>
 <tr>
 <td>Create Transaction</td>
-<td><code>curl -X POST "https://xdc.cash/api/onramp/createTransaction" -H "Content-Type: application/x-www-form-urlencoded" -d "ref_id=&lt;your_ref_id&gt;&amp;chain=XDC&amp;toCurrency=USDC&amp;rate=3.7493&amp;fromAmount=200&amp;..."</code></td>
+<td><code>curl -X POST "https://xdc.cash/api/onramp/createTransaction" -H "X-API-Key: &lt;your-api-key&gt;" -H "Content-Type: application/x-www-form-urlencoded" -d "ref_id=&lt;your_ref_id&gt;&amp;chain=XDC&amp;toCurrency=USDC&amp;rate=3.7493&amp;fromAmount=200&amp;..."</code></td>
 </tr>
 <tr>
 <td>Get Transaction</td>
-<td><code>curl -X POST "https://xdc.cash/api/onramp/transaction" -H "Content-Type: application/x-www-form-urlencoded" -d "ref_id=&lt;your_ref_id&gt;&amp;transactionId=ID&amp;customerId=CID"</code></td>
+<td><code>curl -X POST "https://xdc.cash/api/onramp/transaction" -H "X-API-Key: &lt;your-api-key&gt;" -H "Content-Type: application/x-www-form-urlencoded" -d "ref_id=&lt;your_ref_id&gt;&amp;transactionId=ID&amp;customerId=CID"</code></td>
 </tr>
 <tr>
 <td>Update Reference ID</td>
-<td><code>curl -X PUT "https://xdc.cash/api/onramp/referenceId" -H "Content-Type: application/x-www-form-urlencoded" -d "ref_id=&lt;your_ref_id&gt;&amp;customerId=CID&amp;transactionId=ID&amp;referenceId=REF"</code></td>
+<td><code>curl -X PUT "https://xdc.cash/api/onramp/referenceId" -H "X-API-Key: &lt;your-api-key&gt;" -H "Content-Type: application/x-www-form-urlencoded" -d "ref_id=&lt;your_ref_id&gt;&amp;customerId=CID&amp;transactionId=ID&amp;referenceId=REF"</code></td>
 </tr>
 </tbody>
 </table>
@@ -289,15 +302,15 @@
 <tbody>
 <tr>
 <td>Get Quote</td>
-<td><code>curl -X POST "https://xdc.cash/api/offramp/quote" -H "Content-Type: application/x-www-form-urlencoded" -d "ref_id=&lt;your_ref_id&gt;&amp;fromCurrency=USDC&amp;toCurrency=PHP&amp;fromAmount=5&amp;chain=XDC"</code></td>
+<td><code>curl -X POST "https://xdc.cash/api/offramp/quote" -H "X-API-Key: &lt;your-api-key&gt;" -H "Content-Type: application/x-www-form-urlencoded" -d "ref_id=&lt;your_ref_id&gt;&amp;fromCurrency=USDC&amp;toCurrency=PHP&amp;fromAmount=5&amp;chain=XDC"</code></td>
 </tr>
 <tr>
 <td>Create Transaction</td>
-<td><code>curl -X POST "https://xdc.cash/api/offramp/createTransaction" -H "Content-Type: application/x-www-form-urlencoded" -d "ref_id=&lt;your_ref_id&gt;&amp;chain=XDC&amp;customerId=CID&amp;fiatAccountId=FID&amp;fromAmount=5&amp;fromCurrency=USDC&amp;rate=RATE&amp;toAmount=AMT&amp;toCurrency=PHP"</code></td>
+<td><code>curl -X POST "https://xdc.cash/api/offramp/createTransaction" -H "X-API-Key: &lt;your-api-key&gt;" -H "Content-Type: application/x-www-form-urlencoded" -d "ref_id=&lt;your_ref_id&gt;&amp;chain=XDC&amp;customerId=CID&amp;fiatAccountId=FID&amp;fromAmount=5&amp;fromCurrency=USDC&amp;rate=RATE&amp;toAmount=AMT&amp;toCurrency=PHP"</code></td>
 </tr>
 <tr>
 <td>Get Transaction</td>
-<td><code>curl -X POST "https://xdc.cash/api/offramp/transaction" -H "Content-Type: application/x-www-form-urlencoded" -d "ref_id=&lt;your_ref_id&gt;&amp;customerId=CID&amp;transactionId=ID"</code></td>
+<td><code>curl -X POST "https://xdc.cash/api/offramp/transaction" -H "X-API-Key: &lt;your-api-key&gt;" -H "Content-Type: application/x-www-form-urlencoded" -d "ref_id=&lt;your_ref_id&gt;&amp;customerId=CID&amp;transactionId=ID"</code></td>
 </tr>
 </tbody>
 </table>
@@ -312,11 +325,11 @@
 <tbody>
 <tr>
 <td>AED→PHP</td>
-<td><code>curl -X POST "https://xdc.cash/api/getExchangeRate" -H "Content-Type: application/x-www-form-urlencoded" -d "ref_id=&lt;your_ref_id&gt;&amp;fromCurrency=AED&amp;toCurrency=PHP&amp;fromAmount=200&amp;chain=XDC&amp;paymentMethodType=AED-BANK-TRANSFER"</code></td>
+<td><code>curl -X POST "https://xdc.cash/api/getExchangeRate" -H "X-API-Key: &lt;your-api-key&gt;" -H "Content-Type: application/x-www-form-urlencoded" -d "ref_id=&lt;your_ref_id&gt;&amp;fromCurrency=AED&amp;toCurrency=PHP&amp;fromAmount=200&amp;chain=XDC&amp;paymentMethodType=AED-BANK-TRANSFER"</code></td>
 </tr>
 <tr>
 <td>INR→PHP</td>
-<td><code>curl -X POST "https://xdc.cash/api/getExchangeRate" -H "Content-Type: application/x-www-form-urlencoded" -d "ref_id=&lt;your_ref_id&gt;&amp;fromCurrency=INR&amp;toCurrency=PHP&amp;fromAmount=1000&amp;chain=XDC&amp;paymentMethodType=UPI"</code></td>
+<td><code>curl -X POST "https://xdc.cash/api/getExchangeRate" -H "X-API-Key: &lt;your-api-key&gt;" -H "Content-Type: application/x-www-form-urlencoded" -d "ref_id=&lt;your_ref_id&gt;&amp;fromCurrency=INR&amp;toCurrency=PHP&amp;fromAmount=1000&amp;chain=XDC&amp;paymentMethodType=UPI"</code></td>
 </tr>
 </tbody>
 </table>
@@ -359,7 +372,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Quick Reference","level":"1.7","depth":1,"previous":{"title":"Coins.ph API","level":"1.6","depth":1,"path":"coins-api.md","ref":"coins-api.md","articles":[]},"dir":"ltr"},"config":{"plugins":["livereload"],"root":".","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"XDC Cash","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Offramp API","language":"en","gitbook":"*","description":"API documentation for Offramp/XDC Cash integration"},"file":{"path":"quick-reference.md","mtime":"2026-02-28T20:30:00.645Z","type":"markdown"},"gitbook":{"version":"4.0.8","time":"2026-02-28T20:30:18.015Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Quick Reference","level":"1.8","depth":1,"previous":{"title":"Coins.ph API","level":"1.7","depth":1,"path":"coins-api.md","ref":"coins-api.md","articles":[]},"dir":"ltr"},"config":{"plugins":["livereload"],"root":".","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"XDC Cash","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Offramp API","language":"en","gitbook":"*","description":"API documentation for Offramp/XDC Cash integration"},"file":{"path":"quick-reference.md","mtime":"2026-02-28T21:22:32.087Z","type":"markdown"},"gitbook":{"version":"4.0.8","time":"2026-02-28T21:44:37.023Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

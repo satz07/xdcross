@@ -24,6 +24,7 @@ Fetch conversion rate and quote for USDC → PHP.
 **cURL**
 ```bash
 curl -X POST "https://xdc.cash/api/offramp/quote" \
+  -H "X-API-Key: <your-api-key>" \
   -H "Content-Type: application/x-www-form-urlencoded" \
   -d "ref_id=<your_ref_id>&fromCurrency=USDC&toCurrency=PHP&fromAmount=5&chain=XDC"
 ```
@@ -77,6 +78,7 @@ Initiate an offramp (sell) transaction. Use values from the quote response.
 **cURL**
 ```bash
 curl -X POST "https://xdc.cash/api/offramp/createTransaction" \
+  -H "X-API-Key: <your-api-key>" \
   -H "Content-Type: application/x-www-form-urlencoded" \
   -d "ref_id=<your_ref_id>&chain=XDC&customerId=YourCustomerId&fiatAccountId=123456789&fromAmount=5&fromCurrency=USDC&rate=58.3023&toAmount=269.78&toCurrency=PHP&merchantRecognitionId=ref123"
 ```
@@ -116,6 +118,7 @@ Fetch a single offramp transaction by ID.
 **cURL**
 ```bash
 curl -X POST "https://xdc.cash/api/offramp/transaction" \
+  -H "X-API-Key: <your-api-key>" \
   -H "Content-Type: application/x-www-form-urlencoded" \
   -d "ref_id=<your_ref_id>&customerId=YourCustomerId&transactionId=443468"
 ```
@@ -157,6 +160,7 @@ List all offramp transactions for a customer.
 **cURL**
 ```bash
 curl -X POST "https://xdc.cash/api/offramp/allUserTransaction" \
+  -H "X-API-Key: <your-api-key>" \
   -H "Content-Type: application/x-www-form-urlencoded" \
   -d "ref_id=<your_ref_id>&customerId=YourCustomerId&page=1&pageSize=20"
 ```

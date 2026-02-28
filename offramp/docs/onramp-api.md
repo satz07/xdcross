@@ -26,6 +26,7 @@ Fetch conversion rate and quote for fiat → USDC.
 **cURL**
 ```bash
 curl -X POST "https://xdc.cash/api/onramp/quote" \
+  -H "X-API-Key: <your-api-key>" \
   -H "Content-Type: application/x-www-form-urlencoded" \
   -d "ref_id=<your_ref_id>&fromCurrency=AED&toCurrency=USDC&fromAmount=200&chain=XDC&paymentMethodType=AED-BANK-TRANSFER"
 ```
@@ -81,6 +82,7 @@ Initiate an onramp transaction. Use values from the quote response.
 **cURL**
 ```bash
 curl -X POST "https://xdc.cash/api/onramp/createTransaction" \
+  -H "X-API-Key: <your-api-key>" \
   -H "Content-Type: application/x-www-form-urlencoded" \
   -d "ref_id=<your_ref_id>&chain=XDC&toCurrency=USDC&rate=3.7493&fromAmount=200&depositAddress=0xYourWallet&customerId=YourCustomerId&toAmount=51.1&fromCurrency=AED&paymentMethodType=AED-BANK-TRANSFER&merchantRecognitionId=ref123&fiatAccountId=YourFiatAccountId"
 ```
@@ -120,6 +122,7 @@ Fetch a single onramp transaction by ID.
 **cURL**
 ```bash
 curl -X POST "https://xdc.cash/api/onramp/transaction" \
+  -H "X-API-Key: <your-api-key>" \
   -H "Content-Type: application/x-www-form-urlencoded" \
   -d "ref_id=<your_ref_id>&transactionId=1560780&customerId=YourCustomerId"
 ```
@@ -161,6 +164,7 @@ List all onramp transactions for a customer.
 **cURL**
 ```bash
 curl -X POST "https://xdc.cash/api/onramp/allUserTransaction" \
+  -H "X-API-Key: <your-api-key>" \
   -H "Content-Type: application/x-www-form-urlencoded" \
   -d "ref_id=<your_ref_id>&customerId=YourCustomerId&page=1&pageSize=20"
 ```
@@ -198,6 +202,7 @@ Update the merchant reference ID for an onramp transaction.
 **cURL**
 ```bash
 curl -X PUT "https://xdc.cash/api/onramp/referenceId" \
+  -H "X-API-Key: <your-api-key>" \
   -H "Content-Type: application/x-www-form-urlencoded" \
   -d "ref_id=<your_ref_id>&customerId=YourCustomerId&transactionId=1562612&referenceId=TRN12345"
 ```
@@ -234,6 +239,7 @@ Fetch bank payment details for an onramp transaction (e.g. for bank transfer flo
 **cURL**
 ```bash
 curl -X POST "https://xdc.cash/api/bank/bankDetails" \
+  -H "X-API-Key: <your-api-key>" \
   -H "Content-Type: application/x-www-form-urlencoded" \
   -d "ref_id=<your_ref_id>&customerId=YourCustomerId&fromCurrency=AED&transactionId=1545994&paymentMethodType=AED-BANK-TRANSFER"
 ```

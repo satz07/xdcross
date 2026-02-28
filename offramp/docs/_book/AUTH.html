@@ -3,7 +3,7 @@
 <html lang="en" >
     <head>
         <meta charset="UTF-8">
-        <title>Welcome · Offramp API</title>
+        <title>Authentication (API key) · Offramp API</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="HonKit 4.0.8">
@@ -56,8 +56,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="AUTH.html" />
+    <link rel="next" href="api-reference.html" />
     
+    
+    <link rel="prev" href="./" />
     
 
     </head>
@@ -86,7 +88,7 @@
         
         
     
-        <li class="chapter active" data-level="1.1" data-path="./">
+        <li class="chapter " data-level="1.1" data-path="./">
             
                 <a href="./">
             
@@ -99,7 +101,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2" data-path="AUTH.html">
+        <li class="chapter active" data-level="1.2" data-path="AUTH.html">
             
                 <a href="AUTH.html">
             
@@ -220,7 +222,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >Welcome</a>
+        <a href="." >Authentication (API key)</a>
     </h1>
 </div>
 
@@ -235,41 +237,92 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="welcome-to-xdc-cash">Welcome to XDC Cash</h1>
-<p><strong>Lightning-fast onramp and offramp</strong> ⚡️</p>
-<p>Welcome to XDC Cash API documentation. We offer robust APIs to integrate onramp and offramp services—enabling users to convert between fiat (AED, INR, PHP) and crypto (USDC on XDC) seamlessly.</p>
+                                <h1 id="api-key-authentication">API key authentication</h1>
+<p>If your integration uses <strong>API key authentication</strong>, you must send your API key with every request to the API. Your key was provided to you when you signed up; do not share it or expose it in client-side code.</p>
 <hr></hr>
-<h2 id="introduction">Introduction</h2>
-<p>XDC Cash opens the gateway for your users into crypto. Whether it's purchasing USDC, sending remittance to Philippines, or seamless conversions between fiat and crypto across UAE, India, and Philippines—we have you covered.</p>
-<p>With <strong>production-ready APIs</strong> and clear documentation, XDC Cash enables businesses to onboard users for <strong>onramp</strong> (fiat → crypto) and <strong>offramp</strong> (crypto → fiat) operations.</p>
+<h2 id="how-to-send-your-api-key">How to send your API key</h2>
+<p>Send the key in <strong>one</strong> of these headers:</p>
+<table>
+<thead>
+<tr>
+<th>Header</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>X-API-Key</code></td>
+<td><code>X-API-Key: &lt;your-api-key&gt;</code></td>
+</tr>
+<tr>
+<td><code>Authorization</code></td>
+<td><code>Authorization: Bearer &lt;your-api-key&gt;</code></td>
+</tr>
+</tbody>
+</table>
+<p>Use the same key for all requests. The key is separate from your <strong>reference ID</strong> (<code>ref_id</code>), which you still send in the query or body to select the service.</p>
 <hr></hr>
-<h2 id="key-features">Key Features</h2>
-<ul>
-<li><strong>Multi-Currency Support:</strong> AED (UAE), INR (India), PHP (Philippines), USDC (XDC chain)</li>
-<li><strong>Multiple Payment Methods:</strong> Bank transfer, UPI, IMPS, InstaPay, PESONet, and more</li>
-<li><strong>Competitive Rates:</strong> Transparent conversion rates with fee breakdown</li>
-<li><strong>Production API:</strong> Single base URL for all operations</li>
-</ul>
+<h2 id="example-requests">Example requests</h2>
+<p><strong>GET or POST with query (e.g. get-quote):</strong></p>
+<pre><code class="lang-bash">curl -X POST <span class="hljs-string">"https://xdc.cash/api/get-quote?ref_id=YOUR_REF_ID&amp;sourceCurrency=XDC&amp;targetCurrency=PHP&amp;sourceAmount=50"</span> \
+  -H <span class="hljs-string">"X-API-Key: &lt;your-api-key&gt;"</span>
+</code></pre>
+<p><strong>POST with body (e.g. onramp quote):</strong></p>
+<pre><code class="lang-bash">curl -X POST <span class="hljs-string">"https://xdc.cash/api/onramp/quote"</span> \
+  -H <span class="hljs-string">"X-API-Key: &lt;your-api-key&gt;"</span> \
+  -H <span class="hljs-string">"Content-Type: application/x-www-form-urlencoded"</span> \
+  -d <span class="hljs-string">"ref_id=YOUR_REF_ID&amp;fromCurrency=AED&amp;toCurrency=USDC&amp;fromAmount=200&amp;chain=XDC&amp;paymentMethodType=AED-BANK-TRANSFER"</span>
+</code></pre>
+<p><strong>Using Bearer instead:</strong></p>
+<pre><code class="lang-bash">curl -X POST <span class="hljs-string">"https://xdc.cash/api/get-quote?ref_id=YOUR_REF_ID&amp;sourceCurrency=XDC&amp;targetCurrency=PHP&amp;sourceAmount=50"</span> \
+  -H <span class="hljs-string">"Authorization: Bearer &lt;your-api-key&gt;"</span>
+</code></pre>
+<p>Replace <code>&lt;your-api-key&gt;</code> with the key you received. Keep it secret and use it only in server-side or secure environments.</p>
 <hr></hr>
-<h2 id="base-url">Base URL</h2>
-<p>All API requests use the production endpoint:</p>
-<pre><code>https://xdc.cash
-</code></pre><p><strong>Path format:</strong> <code>/api/{endpoint}</code> — e.g. <code>/api/get-quote</code>, <code>/api/onramp/quote</code>.</p>
-<p><strong>Reference ID:</strong> Pass your reference ID in every request as <code>ref_id</code> (in the query string for GET, or in the request body for POST). Use the value provided to you when integrating.</p>
+<h2 id="if-you-get-401-unauthorized">If you get 401 Unauthorized</h2>
+<p><strong>Missing API key</strong> — you did not send a key, or the header name is wrong:</p>
+<pre><code class="lang-json">{
+  <span class="hljs-string">"error"</span>: {
+    <span class="hljs-string">"message"</span>: <span class="hljs-string">"Missing API key. Send X-API-Key header or Authorization: Bearer &lt;key&gt;."</span>,
+    <span class="hljs-string">"status"</span>: <span class="hljs-number">401</span>,
+    <span class="hljs-string">"code"</span>: <span class="hljs-string">"MISSING_API_KEY"</span>
+  }
+}
+</code></pre>
+<p><strong>Invalid API key</strong> — the key is wrong or no longer valid:</p>
+<pre><code class="lang-json">{
+  <span class="hljs-string">"error"</span>: {
+    <span class="hljs-string">"message"</span>: <span class="hljs-string">"Invalid API key."</span>,
+    <span class="hljs-string">"status"</span>: <span class="hljs-number">401</span>,
+    <span class="hljs-string">"code"</span>: <span class="hljs-string">"INVALID_API_KEY"</span>
+  }
+}
+</code></pre>
+<p>If you see these, check that you are sending the correct key in <code>X-API-Key</code> or <code>Authorization: Bearer &lt;key&gt;</code>. If the key was rotated or revoked, you will need a new key from your provider.</p>
 <hr></hr>
-<h2 id="authentication">Authentication</h2>
-<ul>
-<li><strong>Reference ID:</strong> Include your <code>ref_id</code> in every request (query or body) to select the integration.</li>
-<li><strong>API key (optional):</strong> If the server has API key authentication enabled, send your key in the <code>X-API-Key</code> header or <code>Authorization: Bearer &lt;key&gt;</code>. See <a href="AUTH.html">Authentication (API key)</a> for setup and examples.</li>
-</ul>
-<p><strong>Content-Type:</strong> <code>application/x-www-form-urlencoded</code> for most endpoints; <code>application/json</code> for Cash Out.</p>
-<hr></hr>
-<h2 id="quick-links">Quick Links</h2>
-<ul>
-<li><a href="onramp-api.html">Onramp Operations</a> — Fetch quote, create transaction, get transaction status</li>
-<li><a href="offramp-api.html">Offramp Operations</a> — Sell crypto, fetch quote, transaction status</li>
-<li><a href="get-exchange-rate.html">Get Exchange Rate</a> — Combined AED/INR → PHP rate in one call</li>
-</ul>
+<h2 id="summary">Summary</h2>
+<table>
+<thead>
+<tr>
+<th>What</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Header</strong></td>
+<td><code>X-API-Key: &lt;your-api-key&gt;</code> or <code>Authorization: Bearer &lt;your-api-key&gt;</code></td>
+</tr>
+<tr>
+<td><strong>When</strong></td>
+<td>On every request to <code>/api/*</code> if your integration uses API key authentication</td>
+</tr>
+<tr>
+<td><strong>ref_id</strong></td>
+<td>Still required in query or body; it is separate from the API key</td>
+</tr>
+</tbody>
+</table>
 
                                 
                                 </section>
@@ -297,8 +350,12 @@
 
             
                 
+                <a href="./" class="navigation navigation-prev " aria-label="Previous page: Welcome">
+                    <i class="fa fa-angle-left"></i>
+                </a>
                 
-                <a href="AUTH.html" class="navigation navigation-next navigation-unique" aria-label="Next page: Authentication (API key)">
+                
+                <a href="api-reference.html" class="navigation navigation-next " aria-label="Next page: API Reference (cURL)">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -309,7 +366,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Welcome","level":"1.1","depth":1,"next":{"title":"Authentication (API key)","level":"1.2","depth":1,"path":"AUTH.md","ref":"AUTH.md","articles":[]},"dir":"ltr"},"config":{"plugins":["livereload"],"root":".","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"XDC Cash","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Offramp API","language":"en","gitbook":"*","description":"API documentation for Offramp/XDC Cash integration"},"file":{"path":"README.md","mtime":"2026-02-28T21:01:07.945Z","type":"markdown"},"gitbook":{"version":"4.0.8","time":"2026-02-28T21:44:37.023Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Authentication (API key)","level":"1.2","depth":1,"next":{"title":"API Reference (cURL)","level":"1.3","depth":1,"path":"api-reference.md","ref":"api-reference.md","articles":[]},"previous":{"title":"Welcome","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[]},"dir":"ltr"},"config":{"plugins":["livereload"],"root":".","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"XDC Cash","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Offramp API","language":"en","gitbook":"*","description":"API documentation for Offramp/XDC Cash integration"},"file":{"path":"AUTH.md","mtime":"2026-02-28T21:22:48.424Z","type":"markdown"},"gitbook":{"version":"4.0.8","time":"2026-02-28T21:44:37.023Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

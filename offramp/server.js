@@ -6,6 +6,8 @@ require('dotenv').config();
 
 const coinsRoutes = require('./routes/coins');
 const onrampRoutes = require('./routes/onramp');
+const { apiKeyAuth } = require('./middleware/api-key-auth');
+const { isAuthEnabled } = require('./config/api-keys');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -53,6 +55,9 @@ const limiter = rateLimit({
 });
 app.use('/api/', limiter);
 
+// API key authentication (optional: set API_KEYS env to enable)
+app.use('/api', apiKeyAuth);
+
 // Health check endpoint
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
@@ -94,6 +99,7 @@ app.use((req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
   console.log(`Health check: http://localhost:${PORT}/health`);
+  console.log(`API auth: ${isAuthEnabled() ? 'ON (API_KEYS set)' : 'OFF (set API_KEYS to require API key)'}`);
   console.log(`API Routes: http://localhost:${PORT}/api/... (use ref_id in query or body)`);
   console.log(`Example: http://localhost:${PORT}/api/get-quote?ref_id=id0001&sourceCurrency=XDC&targetCurrency=PHP&sourceAmount=50`);
 });

@@ -39,7 +39,8 @@ https://xdc.cash
 
 ## Authentication
 
-API authentication is handled automatically. Include your `ref_id` (reference ID) and credentials when setting up the integration. No additional headers required for standard requests.
+- **Reference ID:** Include your `ref_id` in every request (query or body) to select the integration.
+- **API key (optional):** If the server has API key authentication enabled, send your key in the `X-API-Key` header or `Authorization: Bearer <key>`. See [Authentication (API key)](AUTH.md) for setup and examples.
 
 **Content-Type:** `application/x-www-form-urlencoded` for most endpoints; `application/json` for Cash Out.
 

@@ -28,6 +28,7 @@ Combined endpoint that returns the final PHP amount for a given fiat amount (AED
 **cURL**
 ```bash
 curl -X POST "https://xdc.cash/api/getExchangeRate" \
+  -H "X-API-Key: <your-api-key>" \
   -H "Content-Type: application/x-www-form-urlencoded" \
   -d "ref_id=<your_ref_id>&fromCurrency=AED&toCurrency=PHP&fromAmount=200&chain=XDC&paymentMethodType=AED-BANK-TRANSFER"
 ```
@@ -48,6 +49,7 @@ paymentMethodType=AED-BANK-TRANSFER
 **cURL**
 ```bash
 curl -X POST "https://xdc.cash/api/getExchangeRate" \
+  -H "X-API-Key: <your-api-key>" \
   -H "Content-Type: application/x-www-form-urlencoded" \
   -d "ref_id=<your_ref_id>&fromCurrency=INR&toCurrency=PHP&fromAmount=1000&chain=XDC&paymentMethodType=UPI"
 ```
