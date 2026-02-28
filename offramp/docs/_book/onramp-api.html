@@ -1,0 +1,742 @@
+
+<!DOCTYPE HTML>
+<html lang="en" >
+    <head>
+        <meta charset="UTF-8">
+        <title>Onramp Operations · Offramp API</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="HonKit 6.1.6">
+        <meta name="author" content="XDC Cash">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/@honkit/honkit-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/@honkit/honkit-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="offramp-api.html" />
+    
+    
+    <link rel="prev" href="./" />
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Welcome
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2" data-path="onramp-api.html">
+            
+                <a href="onramp-api.html">
+            
+                    
+                    Onramp Operations
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="offramp-api.html">
+            
+                <a href="offramp-api.html">
+            
+                    
+                    Offramp Operations
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="get-exchange-rate.html">
+            
+                <a href="get-exchange-rate.html">
+            
+                    
+                    Get Exchange Rate
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="coins-api.html">
+            
+                <a href="coins-api.html">
+            
+                    
+                    Coins.ph API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="quick-reference.html">
+            
+                <a href="quick-reference.html">
+            
+                    
+                    Quick Reference
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="testing.html">
+            
+                <a href="testing.html">
+            
+                    
+                    Build & Publish
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://github.com/honkit/honkit" target="blank" class="gitbook-link">
+            Published with HonKit
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >Onramp Operations</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="onramp-operations">Onramp Operations</h1>
+<p>Convert fiat (AED, INR) to USDC on the XDC chain. All endpoints use partner ID <code>id0002</code>.</p>
+<p><strong>Base URL:</strong> <code>https://xdc.cash/api/id0002</code></p>
+<hr></hr>
+<h2 id="get-quote">Get Quote</h2>
+<p>Fetch conversion rate and quote for fiat → USDC.</p>
+<p><strong>Endpoint:</strong> <code>POST /onramp/quote</code></p>
+<p><strong>Request</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fromCurrency</td>
+<td>string</td>
+<td>Yes</td>
+<td>Source fiat: <code>AED</code>, <code>INR</code></td>
+</tr>
+<tr>
+<td>toCurrency</td>
+<td>string</td>
+<td>Yes</td>
+<td>Target: <code>USDC</code></td>
+</tr>
+<tr>
+<td>fromAmount</td>
+<td>string</td>
+<td>Yes</td>
+<td>Amount to convert</td>
+</tr>
+<tr>
+<td>chain</td>
+<td>string</td>
+<td>Yes</td>
+<td><code>XDC</code></td>
+</tr>
+<tr>
+<td>paymentMethodType</td>
+<td>string</td>
+<td>Yes</td>
+<td><code>AED-BANK-TRANSFER</code> (UAE) or <code>UPI</code>, <code>IMPS</code> (India)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>cURL</strong></p>
+<pre><code class="lang-bash">curl -X POST <span class="hljs-string">"https://xdc.cash/api/id0002/onramp/quote"</span> \
+  -H <span class="hljs-string">"Content-Type: application/x-www-form-urlencoded"</span> \
+  -d <span class="hljs-string">"fromCurrency=AED&amp;toCurrency=USDC&amp;fromAmount=200&amp;chain=XDC&amp;paymentMethodType=AED-BANK-TRANSFER"</span>
+</code></pre>
+<p><strong>Response</strong></p>
+<pre><code class="lang-json">{
+  <span class="hljs-string">"status"</span>: <span class="hljs-number">1</span>,
+  <span class="hljs-string">"code"</span>: <span class="hljs-number">200</span>,
+  <span class="hljs-string">"data"</span>: {
+    <span class="hljs-string">"fromCurrency"</span>: <span class="hljs-string">"AED"</span>,
+    <span class="hljs-string">"toCurrency"</span>: <span class="hljs-string">"USDC"</span>,
+    <span class="hljs-string">"fromAmount"</span>: <span class="hljs-string">"200"</span>,
+    <span class="hljs-string">"toAmount"</span>: <span class="hljs-string">"51.11"</span>,
+    <span class="hljs-string">"rate"</span>: <span class="hljs-string">"3.7486"</span>,
+    <span class="hljs-string">"fees"</span>: [
+      {
+        <span class="hljs-string">"type"</span>: <span class="hljs-string">"fiat"</span>,
+        <span class="hljs-string">"onrampFee"</span>: <span class="hljs-string">"0"</span>,
+        <span class="hljs-string">"clientFee"</span>: <span class="hljs-string">"0"</span>,
+        <span class="hljs-string">"gatewayFee"</span>: <span class="hljs-string">"2.5"</span>,
+        <span class="hljs-string">"gasFee"</span>: <span class="hljs-string">"0"</span>
+      }
+    ]
+  }
+}
+</code></pre>
+<hr></hr>
+<h2 id="create-transaction">Create Transaction</h2>
+<p>Initiate an onramp transaction. Use values from the quote response.</p>
+<p><strong>Endpoint:</strong> <code>POST /onramp/createTransaction</code></p>
+<p><strong>Request</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>chain</td>
+<td>string</td>
+<td>Yes</td>
+<td><code>XDC</code></td>
+</tr>
+<tr>
+<td>fromCurrency</td>
+<td>string</td>
+<td>Yes</td>
+<td><code>AED</code> or <code>INR</code></td>
+</tr>
+<tr>
+<td>toCurrency</td>
+<td>string</td>
+<td>Yes</td>
+<td><code>USDC</code></td>
+</tr>
+<tr>
+<td>fromAmount</td>
+<td>string</td>
+<td>Yes</td>
+<td>Fiat amount</td>
+</tr>
+<tr>
+<td>toAmount</td>
+<td>string</td>
+<td>Yes</td>
+<td>USDC amount (from quote)</td>
+</tr>
+<tr>
+<td>rate</td>
+<td>string</td>
+<td>Yes</td>
+<td>Rate (from quote)</td>
+</tr>
+<tr>
+<td>paymentMethodType</td>
+<td>string</td>
+<td>Yes</td>
+<td>Payment method</td>
+</tr>
+<tr>
+<td>depositAddress</td>
+<td>string</td>
+<td>Yes</td>
+<td>User's XDC wallet address</td>
+</tr>
+<tr>
+<td>customerId</td>
+<td>string</td>
+<td>Yes</td>
+<td>Your customer identifier</td>
+</tr>
+<tr>
+<td>fiatAccountId</td>
+<td>string</td>
+<td>Yes</td>
+<td>Fiat account/bank ID</td>
+</tr>
+<tr>
+<td>merchantRecognitionId</td>
+<td>string</td>
+<td>No</td>
+<td>Your reference ID</td>
+</tr>
+</tbody>
+</table>
+<p><strong>cURL</strong></p>
+<pre><code class="lang-bash">curl -X POST <span class="hljs-string">"https://xdc.cash/api/id0002/onramp/createTransaction"</span> \
+  -H <span class="hljs-string">"Content-Type: application/x-www-form-urlencoded"</span> \
+  -d <span class="hljs-string">"chain=XDC&amp;toCurrency=USDC&amp;rate=3.7493&amp;fromAmount=200&amp;depositAddress=0x7eCd41036D5C0D25A8d1270e388ea240308d06Df&amp;customerId=O2FYxMiaeX_79613&amp;toAmount=51.1&amp;fromCurrency=AED&amp;paymentMethodType=AED-BANK-TRANSFER&amp;merchantRecognitionId=ref123&amp;fiatAccountId=2efc8ca96e833bbb6c0c06dd7c948b52"</span>
+</code></pre>
+<p><strong>Response</strong></p>
+<pre><code class="lang-json">{
+  <span class="hljs-string">"status"</span>: <span class="hljs-number">1</span>,
+  <span class="hljs-string">"code"</span>: <span class="hljs-number">200</span>,
+  <span class="hljs-string">"data"</span>: {
+    <span class="hljs-string">"transactionId"</span>: <span class="hljs-string">"1560780"</span>,
+    <span class="hljs-string">"status"</span>: <span class="hljs-string">"pending"</span>,
+    <span class="hljs-string">"depositAddress"</span>: <span class="hljs-string">"0x7eCd41036D5C0D25A8d1270e388ea240308d06Df"</span>,
+    <span class="hljs-string">"fromAmount"</span>: <span class="hljs-string">"200"</span>,
+    <span class="hljs-string">"toAmount"</span>: <span class="hljs-string">"51.1"</span>,
+    <span class="hljs-string">"fromCurrency"</span>: <span class="hljs-string">"AED"</span>,
+    <span class="hljs-string">"toCurrency"</span>: <span class="hljs-string">"USDC"</span>
+  }
+}
+</code></pre>
+<hr></hr>
+<h2 id="get-transaction">Get Transaction</h2>
+<p>Fetch a single onramp transaction by ID.</p>
+<p><strong>Endpoint:</strong> <code>POST /onramp/transaction</code></p>
+<p><strong>Request</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>transactionId</td>
+<td>string</td>
+<td>Yes</td>
+<td>Transaction ID</td>
+</tr>
+<tr>
+<td>customerId</td>
+<td>string</td>
+<td>Yes</td>
+<td>Customer ID</td>
+</tr>
+</tbody>
+</table>
+<p><strong>cURL</strong></p>
+<pre><code class="lang-bash">curl -X POST <span class="hljs-string">"https://xdc.cash/api/id0002/onramp/transaction"</span> \
+  -H <span class="hljs-string">"Content-Type: application/x-www-form-urlencoded"</span> \
+  -d <span class="hljs-string">"transactionId=1560780&amp;customerId=O2FYxMiaeX_79613"</span>
+</code></pre>
+<p><strong>Response</strong></p>
+<pre><code class="lang-json">{
+  <span class="hljs-string">"status"</span>: <span class="hljs-number">1</span>,
+  <span class="hljs-string">"code"</span>: <span class="hljs-number">200</span>,
+  <span class="hljs-string">"data"</span>: {
+    <span class="hljs-string">"transactionId"</span>: <span class="hljs-string">"1560780"</span>,
+    <span class="hljs-string">"status"</span>: <span class="hljs-string">"completed"</span>,
+    <span class="hljs-string">"fromCurrency"</span>: <span class="hljs-string">"AED"</span>,
+    <span class="hljs-string">"toCurrency"</span>: <span class="hljs-string">"USDC"</span>,
+    <span class="hljs-string">"fromAmount"</span>: <span class="hljs-string">"200"</span>,
+    <span class="hljs-string">"toAmount"</span>: <span class="hljs-string">"51.1"</span>,
+    <span class="hljs-string">"createdAt"</span>: <span class="hljs-string">"..."</span>,
+    <span class="hljs-string">"updatedAt"</span>: <span class="hljs-string">"..."</span>
+  }
+}
+</code></pre>
+<hr></hr>
+<h2 id="get-all-user-transactions">Get All User Transactions</h2>
+<p>List all onramp transactions for a customer.</p>
+<p><strong>Endpoint:</strong> <code>POST /onramp/allUserTransaction</code></p>
+<p><strong>Request</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>customerId</td>
+<td>string</td>
+<td>Yes</td>
+<td>Customer ID</td>
+</tr>
+<tr>
+<td>page</td>
+<td>string</td>
+<td>No</td>
+<td>Page number (default: 1)</td>
+</tr>
+<tr>
+<td>pageSize</td>
+<td>string</td>
+<td>No</td>
+<td>Items per page (default: 20)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>cURL</strong></p>
+<pre><code class="lang-bash">curl -X POST <span class="hljs-string">"https://xdc.cash/api/id0002/onramp/allUserTransaction"</span> \
+  -H <span class="hljs-string">"Content-Type: application/x-www-form-urlencoded"</span> \
+  -d <span class="hljs-string">"customerId=O2FYxMiaeX_79613&amp;page=1&amp;pageSize=20"</span>
+</code></pre>
+<p><strong>Response</strong></p>
+<pre><code class="lang-json">{
+  <span class="hljs-string">"status"</span>: <span class="hljs-number">1</span>,
+  <span class="hljs-string">"code"</span>: <span class="hljs-number">200</span>,
+  <span class="hljs-string">"data"</span>: {
+    <span class="hljs-string">"list"</span>: [...],
+    <span class="hljs-string">"total"</span>: <span class="hljs-number">10</span>,
+    <span class="hljs-string">"page"</span>: <span class="hljs-number">1</span>,
+    <span class="hljs-string">"pageSize"</span>: <span class="hljs-number">20</span>
+  }
+}
+</code></pre>
+<hr></hr>
+<h2 id="update-reference-id">Update Reference ID</h2>
+<p>Update the merchant reference ID for an onramp transaction.</p>
+<p><strong>Endpoint:</strong> <code>PUT /onramp/referenceId</code></p>
+<p><strong>Request</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>transactionId</td>
+<td>string</td>
+<td>Yes</td>
+<td>Transaction ID</td>
+</tr>
+<tr>
+<td>customerId</td>
+<td>string</td>
+<td>Yes</td>
+<td>Customer ID</td>
+</tr>
+<tr>
+<td>referenceId</td>
+<td>string</td>
+<td>Yes</td>
+<td>Your reference (e.g. order ID)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>cURL</strong></p>
+<pre><code class="lang-bash">curl -X PUT <span class="hljs-string">"https://xdc.cash/api/id0002/onramp/referenceId"</span> \
+  -H <span class="hljs-string">"Content-Type: application/x-www-form-urlencoded"</span> \
+  -d <span class="hljs-string">"customerId=qA7M4kehLG_83597&amp;transactionId=1562612&amp;referenceId=TRN12345"</span>
+</code></pre>
+<p><strong>Response</strong></p>
+<pre><code class="lang-json">{
+  <span class="hljs-string">"status"</span>: <span class="hljs-number">1</span>,
+  <span class="hljs-string">"code"</span>: <span class="hljs-number">200</span>,
+  <span class="hljs-string">"data"</span>: {
+    <span class="hljs-string">"transactionId"</span>: <span class="hljs-string">"1562612"</span>,
+    <span class="hljs-string">"referenceId"</span>: <span class="hljs-string">"TRN12345"</span>
+  }
+}
+</code></pre>
+<hr></hr>
+<h2 id="bank-details">Bank Details</h2>
+<p>Fetch bank payment details for an onramp transaction (e.g. for bank transfer flow).</p>
+<p><strong>Endpoint:</strong> <code>POST /bank/bankDetails</code></p>
+<p><strong>Request</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>customerId</td>
+<td>string</td>
+<td>Yes</td>
+<td>Customer ID</td>
+</tr>
+<tr>
+<td>fromCurrency</td>
+<td>string</td>
+<td>Yes</td>
+<td><code>AED</code> or <code>INR</code></td>
+</tr>
+<tr>
+<td>transactionId</td>
+<td>string</td>
+<td>Yes</td>
+<td>Transaction ID</td>
+</tr>
+<tr>
+<td>paymentMethodType</td>
+<td>string</td>
+<td>Yes</td>
+<td>Payment method</td>
+</tr>
+</tbody>
+</table>
+<p><strong>cURL</strong></p>
+<pre><code class="lang-bash">curl -X POST <span class="hljs-string">"https://xdc.cash/api/id0002/bank/bankDetails"</span> \
+  -H <span class="hljs-string">"Content-Type: application/x-www-form-urlencoded"</span> \
+  -d <span class="hljs-string">"customerId=O2FYxMiaeX_79613&amp;fromCurrency=AED&amp;transactionId=1545994&amp;paymentMethodType=AED-BANK-TRANSFER"</span>
+</code></pre>
+<p><strong>Response</strong></p>
+<pre><code class="lang-json">{
+  <span class="hljs-string">"status"</span>: <span class="hljs-number">1</span>,
+  <span class="hljs-string">"code"</span>: <span class="hljs-number">200</span>,
+  <span class="hljs-string">"data"</span>: {
+    <span class="hljs-string">"bankName"</span>: <span class="hljs-string">"..."</span>,
+    <span class="hljs-string">"accountNumber"</span>: <span class="hljs-string">"..."</span>,
+    <span class="hljs-string">"accountName"</span>: <span class="hljs-string">"..."</span>,
+    <span class="hljs-string">"reference"</span>: <span class="hljs-string">"..."</span>,
+    <span class="hljs-string">"amount"</span>: <span class="hljs-string">"200"</span>,
+    <span class="hljs-string">"currency"</span>: <span class="hljs-string">"AED"</span>
+  }
+}
+</code></pre>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="./" class="navigation navigation-prev " aria-label="Previous page: Welcome">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="offramp-api.html" class="navigation navigation-next " aria-label="Next page: Offramp Operations">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Onramp Operations","level":"1.2","depth":1,"next":{"title":"Offramp Operations","level":"1.3","depth":1,"path":"offramp-api.md","ref":"offramp-api.md","articles":[]},"previous":{"title":"Welcome","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[]},"dir":"ltr"},"config":{"plugins":["livereload"],"root":".","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"XDC Cash","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Offramp API","language":"en","gitbook":"*","description":"API documentation for Offramp/XDC Cash integration"},"file":{"path":"onramp-api.md","mtime":"2026-02-18T06:52:30.548Z","type":"markdown"},"gitbook":{"version":"6.1.6","time":"2026-02-18T06:54:52.708Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="gitbook/@honkit/honkit-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

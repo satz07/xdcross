@@ -1,0 +1,55 @@
+# Welcome to XDC Cash
+
+**Lightning-fast onramp and offramp** ⚡️
+
+Welcome to XDC Cash API documentation. We offer robust APIs to integrate onramp and offramp services—enabling users to convert between fiat (AED, INR, PHP) and crypto (USDC on XDC) seamlessly.
+
+---
+
+## Introduction
+
+XDC Cash opens the gateway for your users into crypto. Whether it's purchasing USDC, sending remittance to Philippines, or seamless conversions between fiat and crypto across UAE, India, and Philippines—we have you covered.
+
+With **production-ready APIs** and clear documentation, XDC Cash enables businesses to onboard users for **onramp** (fiat → crypto) and **offramp** (crypto → fiat) operations.
+
+---
+
+## Key Features
+
+- **Multi-Currency Support:** AED (UAE), INR (India), PHP (Philippines), USDC (XDC chain)
+- **Multiple Payment Methods:** Bank transfer, UPI, IMPS, InstaPay, PESONet, and more
+- **Competitive Rates:** Transparent conversion rates with fee breakdown
+- **Production API:** Single base URL for all operations
+
+---
+
+## Base URL
+
+All API requests use the production endpoint:
+
+```
+https://xdc.cash
+```
+
+**Path format:** `/api/{partnerId}/{endpoint}`
+
+| Partner ID | Service |
+|------------|---------|
+| `id0001` | Coins.ph (XDC ↔ PHP) |
+| `id0002` | Onramp.money (AED/INR ↔ USDC ↔ PHP) |
+
+---
+
+## Authentication
+
+API authentication is handled automatically via partner configuration. Include your partner credentials when setting up the integration. No additional headers required for standard requests.
+
+**Content-Type:** `application/x-www-form-urlencoded` for most endpoints; `application/json` for Cash Out.
+
+---
+
+## Quick Links
+
+- [Onramp Operations](onramp-api.md) — Fetch quote, create transaction, get transaction status
+- [Offramp Operations](offramp-api.md) — Sell crypto, fetch quote, transaction status
+- [Get Exchange Rate](get-exchange-rate.md) — Combined AED/INR → PHP rate in one call
