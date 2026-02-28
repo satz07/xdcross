@@ -1,4 +1,4 @@
-# Coins.ph API
+# PHP offramp (XDC ↔ PHP)
 
 XDC ↔ PHP conversion. Include `ref_id=<your_ref_id>` in every request (query or body).
 

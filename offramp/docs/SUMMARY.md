@@ -6,5 +6,5 @@
 * [Onramp Operations](onramp-api.md)
 * [Offramp Operations](offramp-api.md)
 * [Get Exchange Rate](get-exchange-rate.md)
-* [Coins.ph API](coins-api.md)
+* [PHP offramp (XDC ↔ PHP)](coins-api.md)
 * [Quick Reference](quick-reference.md)

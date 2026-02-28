@@ -2,7 +2,7 @@
 
 Production base URL: `https://xdc.cash`. Replace `<your_ref_id>` with your reference ID and `<your-api-key>` with your API key (when required) in every request.
 
-## Convert / Coins
+## PHP offramp (XDC ↔ PHP)
 
 | Endpoint | cURL |
 |----------|------|

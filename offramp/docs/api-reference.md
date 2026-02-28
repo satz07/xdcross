@@ -43,7 +43,7 @@ All endpoints live under `/api/`. Include `ref_id` in every request (query strin
 
 ---
 
-## Convert / Coins (Get Quote, Accept Quote, Cash Out, Account)
+## PHP offramp (XDC ↔ PHP) — Get Quote, Accept Quote, Cash Out, Account
 
 ### Get Quote
 

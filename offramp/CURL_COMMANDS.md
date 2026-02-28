@@ -10,7 +10,7 @@ Replace `BASE_URL` with your server URL:
 
 ## Partner ID (ref_id)
 Partner is identified by **ref_id** in the request (query string or body), not in the URL path.
-- Coins partner: `ref_id=id0001`
+- PHP offramp (XDC ↔ PHP): `ref_id=id0001`
 - Onramp partner: `ref_id=id0002`
 Add `ref_id` to every request (e.g. `?ref_id=id0001` for GET/query, or `ref_id=id0002` in form/JSON body for POST).
 
@@ -657,7 +657,7 @@ curl -X POST "https://xdc.cash/api/getExchangeRate" -H "X-API-Key: <your-api-key
 
 ## Notes
 
-- **ref_id required** - Pass partner as `ref_id` in query (GET) or in body (POST), e.g. `ref_id=id0001` (Coins) or `ref_id=id0002` (Onramp).
+- **ref_id required** - Pass partner as `ref_id` in query (GET) or in body (POST), e.g. `ref_id=id0001` (PHP offramp) or `ref_id=id0002` (Onramp).
 - **No Content-Type header needed** - Server handles it automatically (except for cash-out which requires it)
 - **Methods**: Most endpoints use POST, account endpoint uses GET
 - **Signature generation is automatic** - No need to configure
