@@ -236,7 +236,7 @@ router.post('/onramp/createTransaction', async (req, res) => {
           chain: body.chain,
           paymentMethodType: body.paymentMethodType
         };
-        const quoteResponse = await callOnrampQuote(partnerId, quoteBody);
+        const quoteResponse = await callOnrampQuote(partnerId, quoteBody, req.apiKey);
         if (quoteResponse?.status === 1 && quoteResponse?.data?.toAmount) {
           body.toAmount = quoteResponse.data.toAmount;
           toAmountNum = parseFloat(body.toAmount);
@@ -1030,19 +1030,30 @@ router.post('/offramp/transaction', async (req, res) => {
 });
 
 /**
- * Helper function to call onramp quote endpoint internally
+ * Helper function to call onramp quote endpoint internally.
+ * When API key auth is enabled on /api, we must forward the
+ * client's API key so nested calls are also authorized.
  */
-async function callOnrampQuote(partnerId, body) {
+async function callOnrampQuote(partnerId, body, apiKeyForInternal) {
   const port = process.env.PORT || 3000;
   const url = `http://localhost:${port}/api/onramp/quote`;
   const bodyWithRef = { ...body, ref_id: partnerId };
   try {
-    const response = await axios.post(url, new URLSearchParams(bodyWithRef), {
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      timeout: 30000
-    });
+    const headers = {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    };
+    if (apiKeyForInternal) {
+      headers['X-API-Key'] = apiKeyForInternal;
+    }
+
+    const response = await axios.post(
+      url,
+      new URLSearchParams(bodyWithRef),
+      {
+        headers,
+        timeout: 30000
+      }
+    );
     return response.data;
   } catch (err) {
     if (err.response) {
@@ -1055,17 +1066,26 @@ async function callOnrampQuote(partnerId, body) {
 /**
  * Helper function to call offramp quote endpoint internally
  */
-async function callOfframpQuote(partnerId, body) {
+async function callOfframpQuote(partnerId, body, apiKeyForInternal) {
   const port = process.env.PORT || 3000;
   const url = `http://localhost:${port}/api/offramp/quote`;
   const bodyWithRef = { ...body, ref_id: partnerId };
   try {
-    const response = await axios.post(url, new URLSearchParams(bodyWithRef), {
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      timeout: 30000
-    });
+    const headers = {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    };
+    if (apiKeyForInternal) {
+      headers['X-API-Key'] = apiKeyForInternal;
+    }
+
+    const response = await axios.post(
+      url,
+      new URLSearchParams(bodyWithRef),
+      {
+        headers,
+        timeout: 30000
+      }
+    );
     return response.data;
   } catch (err) {
     if (err.response) {
@@ -1139,7 +1159,7 @@ router.post('/getExchangeRate', async (req, res) => {
         paymentMethodType: paymentMethodType || defaultPaymentMethod
     };
 
-    const onrampQuote = await callOnrampQuote(partnerId, onrampBody);
+    const onrampQuote = await callOnrampQuote(partnerId, onrampBody, req.apiKey);
 
     if (!onrampQuote || onrampQuote.status !== 1 || !onrampQuote.data) {
       throw new Error('Failed to get onramp quote: ' + JSON.stringify(onrampQuote));
@@ -1158,7 +1178,7 @@ router.post('/getExchangeRate', async (req, res) => {
       chain: chain
     };
 
-    const offrampQuote = await callOfframpQuote(partnerId, offrampBody);
+    const offrampQuote = await callOfframpQuote(partnerId, offrampBody, req.apiKey);
 
     if (!offrampQuote || offrampQuote.status !== 1 || !offrampQuote.data) {
       throw new Error('Failed to get offramp quote: ' + JSON.stringify(offrampQuote));

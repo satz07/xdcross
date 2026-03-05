@@ -27598,3 +27598,1819 @@ Then:
 
 ---
 
+_**User**_
+
+remove coins.ph in socs... use PHP offrapng like that...
+
+---
+
+_**Agent (model default, mode Agent)**_
+
+<think><details><summary>Thought Process</summary>
+
+The user wants to remove "coins.ph" (or "Coins.ph") from the docs and use wording like "PHP offramp" instead. Let me search for occurrences of "coins" or "Coins.ph" in the docs folder and CURL_COMMANDS.md to replace with more generic wording like "PHP offramp" or similar.
+</details></think>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "pattern": "coins\\.ph|Coins\\.ph|Coins\\.PH",
+  "path": "/Users/satheesh/go/src/xdcross/offramp",
+  "glob": "*.md",
+  "caseInsensitive": true
+}
+```
+Result:
+
+```json
+{
+  "success": {
+    "pattern": "coins\\.ph|Coins\\.ph|Coins\\.PH",
+    "path": "/Users/satheesh/go/src/xdcross/offramp",
+    "outputMode": "content",
+    "workspaceResults": {
+      "/Users/satheesh/go/src/xdcross/offramp": {
+        "content": {
+          "matches": [
+            {
+              "file": "./.specstory/history/2026-02-28_18-48Z-curl-command-parameter-modification.md",
+              "matches": [
+                {
+                  "lineNumber": 838,
+                  "content": "                  \"content\": \"&amp;lt;p&amp;gt;XDC ↔ PHP conversion via Coins.ph. Uses partner ID &amp;lt;code&amp;gt;id0001&amp;lt;/code&amp;gt;.&amp;lt;/p&amp;gt;\""
+                },
+                {
+                  "lineNumber": 867,
+                  "content": "                  \"content\": \"{\\\"index\\\":{\\\"version\\\":\\\"0.5.12\\\",\\\"fields\\\":[{\\\"name\\\":\\\"title\\\",\\\"boost\\\":10},{\\\"name\\\":\\\"keywords\\\",\\\"boost\\\":15},{\\\"name\\\":\\\"body\\\",\\\"boost\\\":1}],\\\"ref\\\":\\\"url\\\",\\\"documentStore\\\":{\\\"store\\\":{\\\"./\\\":[\\\"(aed,\\\",\\\"(aed/inr\\\",\\\"(crypto\\\",\\\"(fiat\\\",\\\"(india),\\\",\\\"(philippines),\\\",\\\"(uae),\\\",\\\"(usdc\\\",\\\"(xdc\\\",\\\"/api/{partnerid}/{endpoint}\\\",\\\"a\\\",\\\"addit\\\",\\\"aed/inr\\\",\\\"api\\\",\\\"api:\\\",\\\"application/json\\\",\\\"application/x\\\",\\\"authent\\\",\\\"automat\\\",\\\"bank\\\",\\\"base\\\",\\\"between\\\",\\\"breakdown\\\",\\\"busi\\\",\\\"call\\\",\\\"cash\\\",\\\"chain)\\\",\\\"clear\\\",\\\"coins.ph\\\",\\\"combin\\\",\\\"competit\\\",\\\"configuration.\\\",\\\"content\\\",\\\"convers\\\",\\\"convert\\\",\\\"covered.\\\",\\\"creat\\\",\\\"credenti\\\",\\\"crypto\\\",\\\"crypto)\\\",\\\"crypto,\\\",\\\"crypto.\\\",\\\"currenc\\\",\\\"documentation,\\\",\\\"documentation.\\\",\\\"enabl\\\",\\\"endpoint:\\\",\\\"endpoints;\\\",\\\"exchang\\\",\\\"fast\\\",\\\"featur\\\",\\\"fee\\\",\\\"fetch\\\",\\\"fiat\\\",\\\"fiat)\\\",\\\"form\\\",\\\"format:\\\",\\\"gateway\\\",\\\"handl\\\",\\\"header\\\",\\\"https://xdc.cash\\\",\\\"id\\\",\\\"id0001\\\", [... omitted end of long line]"
+                },
+                {
+                  "lineNumber": 922,
+                  "content": "                  \"content\": \"XDC ↔ PHP conversion via Coins.ph. Uses partner ID &amp;#96;id0001&amp;#96;.\""
+                },
+                {
+                  "lineNumber": 1009,
+                  "content": "                  \"content\": \"| &amp;#96;id0001&amp;#96; | Coins.ph (XDC ↔ PHP) |\""
+                },
+                {
+                  "lineNumber": 1513,
+                  "content": "                  \"content\": \"        \\\"contents\\\": \\\"/**\\\\n * Coins.ph API Routes\\\\n * Wraps Coins.ph API with signature generation\\\\n */\\\\n\\\\nconst express = require('express');\\\\nconst router = express.Router({ mergeParams: true }); // Enable route params from parent route\\\\nconst axios = require('axios');\\\\nconst fs = require('fs');\\\\nconst path = require('path');\\\\n\\\\nconst { getPartner } = require('../config/partners');\\\\n// Signature generation is done inline using CryptoJS to match Postman pre-script exactly\\\\n\\\\nconst QUOTE_DATA_FILE = path.join(process.cwd(), '.quote-data.json');\\\\n\\\\n/**\\\\n * Get partner configuration from request\\\\n * Extracts partner ID dynamically from URL path: /api/{partnerId}/...\\\\n */\\\\nfunction getPartnerFromRequest(req) {\\\\n  // Extract partner ID directly from URL path\\\\n  // URL format: /api/id0001/get-quote -&amp;amp;gt; extract 'id0001'\\\\n  // Try multiple sources to extract partnerId from URL\\\\n  console.log(\\\\\\\"req-------------\\\\\\\", req.params);\\\\ [... omitted end of long line]"
+                },
+                {
+                  "lineNumber": 1597,
+                  "content": "                  \"content\": \"        \\\"contents\\\": \\\"/**\\\\n * Partner Configuration\\\\n * Abstracts partner details from end users\\\\n */\\\\n\\\\nconst partners = {\\\\n  id0001: {\\\\n    name: 'Coins.ph',\\\\n    baseUrl: 'https://api.pro.coins.ph',\\\\n    apiKey: process.env.COINS_API_KEY,\\\\n    secret: process.env.COINS_API_SECRET,\\\\n    enabled: true\\\\n  },\\\\n  id0002: {\\\\n    name: 'Onramp.money',\\\\n    baseUrl: 'https://api.onramp.money/onramp/api/v2/whiteLabel',\\\\n    apiKey: process.env.ONRAMP_API_KEY || 'vdBGnS3WMHMNlmk5LpTK6iJqSfZeVk',\\\\n    secret: process.env.ONRAMP_SECRET || 'MfeppKpi9A7LSwCxMPqs5VH9dV9Ix3Sh',\\\\n    enabled: true\\\\n  },\\\\n  // Add more partners here\\\\n  // partner2: {\\\\n  //   name: 'Partner 2',\\\\n  //   baseUrl: 'https://api.partner2.com',\\\\n  //   apiKey: process.env.PARTNER2_API_KEY,\\\\n  //   secret: process.env.PARTNER2_API_SECRET,\\\\n  //   enabled: true\\\\n  // }\\\\n};\\\\n\\\\n/**\\\\n * Get partner configuration by ID\\\\n * @param {string} partnerId - Partner identifi [... omitted end of long line]"
+                },
+                {
+                  "lineNumber": 1761,
+                  "content": "                  \"content\": \"        \\\"contents\\\": \\\"# Offramp API Proxy\\\\n\\\\nNode.js Express API server with Coins.ph integration and dynamic signature generation.\\\\n\\\\n## Features\\\\n\\\\n- **Express.js** - Fast, unopinionated web framework\\\\n- **Coins.ph Integration** - Pre-configured endpoints with HMAC SHA256 signature generation\\\\n- **Dynamic Signature Generation** - Matches Postman pre-script logic exactly\\\\n- **Rate Limiting** - Prevents abuse\\\\n- **CORS Support** - Cross-origin resource sharing\\\\n- **Security Headers** - Helmet.js for security\\\\n\\\\n## Installation\\\\n\\\\n1. Install dependencies:\\\\n&amp;amp;#96;&amp;amp;#96;&amp;amp;#96;bash\\\\nnpm install\\\\n&amp;amp;#96;&amp;amp;#96;&amp;amp;#96;\\\\n\\\\n2. Create a &amp;amp;#96;.env&amp;amp;#96; file:\\\\n&amp;amp;#96;&amp;amp;#96;&amp;amp;#96;bash\\\\ncp .env.example .env\\\\n&amp;amp;#96;&amp;amp;#96;&amp;amp;#96;\\\\n\\\\n3. Update &amp;amp;#96;.env&amp;amp;#96; with your Coins.ph credentials:\\\\n&amp;amp;#96;&amp;amp;#96;&amp;amp;#96;env\\\\nPORT=3000\\\\nCOINS_API_KEY=HRqjJcBxjppZAvVyzZvdxMI95O74jPDYbd2sbGaBecvPIHd6jl [... omitted end of long line]"
+                },
+                {
+                  "lineNumber": 2502,
+                  "content": "                  \"content\": \"        \\\"contents\\\": \\\"/**\\\\n * Partner Configuration\\\\n * Abstracts partner details from end users\\\\n */\\\\n\\\\nconst partners = {\\\\n  id0001: {\\\\n    name: 'Coins.ph',\\\\n    baseUrl: 'https://api.pro.coins.ph',\\\\n    apiKey: process.env.COINS_API_KEY,\\\\n    secret: process.env.COINS_API_SECRET,\\\\n    enabled: true\\\\n  },\\\\n  id0002: {\\\\n    name: 'Onramp.money',\\\\n    baseUrl: 'https://api.onramp.money/onramp/api/v2/whiteLabel',\\\\n    apiKey: process.env.ONRAMP_API_KEY || 'vdBGnS3WMHMNlmk5LpTK6iJqSfZeVk',\\\\n    secret: process.env.ONRAMP_SECRET || 'MfeppKpi9A7LSwCxMPqs5VH9dV9Ix3Sh',\\\\n    enabled: true\\\\n  },\\\\n  // Add more partners here\\\\n  // partner2: {\\\\n  //   name: 'Partner 2',\\\\n  //   baseUrl: 'https://api.partner2.com',\\\\n  //   apiKey: process.env.PARTNER2_API_KEY,\\\\n  //   secret: process.env.PARTNER2_API_SECRET,\\\\n  //   enabled: true\\\\n  // }\\\\n};\\\\n\\\\n/**\\\\n * Get partner configuration by ID\\\\n * @param {string} partnerId - Partner identifi [... omitted end of long line]"
+                },
+                {
+                  "lineNumber": 2842,
+                  "content": "                  \"content\": \"- docs/coins-api.md - Coins.ph (id0001) endpoints\""
+                },
+                {
+                  "lineNumber": 2846,
+                  "content": "                  \"content\": \"Let me create the new structure. I'll use partner ID in the path - id0001 for Coins.ph, id0002 for Onramp - both as production endpoints.\""
+                },
+                {
+                  "lineNumber": 3414,
+                  "content": "                  \"content\": \"   - **Anything else (e.g. &amp;#96;id0001&amp;#96;)** → &amp;#96;coinsRoutes&amp;#96; (Coins.ph).\""
+                },
+                {
+                  "lineNumber": 3446,
+                  "content": "                  \"content\": \"- **id0001** → Coins.ph config, and in &amp;#96;server.js&amp;#96; it goes to **coinsRoutes**.\""
+                },
+                {
+                  "lineNumber": 3466,
+                  "content": "                  \"content\": \"## 1. **Coins.ph (id0001) – &amp;#96;routes/coins.js&amp;#96;**\""
+                },
+                {
+                  "lineNumber": 3486,
+                  "content": "                  \"content\": \"Partner config (baseUrl, keys) is in **&amp;#96;config/partners.js&amp;#96;** under &amp;#96;id0001&amp;#96; (e.g. &amp;#96;baseUrl: 'https://api.pro.coins.ph'&amp;#96;).\""
+                },
+                {
+                  "lineNumber": 3823,
+                  "content": "                  \"content\": \"| &amp;#96;server.js&amp;#96; | &amp;#96;console.log(&amp;#96;Coins.ph API: http://localhost:$\\\\{PORT\\\\}/api/coins&amp;#96;);&amp;#96; | L59 |\""
+                },
+                {
+                  "lineNumber": 3887,
+                  "content": "                  \"content\": \"+ // Coins.ph API routes - using id0001 in URL\""
+                },
+                {
+                  "lineNumber": 3895,
+                  "content": "                  \"content\": \"-   console.log(&amp;amp;#96;Coins.ph API: http://localhost:${PORT}/api/coins&amp;amp;#96;);\""
+                },
+                {
+                  "lineNumber": 3899,
+                  "content": "                  \"content\": \"+   console.log(&amp;amp;#96;Coins.ph API: http://localhost:${PORT}/api/id0001&amp;amp;#96;);\""
+                },
+                {
+                  "lineNumber": 3903,
+                  "content": "                  \"content\": \"| &amp;#96;./server.js&amp;#96; | &amp;#96;// Coins.ph API routes - using id0001 in URL&amp;#96; | L32 |\""
+                },
+                {
+                  "lineNumber": 3911,
+                  "content": "                  \"content\": \"| &amp;#96;./server.js&amp;#96; | &amp;#96;console.log(&amp;#96;Coins.ph API: http://localhost:$\\\\{PORT\\\\}/api/id0001&amp;#96;);&amp;#96; | L59 |\""
+                },
+                {
+                  "lineNumber": 4191,
+                  "content": "                  \"content\": \"- // Coins.ph API routes - using id0001 in URL\""
+                },
+                {
+                  "lineNumber": 4315,
+                  "content": "                  \"content\": \"-   console.log(&amp;amp;#96;Coins.ph API: http://localhost:${PORT}/api/id0001&amp;amp;#96;);\""
+                },
+                {
+                  "lineNumber": 5047,
+                  "content": "                  \"content\": \"+ \\t\\t\\\"description\\\": \\\"API proxy for Coins.ph integration. Partner details are abstracted - just use the partner ID in the URL path.\\\\n\\\\n**Setup:**\\\\n1. Set &amp;amp;#96;base_url&amp;amp;#96; variable to your server URL (e.g., &amp;amp;#96;http://localhost:3002&amp;amp;#96;)\\\\n2. Set &amp;amp;#96;partner_id&amp;amp;#96; variable to your partner ID (e.g., &amp;amp;#96;id0001&amp;amp;#96;)\\\\n3. All endpoints automatically handle signature generation - no need to configure API keys/secrets!\\\",\""
+                },
+                {
+                  "lineNumber": 5159,
+                  "content": "                  \"content\": \"- \\t\\t\\\"description\\\": \\\"API proxy for Coins.ph integration. Partner details are abstracted - just use the partner ID in the URL path.\\\\n\\\\n**Setup:**\\\\n1. Set &amp;amp;#96;base_url&amp;amp;#96; variable to your server URL (e.g., &amp;amp;#96;http://localhost:3002&amp;amp;#96;)\\\\n2. Set &amp;amp;#96;partner_id&amp;amp;#96; variable to your partner ID (e.g., &amp;amp;#96;id0001&amp;amp;#96;)\\\\n3. All endpoints automatically handle signature generation - no need to configure API keys/secrets!\\\",\""
+                },
+                {
+                  "lineNumber": 5167,
+                  "content": "                  \"content\": \"&amp;lt;details&amp;gt;&amp;lt;summary&amp;gt;Tool use: **run_terminal_cmd** • Run command: cd /Users/satheesh/go/src/offramp &amp;amp;&amp;amp; echo \\\"✅ Updated Postman collection description\\\" &amp;amp;&amp;amp; echo \\\"\\\" &amp;amp;&amp;amp; echo \\\"Summary of all changes:\\\" &amp;amp;&amp;amp; echo \\\"1. ✅ Removed 'source', 'partner', 'timestamp', 'signature' from all responses\\\" &amp;amp;&amp;amp; echo \\\"2. ✅ Removed 'requestParams' and 'requestBody' from responses\\\" &amp;amp;&amp;amp; echo \\\"3. ✅ Updated all comments to remove 'Coins.ph' references\\\" &amp;amp;&amp;amp; echo \\\"4. ✅ Updated Postman collection description\\\" &amp;amp;&amp;amp; echo \\\"5. ✅ Updated Postman documentation examples\\\" &amp;amp;&amp;amp; echo \\\"\\\" &amp;amp;&amp;amp; echo \\\"API responses now only return:\\\" &amp;amp;&amp;amp; echo \\\"  { success: true, data: {...} }\\\" &amp;amp;&amp;amp; echo \\\"\\\" &amp;amp;&amp;amp; echo \\\"All partner details are completely masked - end users only see id0001!\\\"&amp;lt;/summary&amp;gt;\""
+                },
+                {
+                  "lineNumber": 5171,
+                  "content": "                  \"content\": \"cd /Users/satheesh/go/src/offramp &amp;amp;&amp;amp; echo \\\"✅ Updated Postman collection description\\\" &amp;amp;&amp;amp; echo \\\"\\\" &amp;amp;&amp;amp; echo \\\"Summary of all changes:\\\" &amp;amp;&amp;amp; echo \\\"1. ✅ Removed 'source', 'partner', 'timestamp', 'signature' from all responses\\\" &amp;amp;&amp;amp; echo \\\"2. ✅ Removed 'requestParams' and 'requestBody' from responses\\\" &amp;amp;&amp;amp; echo \\\"3. ✅ Updated all comments to remove 'Coins.ph' references\\\" &amp;amp;&amp;amp; echo \\\"4. ✅ Updated Postman collection description\\\" &amp;amp;&amp;amp; echo \\\"5. ✅ Updated Postman documentation examples\\\" &amp;amp;&amp;amp; echo \\\"\\\" &amp;amp;&amp;amp; echo \\\"API responses now only return:\\\" &amp;amp;&amp;amp; echo \\\"  { success: true, data: {...} }\\\" &amp;amp;&amp;amp; echo \\\"\\\" &amp;amp;&amp;amp; echo \\\"All partner details are completely masked - end users only see id0001!\\\"\""
+                },
+                {
+                  "lineNumber": 7128,
+                  "content": "                  \"content\": \"{\\\"index\\\":{\\\"version\\\":\\\"0.5.12\\\",\\\"fields\\\":[{\\\"name\\\":\\\"title\\\",\\\"boost\\\":10},{\\\"name\\\":\\\"keywords\\\",\\\"boost\\\":15},{\\\"name\\\":\\\"body\\\",\\\"boost\\\":1}],\\\"ref\\\":\\\"url\\\",\\\"documentStore\\\":{\\\"store\\\":{\\\"./\\\":[\\\"(aed,\\\",\\\"(aed/inr\\\",\\\"(crypto\\\",\\\"(fiat\\\",\\\"(india),\\\",\\\"(philippines),\\\",\\\"(uae),\\\",\\\"(usdc\\\",\\\"(xdc\\\",\\\"/api/{partnerid}/{endpoint}\\\",\\\"a\\\",\\\"addit\\\",\\\"aed/inr\\\",\\\"api\\\",\\\"api:\\\",\\\"application/json\\\",\\\"application/x\\\",\\\"authent\\\",\\\"automat\\\",\\\"bank\\\",\\\"base\\\",\\\"between\\\",\\\"breakdown\\\",\\\"busi\\\",\\\"call\\\",\\\"cash\\\",\\\"chain)\\\",\\\"clear\\\",\\\"coins.ph\\\",\\\"combin\\\",\\\"competit\\\",\\\"configuration.\\\",\\\"content\\\",\\\"convers\\\",\\\"convert\\\",\\\"covered.\\\",\\\"creat\\\",\\\"credenti\\\",\\\"crypto\\\",\\\"crypto)\\\",\\\"crypto,\\\",\\\"crypto.\\\",\\\"currenc\\\",\\\"documentation,\\\",\\\"documentation.\\\",\\\"enabl\\\",\\\"endpoint:\\\",\\\"endpoints;\\\",\\\"exchang\\\",\\\"fast\\\",\\\"featur\\\",\\\"fee\\\",\\\"fetch\\\",\\\"fiat\\\",\\\"fiat)\\\",\\\"form\\\",\\\"format:\\\",\\\"gateway\\\",\\\"handl\\\",\\\"header\\\",\\\"https://xdc.cash\\\",\\\"id\\\",\\\"id0001\\\", [... omitted end of long line]"
+                },
+                {
+                  "lineNumber": 7670,
+                  "content": "                  \"content\": \"        \\\"contents\\\": \\\"/**\\\\n * Coins.ph API Routes\\\\n * Wraps Coins.ph API with signature generation\\\\n */\\\\n\\\\nconst express = require('express');\\\\nconst router = express.Router({ mergeParams: true }); // Enable route params from parent route\\\\nconst axios = require('axios');\\\\nconst fs = require('fs');\\\\nconst path = require('path');\\\\n\\\\nconst { getPartner } = require('../config/partners');\\\\n// Signature generation is done inline using CryptoJS to match Postman pre-script exactly\\\\n\\\\nconst QUOTE_DATA_FILE = path.join(process.cwd(), '.quote-data.json');\\\\n\\\\n/**\\\\n * Get partner configuration from request\\\\n * Extracts partner ID dynamically from URL path: /api/{partnerId}/...\\\\n */\\\\nfunction getPartnerFromRequest(req) {\\\\n  // Extract partner ID directly from URL path\\\\n  // URL format: /api/id0001/get-quote -&amp;amp;gt; extract 'id0001'\\\\n  // Try multiple sources to extract partnerId from URL\\\\n  console.log(\\\\\\\"req-------------\\\\\\\", req.params);\\\\ [... omitted end of long line]"
+                },
+                {
+                  "lineNumber": 7722,
+                  "content": "                  \"content\": \"        \\\"contents\\\": \\\"/**\\\\n * Partner Configuration\\\\n * Abstracts partner details from end users\\\\n */\\\\n\\\\nconst partners = {\\\\n  id0001: {\\\\n    name: 'Coins.ph',\\\\n    baseUrl: 'https://api.pro.coins.ph',\\\\n    apiKey: process.env.COINS_API_KEY,\\\\n    secret: process.env.COINS_API_SECRET,\\\\n    enabled: true\\\\n  },\\\\n  id0002: {\\\\n    name: 'Onramp.money',\\\\n    baseUrl: 'https://api.onramp.money/onramp/api/v2/whiteLabel',\\\\n    apiKey: process.env.ONRAMP_API_KEY || 'vdBGnS3WMHMNlmk5LpTK6iJqSfZeVk',\\\\n    secret: process.env.ONRAMP_SECRET || 'MfeppKpi9A7LSwCxMPqs5VH9dV9Ix3Sh',\\\\n    enabled: true\\\\n  },\\\\n  // Add more partners here\\\\n  // partner2: {\\\\n  //   name: 'Partner 2',\\\\n  //   baseUrl: 'https://api.partner2.com',\\\\n  //   apiKey: process.env.PARTNER2_API_KEY,\\\\n  //   secret: process.env.PARTNER2_API_SECRET,\\\\n  //   enabled: true\\\\n  // }\\\\n};\\\\n\\\\n/**\\\\n * Get partner configuration by ID\\\\n * @param {string} partnerId - Partner identifi [... omitted end of long line]"
+                },
+                {
+                  "lineNumber": 7854,
+                  "content": "                  \"content\": \"        \\\"contents\\\": \\\"# Offramp API Proxy\\\\n\\\\nNode.js Express API server with Coins.ph integration and dynamic signature generation.\\\\n\\\\n## Features\\\\n\\\\n- **Express.js** - Fast, unopinionated web framework\\\\n- **Coins.ph Integration** - Pre-configured endpoints with HMAC SHA256 signature generation\\\\n- **Dynamic Signature Generation** - Matches Postman pre-script logic exactly\\\\n- **Rate Limiting** - Prevents abuse\\\\n- **CORS Support** - Cross-origin resource sharing\\\\n- **Security Headers** - Helmet.js for security\\\\n\\\\n## Installation\\\\n\\\\n1. Install dependencies:\\\\n&amp;amp;#96;&amp;amp;#96;&amp;amp;#96;bash\\\\nnpm install\\\\n&amp;amp;#96;&amp;amp;#96;&amp;amp;#96;\\\\n\\\\n2. Create a &amp;amp;#96;.env&amp;amp;#96; file:\\\\n&amp;amp;#96;&amp;amp;#96;&amp;amp;#96;bash\\\\ncp .env.example .env\\\\n&amp;amp;#96;&amp;amp;#96;&amp;amp;#96;\\\\n\\\\n3. Update &amp;amp;#96;.env&amp;amp;#96; with your Coins.ph credentials:\\\\n&amp;amp;#96;&amp;amp;#96;&amp;amp;#96;env\\\\nPORT=3000\\\\nCOINS_API_KEY=HRqjJcBxjppZAvVyzZvdxMI95O74jPDYbd2sbGaBecvPIHd6jl [... omitted end of long line]"
+                },
+                {
+                  "lineNumber": 8519,
+                  "content": "                  \"content\": \"        \\\"contents\\\": \\\"/**\\\\n * Partner Configuration\\\\n * Abstracts partner details from end users\\\\n */\\\\n\\\\nconst partners = {\\\\n  id0001: {\\\\n    name: 'Coins.ph',\\\\n    baseUrl: 'https://api.pro.coins.ph',\\\\n    apiKey: process.env.COINS_API_KEY,\\\\n    secret: process.env.COINS_API_SECRET,\\\\n    enabled: true\\\\n  },\\\\n  id0002: {\\\\n    name: 'Onramp.money',\\\\n    baseUrl: 'https://api.onramp.money/onramp/api/v2/whiteLabel',\\\\n    apiKey: process.env.ONRAMP_API_KEY || 'vdBGnS3WMHMNlmk5LpTK6iJqSfZeVk',\\\\n    secret: process.env.ONRAMP_SECRET || 'MfeppKpi9A7LSwCxMPqs5VH9dV9Ix3Sh',\\\\n    enabled: true\\\\n  },\\\\n  // Add more partners here\\\\n  // partner2: {\\\\n  //   name: 'Partner 2',\\\\n  //   baseUrl: 'https://api.partner2.com',\\\\n  //   apiKey: process.env.PARTNER2_API_KEY,\\\\n  //   secret: process.env.PARTNER2_API_SECRET,\\\\n  //   enabled: true\\\\n  // }\\\\n};\\\\n\\\\n/**\\\\n * Get partner configuration by ID\\\\n * @param {string} partnerId - Partner identifi [... omitted end of long line]"
+                },
+                {
+                  "lineNumber": 9584,
+                  "content": "                  \"content\": \"| &amp;#96;server.js&amp;#96; | &amp;#96;console.log(&amp;#96;Coins.ph API: http://localhost:$\\\\{PORT\\\\}/api/coins&amp;#96;);&amp;#96; | L59 |\""
+                },
+                {
+                  "lineNumber": 9596,
+                  "content": "                  \"content\": \"-   console.log(&amp;amp;#96;Coins.ph API: http://localhost:${PORT}/api/coins&amp;amp;#96;);\""
+                },
+                {
+                  "lineNumber": 9600,
+                  "content": "                  \"content\": \"+   console.log(&amp;amp;#96;Coins.ph API: http://localhost:${PORT}/api/id0001&amp;amp;#96;);\""
+                },
+                {
+                  "lineNumber": 9608,
+                  "content": "                  \"content\": \"| &amp;#96;./server.js&amp;#96; | &amp;#96;console.log(&amp;#96;Coins.ph API: http://localhost:$\\\\{PORT\\\\}/api/id0001&amp;#96;);&amp;#96; | L59 |\""
+                },
+                {
+                  "lineNumber": 9880,
+                  "content": "                  \"content\": \"-   console.log(&amp;amp;#96;Coins.ph API: http://localhost:${PORT}/api/id0001&amp;amp;#96;);\""
+                },
+                {
+                  "lineNumber": 11819,
+                  "content": "                  \"content\": \"    url: 'https://api.pro.coins.ph/openapi/fiat/v1/cash-out?signature=INVALID_SIGNATURE_FOR_REFERENCE',\""
+                },
+                {
+                  "lineNumber": 11954,
+                  "content": "                  \"content\": \"    baseUrl: 'https://api.pro.coins.ph',\""
+                },
+                {
+                  "lineNumber": 12474,
+                  "content": "                  \"content\": \"    baseUrl: 'https://api.pro.coins.ph',\""
+                },
+                {
+                  "lineNumber": 15415,
+                  "content": "                  \"content\": \"                  \\\"content\\\": \\\"{\\\\\\\"index\\\\\\\":{\\\\\\\"version\\\\\\\":\\\\\\\"0.5.12\\\\\\\",\\\\\\\"fields\\\\\\\":[{\\\\\\\"name\\\\\\\":\\\\\\\"title\\\\\\\",\\\\\\\"boost\\\\\\\":10},{\\\\\\\"name\\\\\\\":\\\\\\\"keywords\\\\\\\",\\\\\\\"boost\\\\\\\":15},{\\\\\\\"name\\\\\\\":\\\\\\\"body\\\\\\\",\\\\\\\"boost\\\\\\\":1}],\\\\\\\"ref\\\\\\\":\\\\\\\"url\\\\\\\",\\\\\\\"documentStore\\\\\\\":{\\\\\\\"store\\\\\\\":{\\\\\\\"./\\\\\\\":[\\\\\\\"(aed,\\\\\\\",\\\\\\\"(aed/inr\\\\\\\",\\\\\\\"(crypto\\\\\\\",\\\\\\\"(fiat\\\\\\\",\\\\\\\"(india),\\\\\\\",\\\\\\\"(philippines),\\\\\\\",\\\\\\\"(uae),\\\\\\\",\\\\\\\"(usdc\\\\\\\",\\\\\\\"(xdc\\\\\\\",\\\\\\\"/api/{partnerid}/{endpoint}\\\\\\\",\\\\\\\"a\\\\\\\",\\\\\\\"addit\\\\\\\",\\\\\\\"aed/inr\\\\\\\",\\\\\\\"api\\\\\\\",\\\\\\\"api:\\\\\\\",\\\\\\\"application/json\\\\\\\",\\\\\\\"application/x\\\\\\\",\\\\\\\"authent\\\\\\\",\\\\\\\"automat\\\\\\\",\\\\\\\"bank\\\\\\\",\\\\\\\"base\\\\\\\",\\\\\\\"between\\\\\\\",\\\\\\\"breakdown\\\\\\\",\\\\\\\"busi\\\\\\\",\\\\\\\"call\\\\\\\",\\\\\\\"cash\\\\\\\",\\\\\\\"chain)\\\\\\\",\\\\\\\"clear\\\\\\\",\\\\\\\"coins.ph\\\\\\\",\\\\\\\"combin\\\\\\\",\\\\\\\"competit\\\\\\\",\\\\\\\"configuration.\\\\\\\",\\\\\\\"content\\\\\\\",\\\\\\\"convers\\\\\\\",\\\\\\\"convert\\\\\\\",\\\\\\\"covered.\\\\\\\",\\\\\\\"creat\\\\\\\",\\\\\\\"credenti\\\\\\\",\\\\\\\"crypto\\\\\\\",\\\\\\\"crypto)\\\\\\\",\\\\\\\"crypto [... omitted end of long line]"
+                },
+                {
+                  "lineNumber": 15771,
+                  "content": "                  \"content\": \"                  \\\"content\\\": \\\"        \\\\\\\"contents\\\\\\\": \\\\\\\"# Offramp API Proxy\\\\\\\\n\\\\\\\\nNode.js Express API server with Coins.ph integration and dynamic signature generation.\\\\\\\\n\\\\\\\\n## Features\\\\\\\\n\\\\\\\\n- **Express.js** - Fast, unopinionated web framework\\\\\\\\n- **Coins.ph Integration** - Pre-configured endpoints with HMAC SHA256 signature generation\\\\\\\\n- **Dynamic Signature Generation** - Matches Postman pre-script logic exactly\\\\\\\\n- **Rate Limiting** - Prevents abuse\\\\\\\\n- **CORS Support** - Cross-origin resource sharing\\\\\\\\n- **Security Headers** - Helmet.js for security\\\\\\\\n\\\\\\\\n## Installation\\\\\\\\n\\\\\\\\n1. Install dependencies:\\\\\\\\n&amp;amp;amp;#96;&amp;amp;amp;#96;&amp;amp;amp;#96;bash\\\\\\\\nnpm install\\\\\\\\n&amp;amp;amp;#96;&amp;amp;amp;#96;&amp;amp;amp;#96;\\\\\\\\n\\\\\\\\n2. Create a &amp;amp;amp;#96;.env&amp;amp;amp;#96; file:\\\\\\\\n&amp;amp;amp;#96;&amp;amp;amp;#96;&amp;amp;amp;#96;bash\\\\\\\\ncp .env.example .env\\\\\\\\n&amp;amp;amp;#96;&amp;amp;amp;#96;&amp;amp;amp;#96;\\\\\\\\n\\\\\\\\n3. Update &amp;amp;amp;#96;.env&amp;amp [... omitted end of long line]"
+                },
+                {
+                  "lineNumber": 16171,
+                  "content": "                  \"content\": \"                  \\\"content\\\": \\\"| &amp;amp;#96;server.js&amp;amp;#96; | &amp;amp;#96;console.log(&amp;amp;#96;Coins.ph API: http://localhost:$\\\\\\\\{PORT\\\\\\\\}/api/coins&amp;amp;#96;);&amp;amp;#96; | L59 |\\\"\""
+                },
+                {
+                  "lineNumber": 16175,
+                  "content": "                  \"content\": \"                  \\\"content\\\": \\\"-   console.log(&amp;amp;amp;#96;Coins.ph API: http://localhost:${PORT}/api/coins&amp;amp;amp;#96;);\\\"\""
+                },
+                {
+                  "lineNumber": 16179,
+                  "content": "                  \"content\": \"                  \\\"content\\\": \\\"+   console.log(&amp;amp;amp;#96;Coins.ph API: http://localhost:${PORT}/api/id0001&amp;amp;amp;#96;);\\\"\""
+                },
+                {
+                  "lineNumber": 16183,
+                  "content": "                  \"content\": \"                  \\\"content\\\": \\\"| &amp;amp;#96;./server.js&amp;amp;#96; | &amp;amp;#96;console.log(&amp;amp;#96;Coins.ph API: http://localhost:$\\\\\\\\{PORT\\\\\\\\}/api/id0001&amp;amp;#96;);&amp;amp;#96; | L59 |\\\"\""
+                },
+                {
+                  "lineNumber": 16299,
+                  "content": "                  \"content\": \"                  \\\"content\\\": \\\"-   console.log(&amp;amp;amp;#96;Coins.ph API: http://localhost:${PORT}/api/id0001&amp;amp;amp;#96;);\\\"\""
+                },
+                {
+                  "lineNumber": 16399,
+                  "content": "                  \"content\": \"                  \\\"content\\\": \\\"+ \\\\t\\\\t\\\\\\\"description\\\\\\\": \\\\\\\"API proxy for Coins.ph integration. Partner details are abstracted - just use the partner ID in the URL path.\\\\\\\\n\\\\\\\\n**Setup:**\\\\\\\\n1. Set &amp;amp;amp;#96;base_url&amp;amp;amp;#96; variable to your server URL (e.g., &amp;amp;amp;#96;http://localhost:3002&amp;amp;amp;#96;)\\\\\\\\n2. Set &amp;amp;amp;#96;partner_id&amp;amp;amp;#96; variable to your partner ID (e.g., &amp;amp;amp;#96;id0001&amp;amp;amp;#96;)\\\\\\\\n3. All endpoints automatically handle signature generation - no need to configure API keys/secrets!\\\\\\\",\\\"\""
+                },
+                {
+                  "lineNumber": 16403,
+                  "content": "                  \"content\": \"                  \\\"content\\\": \\\"- \\\\t\\\\t\\\\\\\"description\\\\\\\": \\\\\\\"API proxy for Coins.ph integration. Partner details are abstracted - just use the partner ID in the URL path.\\\\\\\\n\\\\\\\\n**Setup:**\\\\\\\\n1. Set &amp;amp;amp;#96;base_url&amp;amp;amp;#96; variable to your server URL (e.g., &amp;amp;amp;#96;http://localhost:3002&amp;amp;amp;#96;)\\\\\\\\n2. Set &amp;amp;amp;#96;partner_id&amp;amp;amp;#96; variable to your partner ID (e.g., &amp;amp;amp;#96;id0001&amp;amp;amp;#96;)\\\\\\\\n3. All endpoints automatically handle signature generation - no need to configure API keys/secrets!\\\\\\\",\\\"\""
+                },
+                {
+                  "lineNumber": 17103,
+                  "content": "                  \"content\": \"                  \\\"content\\\": \\\"{\\\\\\\"index\\\\\\\":{\\\\\\\"version\\\\\\\":\\\\\\\"0.5.12\\\\\\\",\\\\\\\"fields\\\\\\\":[{\\\\\\\"name\\\\\\\":\\\\\\\"title\\\\\\\",\\\\\\\"boost\\\\\\\":10},{\\\\\\\"name\\\\\\\":\\\\\\\"keywords\\\\\\\",\\\\\\\"boost\\\\\\\":15},{\\\\\\\"name\\\\\\\":\\\\\\\"body\\\\\\\",\\\\\\\"boost\\\\\\\":1}],\\\\\\\"ref\\\\\\\":\\\\\\\"url\\\\\\\",\\\\\\\"documentStore\\\\\\\":{\\\\\\\"store\\\\\\\":{\\\\\\\"./\\\\\\\":[\\\\\\\"(aed,\\\\\\\",\\\\\\\"(aed/inr\\\\\\\",\\\\\\\"(crypto\\\\\\\",\\\\\\\"(fiat\\\\\\\",\\\\\\\"(india),\\\\\\\",\\\\\\\"(philippines),\\\\\\\",\\\\\\\"(uae),\\\\\\\",\\\\\\\"(usdc\\\\\\\",\\\\\\\"(xdc\\\\\\\",\\\\\\\"/api/{partnerid}/{endpoint}\\\\\\\",\\\\\\\"a\\\\\\\",\\\\\\\"addit\\\\\\\",\\\\\\\"aed/inr\\\\\\\",\\\\\\\"api\\\\\\\",\\\\\\\"api:\\\\\\\",\\\\\\\"application/json\\\\\\\",\\\\\\\"application/x\\\\\\\",\\\\\\\"authent\\\\\\\",\\\\\\\"automat\\\\\\\",\\\\\\\"bank\\\\\\\",\\\\\\\"base\\\\\\\",\\\\\\\"between\\\\\\\",\\\\\\\"breakdown\\\\\\\",\\\\\\\"busi\\\\\\\",\\\\\\\"call\\\\\\\",\\\\\\\"cash\\\\\\\",\\\\\\\"chain)\\\\\\\",\\\\\\\"clear\\\\\\\",\\\\\\\"coins.ph\\\\\\\",\\\\\\\"combin\\\\\\\",\\\\\\\"competit\\\\\\\",\\\\\\\"configuration.\\\\\\\",\\\\\\\"content\\\\\\\",\\\\\\\"convers\\\\\\\",\\\\\\\"convert\\\\\\\",\\\\\\\"covered.\\\\\\\",\\\\\\\"creat\\\\\\\",\\\\\\\"credenti\\\\\\\",\\\\\\\"crypto\\\\\\\",\\\\\\\"crypto)\\\\\\\",\\\\\\\"crypto [... omitted end of long line]"
+                },
+                {
+                  "lineNumber": 17455,
+                  "content": "                  \"content\": \"                  \\\"content\\\": \\\"        \\\\\\\"contents\\\\\\\": \\\\\\\"# Offramp API Proxy\\\\\\\\n\\\\\\\\nNode.js Express API server with Coins.ph integration and dynamic signature generation.\\\\\\\\n\\\\\\\\n## Features\\\\\\\\n\\\\\\\\n- **Express.js** - Fast, unopinionated web framework\\\\\\\\n- **Coins.ph Integration** - Pre-configured endpoints with HMAC SHA256 signature generation\\\\\\\\n- **Dynamic Signature Generation** - Matches Postman pre-script logic exactly\\\\\\\\n- **Rate Limiting** - Prevents abuse\\\\\\\\n- **CORS Support** - Cross-origin resource sharing\\\\\\\\n- **Security Headers** - Helmet.js for security\\\\\\\\n\\\\\\\\n## Installation\\\\\\\\n\\\\\\\\n1. Install dependencies:\\\\\\\\n&amp;amp;amp;#96;&amp;amp;amp;#96;&amp;amp;amp;#96;bash\\\\\\\\nnpm install\\\\\\\\n&amp;amp;amp;#96;&amp;amp;amp;#96;&amp;amp;amp;#96;\\\\\\\\n\\\\\\\\n2. Create a &amp;amp;amp;#96;.env&amp;amp;amp;#96; file:\\\\\\\\n&amp;amp;amp;#96;&amp;amp;amp;#96;&amp;amp;amp;#96;bash\\\\\\\\ncp .env.example .env\\\\\\\\n&amp;amp;amp;#96;&amp;amp;amp;#96;&amp;amp;amp;#96;\\\\\\\\n\\\\\\\\n3. Update &amp;amp;amp;#96;.env&amp;amp [... omitted end of long line]"
+                },
+                {
+                  "lineNumber": 17847,
+                  "content": "                  \"content\": \"                  \\\"content\\\": \\\"| &amp;amp;#96;server.js&amp;amp;#96; | &amp;amp;#96;console.log(&amp;amp;#96;Coins.ph API: http://localhost:$\\\\\\\\{PORT\\\\\\\\}/api/coins&amp;amp;#96;);&amp;amp;#96; | L59 |\\\"\""
+                },
+                {
+                  "lineNumber": 17851,
+                  "content": "                  \"content\": \"                  \\\"content\\\": \\\"-   console.log(&amp;amp;amp;#96;Coins.ph API: http://localhost:${PORT}/api/coins&amp;amp;amp;#96;);\\\"\""
+                },
+                {
+                  "lineNumber": 17855,
+                  "content": "                  \"content\": \"                  \\\"content\\\": \\\"+   console.log(&amp;amp;amp;#96;Coins.ph API: http://localhost:${PORT}/api/id0001&amp;amp;amp;#96;);\\\"\""
+                },
+                {
+                  "lineNumber": 17859,
+                  "content": "                  \"content\": \"                  \\\"content\\\": \\\"| &amp;amp;#96;./server.js&amp;amp;#96; | &amp;amp;#96;console.log(&amp;amp;#96;Coins.ph API: http://localhost:$\\\\\\\\{PORT\\\\\\\\}/api/id0001&amp;amp;#96;);&amp;amp;#96; | L59 |\\\"\""
+                },
+                {
+                  "lineNumber": 17975,
+                  "content": "                  \"content\": \"                  \\\"content\\\": \\\"-   console.log(&amp;amp;amp;#96;Coins.ph API: http://localhost:${PORT}/api/id0001&amp;amp;amp;#96;);\\\"\""
+                },
+                {
+                  "lineNumber": 19100,
+                  "content": "                  \"content\": \"{\\\"index\\\":{\\\"version\\\":\\\"0.5.12\\\",\\\"fields\\\":[{\\\"name\\\":\\\"title\\\",\\\"boost\\\":10},{\\\"name\\\":\\\"keywords\\\",\\\"boost\\\":15},{\\\"name\\\":\\\"body\\\",\\\"boost\\\":1}],\\\"ref\\\":\\\"url\\\",\\\"documentStore\\\":{\\\"store\\\":{\\\"./\\\":[\\\"(aed,\\\",\\\"(aed/inr\\\",\\\"(crypto\\\",\\\"(fiat\\\",\\\"(india),\\\",\\\"(philippines),\\\",\\\"(uae),\\\",\\\"(usdc\\\",\\\"(xdc\\\",\\\"/api/{partnerid}/{endpoint}\\\",\\\"a\\\",\\\"addit\\\",\\\"aed/inr\\\",\\\"api\\\",\\\"api:\\\",\\\"application/json\\\",\\\"application/x\\\",\\\"authent\\\",\\\"automat\\\",\\\"bank\\\",\\\"base\\\",\\\"between\\\",\\\"breakdown\\\",\\\"busi\\\",\\\"call\\\",\\\"cash\\\",\\\"chain)\\\",\\\"clear\\\",\\\"coins.ph\\\",\\\"combin\\\",\\\"competit\\\",\\\"configuration.\\\",\\\"content\\\",\\\"convers\\\",\\\"convert\\\",\\\"covered.\\\",\\\"creat\\\",\\\"credenti\\\",\\\"crypto\\\",\\\"crypto)\\\",\\\"crypto,\\\",\\\"crypto.\\\",\\\"currenc\\\",\\\"documentation,\\\",\\\"documentation.\\\",\\\"enabl\\\",\\\"endpoint:\\\",\\\"endpoints;\\\",\\\"exchang\\\",\\\"fast\\\",\\\"featur\\\",\\\"fee\\\",\\\"fetch\\\",\\\"fiat\\\",\\\"fiat)\\\",\\\"form\\\",\\\"format:\\\",\\\"gateway\\\",\\\"handl\\\",\\\"header\\\",\\\"https://xdc.cash\\\",\\\"id\\\",\\\"id0001\\\", [... omitted end of long line]"
+                },
+                {
+                  "lineNumber": 19594,
+                  "content": "                  \"content\": \"        \\\"contents\\\": \\\"# Offramp API Proxy\\\\n\\\\nNode.js Express API server with Coins.ph integration and dynamic signature generation.\\\\n\\\\n## Features\\\\n\\\\n- **Express.js** - Fast, unopinionated web framework\\\\n- **Coins.ph Integration** - Pre-configured endpoints with HMAC SHA256 signature generation\\\\n- **Dynamic Signature Generation** - Matches Postman pre-script logic exactly\\\\n- **Rate Limiting** - Prevents abuse\\\\n- **CORS Support** - Cross-origin resource sharing\\\\n- **Security Headers** - Helmet.js for security\\\\n\\\\n## Installation\\\\n\\\\n1. Install dependencies:\\\\n&amp;amp;#96;&amp;amp;#96;&amp;amp;#96;bash\\\\nnpm install\\\\n&amp;amp;#96;&amp;amp;#96;&amp;amp;#96;\\\\n\\\\n2. Create a &amp;amp;#96;.env&amp;amp;#96; file:\\\\n&amp;amp;#96;&amp;amp;#96;&amp;amp;#96;bash\\\\ncp .env.example .env\\\\n&amp;amp;#96;&amp;amp;#96;&amp;amp;#96;\\\\n\\\\n3. Update &amp;amp;#96;.env&amp;amp;#96; with your Coins.ph credentials:\\\\n&amp;amp;#96;&amp;amp;#96;&amp;amp;#96;env\\\\nPORT=3000\\\\nCOINS_API_KEY=HRqjJcBxjppZAvVyzZvdxMI95O74jPDYbd2sbGaBecvPIHd6jl [... omitted end of long line]"
+                },
+                {
+                  "lineNumber": 20140,
+                  "content": "                  \"content\": \"| &amp;#96;server.js&amp;#96; | &amp;#96;console.log(&amp;#96;Coins.ph API: http://localhost:$\\\\{PORT\\\\}/api/coins&amp;#96;);&amp;#96; | L59 |\""
+                },
+                {
+                  "lineNumber": 20152,
+                  "content": "                  \"content\": \"-   console.log(&amp;amp;#96;Coins.ph API: http://localhost:${PORT}/api/coins&amp;amp;#96;);\""
+                },
+                {
+                  "lineNumber": 20156,
+                  "content": "                  \"content\": \"+   console.log(&amp;amp;#96;Coins.ph API: http://localhost:${PORT}/api/id0001&amp;amp;#96;);\""
+                },
+                {
+                  "lineNumber": 20160,
+                  "content": "                  \"content\": \"| &amp;#96;./server.js&amp;#96; | &amp;#96;console.log(&amp;#96;Coins.ph API: http://localhost:$\\\\{PORT\\\\}/api/id0001&amp;#96;);&amp;#96; | L59 |\""
+                },
+                {
+                  "lineNumber": 20304,
+                  "content": "                  \"content\": \"-   console.log(&amp;amp;#96;Coins.ph API: http://localhost:${PORT}/api/id0001&amp;amp;#96;);\""
+                },
+                {
+                  "lineNumber": 20456,
+                  "content": "                  \"content\": \"+ \\t\\t\\\"description\\\": \\\"API proxy for Coins.ph integration. Partner details are abstracted - just use the partner ID in the URL path.\\\\n\\\\n**Setup:**\\\\n1. Set &amp;amp;#96;base_url&amp;amp;#96; variable to your server URL (e.g., &amp;amp;#96;http://localhost:3002&amp;amp;#96;)\\\\n2. Set &amp;amp;#96;partner_id&amp;amp;#96; variable to your partner ID (e.g., &amp;amp;#96;id0001&amp;amp;#96;)\\\\n3. All endpoints automatically handle signature generation - no need to configure API keys/secrets!\\\",\""
+                },
+                {
+                  "lineNumber": 20472,
+                  "content": "                  \"content\": \"- \\t\\t\\\"description\\\": \\\"API proxy for Coins.ph integration. Partner details are abstracted - just use the partner ID in the URL path.\\\\n\\\\n**Setup:**\\\\n1. Set &amp;amp;#96;base_url&amp;amp;#96; variable to your server URL (e.g., &amp;amp;#96;http://localhost:3002&amp;amp;#96;)\\\\n2. Set &amp;amp;#96;partner_id&amp;amp;#96; variable to your partner ID (e.g., &amp;amp;#96;id0001&amp;amp;#96;)\\\\n3. All endpoints automatically handle signature generation - no need to configure API keys/secrets!\\\",\""
+                },
+                {
+                  "lineNumber": 22598,
+                  "content": "                  \"content\": \"            gitbook.page.hasChanged({\\\"page\\\":{\\\"title\\\":\\\"Quick Reference\\\",\\\"level\\\":\\\"1.6\\\",\\\"depth\\\":1,\\\"next\\\":{\\\"title\\\":\\\"Build &amp;amp; Publish\\\",\\\"level\\\":\\\"1.7\\\",\\\"depth\\\":1,\\\"path\\\":\\\"testing.md\\\",\\\"ref\\\":\\\"testing.md\\\",\\\"articles\\\":[]},\\\"previous\\\":{\\\"title\\\":\\\"Coins.ph API\\\",\\\"level\\\":\\\"1.5\\\",\\\"depth\\\":1,\\\"path\\\":\\\"coins-api.md\\\",\\\"ref\\\":\\\"coins-api.md\\\",\\\"articles\\\":[]},\\\"dir\\\":\\\"ltr\\\"},\\\"config\\\":{\\\"plugins\\\":[\\\"livereload\\\"],\\\"root\\\":\\\".\\\",\\\"styles\\\":{\\\"website\\\":\\\"styles/website.css\\\",\\\"pdf\\\":\\\"styles/pdf.css\\\",\\\"epub\\\":\\\"styles/epub.css\\\",\\\"mobi\\\":\\\"styles/mobi.css\\\",\\\"ebook\\\":\\\"styles/ebook.css\\\",\\\"print\\\":\\\"styles/print.css\\\"},\\\"pluginsConfig\\\":{\\\"livereload\\\":{},\\\"highlight\\\":{},\\\"search\\\":{},\\\"lunr\\\":{\\\"maxIndexSize\\\":1000000,\\\"ignoreSpecialCharacters\\\":false},\\\"fontsettings\\\":{\\\"theme\\\":\\\"white\\\",\\\"family\\\":\\\"sans\\\",\\\"size\\\":2},\\\"theme-default\\\":{\\\"styles\\\":{\\\"website\\\":\\\"styles/website.css\\\",\\\"pdf\\\":\\\"styles/pdf.css\\\",\\\"epub\\\":\\\"styles [... omitted end of long line]"
+                },
+                {
+                  "lineNumber": 22675,
+                  "content": "                  \"content\": \"            gitbook.page.hasChanged({\\\"page\\\":{\\\"title\\\":\\\"Get Exchange Rate\\\",\\\"level\\\":\\\"1.4\\\",\\\"depth\\\":1,\\\"next\\\":{\\\"title\\\":\\\"Coins.ph API\\\",\\\"level\\\":\\\"1.5\\\",\\\"depth\\\":1,\\\"path\\\":\\\"coins-api.md\\\",\\\"ref\\\":\\\"coins-api.md\\\",\\\"articles\\\":[]},\\\"previous\\\":{\\\"title\\\":\\\"Offramp Operations\\\",\\\"level\\\":\\\"1.3\\\",\\\"depth\\\":1,\\\"path\\\":\\\"offramp-api.md\\\",\\\"ref\\\":\\\"offramp-api.md\\\",\\\"articles\\\":[]},\\\"dir\\\":\\\"ltr\\\"},\\\"config\\\":{\\\"plugins\\\":[\\\"livereload\\\"],\\\"root\\\":\\\".\\\",\\\"styles\\\":{\\\"website\\\":\\\"styles/website.css\\\",\\\"pdf\\\":\\\"styles/pdf.css\\\",\\\"epub\\\":\\\"styles/epub.css\\\",\\\"mobi\\\":\\\"styles/mobi.css\\\",\\\"ebook\\\":\\\"styles/ebook.css\\\",\\\"print\\\":\\\"styles/print.css\\\"},\\\"pluginsConfig\\\":{\\\"livereload\\\":{},\\\"highlight\\\":{},\\\"search\\\":{},\\\"lunr\\\":{\\\"maxIndexSize\\\":1000000,\\\"ignoreSpecialCharacters\\\":false},\\\"fontsettings\\\":{\\\"theme\\\":\\\"white\\\",\\\"family\\\":\\\"sans\\\",\\\"size\\\":2},\\\"theme-default\\\":{\\\"styles\\\":{\\\"website\\\":\\\"styles/website.css\\\",\\\"pdf\\\":\\\"styles/pdf.css\\\",\\\"epub\\\" [... omitted end of long line]"
+                },
+                {
+                  "lineNumber": 22829,
+                  "content": "                  \"content\": \"            gitbook.page.hasChanged({\\\"page\\\":{\\\"title\\\":\\\"Coins.ph API\\\",\\\"level\\\":\\\"1.5\\\",\\\"depth\\\":1,\\\"next\\\":{\\\"title\\\":\\\"Quick Reference\\\",\\\"level\\\":\\\"1.6\\\",\\\"depth\\\":1,\\\"path\\\":\\\"quick-reference.md\\\",\\\"ref\\\":\\\"quick-reference.md\\\",\\\"articles\\\":[]},\\\"previous\\\":{\\\"title\\\":\\\"Get Exchange Rate\\\",\\\"level\\\":\\\"1.4\\\",\\\"depth\\\":1,\\\"path\\\":\\\"get-exchange-rate.md\\\",\\\"ref\\\":\\\"get-exchange-rate.md\\\",\\\"articles\\\":[]},\\\"dir\\\":\\\"ltr\\\"},\\\"config\\\":{\\\"plugins\\\":[\\\"livereload\\\"],\\\"root\\\":\\\".\\\",\\\"styles\\\":{\\\"website\\\":\\\"styles/website.css\\\",\\\"pdf\\\":\\\"styles/pdf.css\\\",\\\"epub\\\":\\\"styles/epub.css\\\",\\\"mobi\\\":\\\"styles/mobi.css\\\",\\\"ebook\\\":\\\"styles/ebook.css\\\",\\\"print\\\":\\\"styles/print.css\\\"},\\\"pluginsConfig\\\":{\\\"livereload\\\":{},\\\"highlight\\\":{},\\\"search\\\":{},\\\"lunr\\\":{\\\"maxIndexSize\\\":1000000,\\\"ignoreSpecialCharacters\\\":false},\\\"fontsettings\\\":{\\\"theme\\\":\\\"white\\\",\\\"family\\\":\\\"sans\\\",\\\"size\\\":2},\\\"theme-default\\\":{\\\"styles\\\":{\\\"website\\\":\\\"styles/website.css\\\",\\\"pdf\\\":\\\"styl [... omitted end of long line]"
+                },
+                {
+                  "lineNumber": 22870,
+                  "content": "                  \"content\": \"{\\\"index\\\":{\\\"version\\\":\\\"0.5.12\\\",\\\"fields\\\":[{\\\"name\\\":\\\"title\\\",\\\"boost\\\":10},{\\\"name\\\":\\\"keywords\\\",\\\"boost\\\":15},{\\\"name\\\":\\\"body\\\",\\\"boost\\\":1}],\\\"ref\\\":\\\"url\\\",\\\"documentStore\\\":{\\\"store\\\":{\\\"./\\\":[\\\"(aed,\\\",\\\"(aed/inr\\\",\\\"(crypto\\\",\\\"(fiat\\\",\\\"(india),\\\",\\\"(philippines),\\\",\\\"(uae),\\\",\\\"(usdc\\\",\\\"(xdc\\\",\\\"/api/{partnerid}/{endpoint}\\\",\\\"a\\\",\\\"addit\\\",\\\"aed/inr\\\",\\\"api\\\",\\\"api:\\\",\\\"application/json\\\",\\\"application/x\\\",\\\"authent\\\",\\\"automat\\\",\\\"bank\\\",\\\"base\\\",\\\"between\\\",\\\"breakdown\\\",\\\"busi\\\",\\\"call\\\",\\\"cash\\\",\\\"chain)\\\",\\\"clear\\\",\\\"coins.ph\\\",\\\"combin\\\",\\\"competit\\\",\\\"configuration.\\\",\\\"content\\\",\\\"convers\\\",\\\"convert\\\",\\\"covered.\\\",\\\"creat\\\",\\\"credenti\\\",\\\"crypto\\\",\\\"crypto)\\\",\\\"crypto,\\\",\\\"crypto.\\\",\\\"currenc\\\",\\\"documentation,\\\",\\\"documentation.\\\",\\\"enabl\\\",\\\"endpoint:\\\",\\\"endpoints;\\\",\\\"exchang\\\",\\\"fast\\\",\\\"featur\\\",\\\"fee\\\",\\\"fetch\\\",\\\"fiat\\\",\\\"fiat)\\\",\\\"form\\\",\\\"format:\\\",\\\"gateway\\\",\\\"handl\\\",\\\"header\\\",\\\"https://xdc.cash\\\",\\\"id\\\",\\\"id0001\\\", [... omitted end of long line]"
+                },
+                {
+                  "lineNumber": 23969,
+                  "content": "                  \"content\": \"XDC ↔ PHP conversion via Coins.ph. Uses partner ID &amp;#96;id0001&amp;#96;.\""
+                },
+                {
+                  "lineNumber": 24420,
+                  "content": "4. Add get exchange rate and Coins.ph details to API Reference"
+                },
+                {
+                  "lineNumber": 24444,
+                  "content": "4. Add get exchange rate and Coins.ph details to API Reference"
+                },
+                {
+                  "lineNumber": 24449,
+                  "content": "1. Update docs/SUMMARY.md - remove Build &amp; Publish, Onramp Operations, Offramp Operations, Get Exchange Rate, Coins.ph API, Quick Reference - keep only Welcome and API Reference (and merge all content into API Reference)"
+                },
+                {
+                  "lineNumber": 24529,
+                  "content": "   Remove: Onramp Operations, Offramp Operations, Get Exchange Rate, Coins.ph API, Quick Reference, Build &amp; Publish"
+                },
+                {
+                  "lineNumber": 24680,
+                  "content": "1. SUMMARY.md - remove Build &amp; Publish. The user didn't ask to remove the other sections again in this message, so I'll just remove Build &amp; Publish. Actually re-reading the previous message they wanted \"only API reference section\" - so I should have only Welcome and API Reference in SUMMARY. Let me check current SUMMARY - it has Welcome, API Reference, Onramp, Offramp, Get Exchange Rate, Coins.ph, Quick Reference, Build &amp; Publish. For this message they only said remove build and publish and remove partner/use ref_id. So I'll remove Build &amp; Publish only from SUMMARY, and change all partner wordings to reference ID."
+                }
+              ]
+            },
+            {
+              "file": "./docs/coins-api.md",
+              "matches": [
+                {
+                  "lineNumber": 1,
+                  "content": "# Coins.ph API"
+                }
+              ]
+            },
+            {
+              "file": "./docs/SUMMARY.md",
+              "matches": [
+                {
+                  "lineNumber": 9,
+                  "content": "* [Coins.ph API](coins-api.md)"
+                }
+              ]
+            },
+            {
+              "file": "./README.md",
+              "matches": [
+                {
+                  "lineNumber": 3,
+                  "content": "Node.js Express API server with Coins.ph integration and dynamic signature generation."
+                },
+                {
+                  "lineNumber": 8,
+                  "content": "- **Coins.ph Integration** - Pre-configured endpoints with HMAC SHA256 signature generation"
+                },
+                {
+                  "lineNumber": 26,
+                  "content": "3. Update &#96;.env&#96; with your Coins.ph credentials:"
+                },
+                {
+                  "lineNumber": 90,
+                  "content": "  \"source\": \"coins.ph\","
+                },
+                {
+                  "lineNumber": 135,
+                  "content": "  \"source\": \"coins.ph\","
+                },
+                {
+                  "lineNumber": 238,
+                  "content": "│   └── coins.js          # Coins.ph API routes"
+                }
+              ]
+            },
+            {
+              "file": "./.specstory/history/2026-01-22_14-36Z-get-quote-api-404-error.md",
+              "matches": [
+                {
+                  "lineNumber": 2609,
+                  "content": "        \"contents\": \"/**\\n * Coins.ph API Routes\\n * Wraps Coins.ph API with signature generation\\n */\\n\\nconst express = require('express');\\nconst router = express.Router({ mergeParams: true }); // Enable route params from parent route\\nconst axios = require('axios');\\nconst fs = require('fs');\\nconst path = require('path');\\n\\nconst { getPartner } = require('../config/partners');\\n// Signature generation is done inline using CryptoJS to match Postman pre-script exactly\\n\\nconst QUOTE_DATA_FILE = path.join(process.cwd(), '.quote-data.json');\\n\\n/**\\n * Get partner configuration from request\\n * Extracts partner ID dynamically from URL path: /api/{partnerId}/...\\n */\\nfunction getPartnerFromRequest(req) {\\n  // Extract partner ID directly from URL path\\n  // URL format: /api/id0001/get-quote -&amp;gt; extract 'id0001'\\n  // Try multiple sources to extract partnerId from URL\\n  console.log(\\\"req-------------\\\", req.params);\\n  let partnerId = req.params.partnerId;\\n  \\n  // If not in param [... omitted end of long line]"
+                },
+                {
+                  "lineNumber": 2617,
+                  "content": "            \"text\": \" * Coins.ph API Routes\","
+                },
+                {
+                  "lineNumber": 2621,
+                  "content": "            \"text\": \" * Wraps Coins.ph API with signature generation\","
+                },
+                {
+                  "lineNumber": 3655,
+                  "content": "        \"contents\": \"/**\\n * Partner Configuration\\n * Abstracts partner details from end users\\n */\\n\\nconst partners = {\\n  id0001: {\\n    name: 'Coins.ph',\\n    baseUrl: 'https://api.pro.coins.ph',\\n    apiKey: process.env.COINS_API_KEY,\\n    secret: process.env.COINS_API_SECRET,\\n    enabled: true\\n  },\\n  id0002: {\\n    name: 'Onramp.money',\\n    baseUrl: 'https://api.onramp.money/onramp/api/v2/whiteLabel',\\n    apiKey: process.env.ONRAMP_API_KEY || 'vdBGnS3WMHMNlmk5LpTK6iJqSfZeVk',\\n    secret: process.env.ONRAMP_SECRET || 'MfeppKpi9A7LSwCxMPqs5VH9dV9Ix3Sh',\\n    enabled: true\\n  },\\n  // Add more partners here\\n  // partner2: {\\n  //   name: 'Partner 2',\\n  //   baseUrl: 'https://api.partner2.com',\\n  //   apiKey: process.env.PARTNER2_API_KEY,\\n  //   secret: process.env.PARTNER2_API_SECRET,\\n  //   enabled: true\\n  // }\\n};\\n\\n/**\\n * Get partner configuration by ID\\n * @param {string} partnerId - Partner identifier (default: 'id0001')\\n * @returns {Object|null} Partner configu [... omitted end of long line]"
+                },
+                {
+                  "lineNumber": 3686,
+                  "content": "            \"text\": \"    name: 'Coins.ph',\","
+                },
+                {
+                  "lineNumber": 3690,
+                  "content": "            \"text\": \"    baseUrl: 'https://api.pro.coins.ph',\","
+                },
+                {
+                  "lineNumber": 4930,
+                  "content": "        \"contents\": \"# Offramp API Proxy\\n\\nNode.js Express API server with Coins.ph integration and dynamic signature generation.\\n\\n## Features\\n\\n- **Express.js** - Fast, unopinionated web framework\\n- **Coins.ph Integration** - Pre-configured endpoints with HMAC SHA256 signature generation\\n- **Dynamic Signature Generation** - Matches Postman pre-script logic exactly\\n- **Rate Limiting** - Prevents abuse\\n- **CORS Support** - Cross-origin resource sharing\\n- **Security Headers** - Helmet.js for security\\n\\n## Installation\\n\\n1. Install dependencies:\\n&amp;#96;&amp;#96;&amp;#96;bash\\nnpm install\\n&amp;#96;&amp;#96;&amp;#96;\\n\\n2. Create a &amp;#96;.env&amp;#96; file:\\n&amp;#96;&amp;#96;&amp;#96;bash\\ncp .env.example .env\\n&amp;#96;&amp;#96;&amp;#96;\\n\\n3. Update &amp;#96;.env&amp;#96; with your Coins.ph credentials:\\n&amp;#96;&amp;#96;&amp;#96;env\\nPORT=3000\\nCOINS_API_KEY=HRqjJcBxjppZAvVyzZvdxMI95O74jPDYbd2sbGaBecvPIHd6jl4FgHs78wQKNUCE\\nCOINS_API_SECRET=your-coins-api-secret-here\\nNODE_ENV=development\\n&amp;#96;&amp;#96;&amp;#96;\\n\\n## Running the Server\\n\\n### Develo [... omitted end of long line]"
+                },
+                {
+                  "lineNumber": 4941,
+                  "content": "            \"text\": \"Node.js Express API server with Coins.ph integration and dynamic signature generation.\","
+                },
+                {
+                  "lineNumber": 4959,
+                  "content": "            \"text\": \"- **Coins.ph Integration** - Pre-configured endpoints with HMAC SHA256 signature generation\","
+                },
+                {
+                  "lineNumber": 5027,
+                  "content": "            \"text\": \"3. Update &amp;#96;.env&amp;#96; with your Coins.ph credentials:\","
+                },
+                {
+                  "lineNumber": 5400,
+                  "content": "        \"contents\": \"async (req, res) =&amp;gt; {\\n\\n    \\n    // Build string to sign - CRITICAL: Must match exactly what server expects\\n    // Extract query string from original URL (what server actually sees)\\n    const queryStartIndex = fullUrl.indexOf('?');\\n    let param = queryStartIndex &amp;gt;= 0 \\n      ? fullUrl.substring(queryStartIndex + 1, fullUrl.length) \\n      : '';\\n    \\n    // Also try from req.originalUrl directly (what Express sees)\\n    const expressQueryString = req.originalUrl.includes('?') \\n      ? req.originalUrl.substring(req.originalUrl.indexOf('?') + 1)\\n      : '';\\n    \\n    console.log('=== SIGNATURE STRING BUILDING ===');\\n    console.log('Full URL:', fullUrl);\\n    console.log('Query from fullUrl:', param);\\n    console.log('Query from req.originalUrl:', expressQueryString);\\n    console.log('req.query (parsed):', req.query);\\n    \\n    // Use the query string from the URL (not parsed req.query, as order matters!)\\n    let str = param || expressQueryString [... omitted end of long line]"
+                },
+                {
+                  "lineNumber": 5554,
+                  "content": "            \"text\": \"    // Original Postman had recvWindow=null, but Coins.ph rejects it - remove completely\","
+                },
+                {
+                  "lineNumber": 6126,
+                  "content": "        \"contents\": \"### Manual testing with cURL:\\n\\n#### Get Quote:\\n&amp;#96;&amp;#96;&amp;#96;bash\\ncurl -X POST \\\\\\n  -H \\\"Content-Type: application/json\\\" \\\\\\n  \\\"http://localhost:3000/api/coins/get-quote?sourceCurrency=XDC&amp;amp;targetCurrency=PHP&amp;amp;sourceAmount=50\\\"\\n&amp;#96;&amp;#96;&amp;#96;\\n\\n#### Accept Quote:\\n&amp;#96;&amp;#96;&amp;#96;bash\\ncurl -X POST \\\\\\n  -H \\\"Content-Type: application/json\\\" \\\\\\n  \\\"http://localhost:3002/api/coins/accept-quote?quoteId=2088568334659666570\\\"\\n&amp;#96;&amp;#96;&amp;#96;\\n\\n#### Using JavaScript/Node.js:\\n&amp;#96;&amp;#96;&amp;#96;javascript\\nconst axios = require('axios');\\n\\n// Accept Quote\\nlet config = {\\n  method: 'post',\\n  maxBodyLength: Infinity,\\n  url: 'http://localhost:3002/api/coins/accept-quote?quoteId=2088568334659666570',\\n  headers: { \\n    'Content-Type': 'application/json'\\n  }\\n};\\n\\naxios.request(config)\\n  .then((response) =&amp;gt; {\\n    console.log(JSON.stringify(response.data));\\n  })\\n  .catch((error) =&amp;gt; {\\n    console.log(error);\\n  });\\n&amp;#96;&amp;#96;&amp;#96;\\n\\n## Signat [... omitted end of long line]"
+                },
+                {
+                  "lineNumber": 6367,
+                  "content": "            \"text\": \"│   └── coins.js          # Coins.ph API routes\","
+                }
+              ]
+            },
+            {
+              "file": "./.specstory/history/2026-02-06_08-34Z-onramp-and-offramp-transaction-apis.md",
+              "matches": [
+                {
+                  "lineNumber": 3036,
+                  "content": "        \"contents\": \"/**\\n * Partner Configuration\\n * Abstracts partner details from end users\\n */\\n\\nconst partners = {\\n  id0001: {\\n    name: 'Coins.ph',\\n    baseUrl: 'https://api.pro.coins.ph',\\n    apiKey: process.env.COINS_API_KEY,\\n    secret: process.env.COINS_API_SECRET,\\n    enabled: true\\n  },\\n  id0002: {\\n    name: 'Onramp.money',\\n    baseUrl: 'https://api.onramp.money/onramp/api/v2/whiteLabel',\\n    apiKey: process.env.ONRAMP_API_KEY || 'vdBGnS3WMHMNlmk5LpTK6iJqSfZeVk',\\n    secret: process.env.ONRAMP_SECRET || 'MfeppKpi9A7LSwCxMPqs5VH9dV9Ix3Sh',\\n    enabled: true\\n  },\\n  // Add more partners here\\n  // partner2: {\\n  //   name: 'Partner 2',\\n  //   baseUrl: 'https://api.partner2.com',\\n  //   apiKey: process.env.PARTNER2_API_KEY,\\n  //   secret: process.env.PARTNER2_API_SECRET,\\n  //   enabled: true\\n  // }\\n};\\n\\n/**\\n * Get partner configuration by ID\\n * @param {string} partnerId - Partner identifier (default: 'id0001')\\n * @returns {Object|null} Partner configu [... omitted end of long line]"
+                },
+                {
+                  "lineNumber": 3067,
+                  "content": "            \"text\": \"    name: 'Coins.ph',\","
+                },
+                {
+                  "lineNumber": 3071,
+                  "content": "            \"text\": \"    baseUrl: 'https://api.pro.coins.ph',\","
+                },
+                {
+                  "lineNumber": 8218,
+                  "content": "3. Split content into logical pages (Introduction, Coins.ph API, Onramp API, etc.)"
+                },
+                {
+                  "lineNumber": 8296,
+                  "content": "- docs/coins-api.md - Coins.ph (id0001) endpoints"
+                },
+                {
+                  "lineNumber": 8544,
+                  "content": "├── coins-api.md       # Coins.ph endpoints"
+                },
+                {
+                  "lineNumber": 9340,
+                  "content": "6. No mixing of Coins.ph, Onramp.money test endpoints - focus on production"
+                },
+                {
+                  "lineNumber": 9397,
+                  "content": "3. **No test/Coins.ph separate** - unified production API docs"
+                },
+                {
+                  "lineNumber": 9406,
+                  "content": "6. Remove Coins.ph as separate (or keep minimal - user said \"not test like coins ph nrapmey separately\")"
+                },
+                {
+                  "lineNumber": 9466,
+                  "content": "2. Unified API docs - not separate sections for Coins.ph vs Onramp - maybe one unified view?"
+                },
+                {
+                  "lineNumber": 9477,
+                  "content": "I'll keep Coins.ph and Onramp as separate partner flows since they're different APIs - but use production URL throughout. The user might have meant \"don't mix test and prod\" - show only prod."
+                },
+                {
+                  "lineNumber": 9479,
+                  "content": "Let me create the new structure. I'll use partner ID in the path - id0001 for Coins.ph, id0002 for Onramp - both as production endpoints."
+                },
+                {
+                  "lineNumber": 9823,
+                  "content": "| &#96;coins-api.md&#96; | Coins.ph (XDC ↔ PHP) |"
+                },
+                {
+                  "lineNumber": 12806,
+                  "content": "   - **Anything else (e.g. &#96;id0001&#96;)** → &#96;coinsRoutes&#96; (Coins.ph)."
+                },
+                {
+                  "lineNumber": 12821,
+                  "content": "    name: 'Coins.ph',"
+                },
+                {
+                  "lineNumber": 12822,
+                  "content": "    baseUrl: 'https://api.pro.coins.ph',"
+                },
+                {
+                  "lineNumber": 12836,
+                  "content": "- **id0001** → Coins.ph config, and in &#96;server.js&#96; it goes to **coinsRoutes**."
+                },
+                {
+                  "lineNumber": 12861,
+                  "content": "The user wants to know where the actual Coins.ph and Onramp.money API endpoints are defined - i.e. the route handlers that correspond to each partner's API (get-quote, onramp/quote, etc.)."
+                },
+                {
+                  "lineNumber": 13013,
+                  "content": "## 1. **Coins.ph (id0001) – &#96;routes/coins.js&#96;**"
+                },
+                {
+                  "lineNumber": 13023,
+                  "content": "Partner config (baseUrl, keys) is in **&#96;config/partners.js&#96;** under &#96;id0001&#96; (e.g. &#96;baseUrl: 'https://api.pro.coins.ph'&#96;)."
+                },
+                {
+                  "lineNumber": 13071,
+                  "content": "The **actual** external APIs (Coins.ph and Onramp.money) are not “defined” in your repo; their base URLs and usage are in **&#96;config/partners.js&#96;**, and each route in &#96;coins.js&#96; / &#96;onramp.js&#96; calls those external APIs (e.g. &#96;axios.post(partner.baseUrl + '/...', ...)&#96;)."
+                }
+              ]
+            },
+            {
+              "file": "./.specstory/history/2025-11-21_08-56Z-create-a-node-js-api-project.md",
+              "matches": [
+                {
+                  "lineNumber": 503,
+                  "content": "  url: 'https://api.pro.coins.ph/openapi/convert/v1/accept-quote?quoteId=2088568334659666570&amp;timestamp=1763835507615&amp;signature=a5ca67ca09e0144f7d63f680647efb71459ad1fea4e3345ad9613d1492ee30e1',"
+                },
+                {
+                  "lineNumber": 545,
+                  "content": "curl --location --request POST 'https://api.pro.coins.ph/openapi/convert/v1/accept-quote?quoteId=2088568334659666570&amp;timestamp=1763835507615&amp;signature=a5ca67ca09e0144f7d63f680647efb71459ad1fea4e3345ad9613d1492ee30e1' \\"
+                },
+                {
+                  "lineNumber": 785,
+                  "content": "POST https://api.pro.coins.ph/openapi/convert/v1/accept-quote?quoteId=2088568334659666570&amp;timestamp=&lt;from_file&gt;&amp;signature=&lt;from_file&gt;"
+                },
+                {
+                  "lineNumber": 1015,
+                  "content": "and https://api.pro.coins.ph/openapi/convert/v1/accept-quote?quoteId=2088568334659666570&amp;timestamp=1763837257836&amp;signature=4b6eae0f0f48b0685184fb8797f0eb4217a2851a2697770d235fbd56a30a04cb "
+                },
+                {
+                  "lineNumber": 1369,
+                  "content": "Final URL: https://api.pro.coins.ph/openapi/convert/v1/get-quote?sourceCurrency=XDC&amp;amp;targetCurrency=PHP&amp;amp;sourceAmount=50&amp;amp;timestamp=1763795217668&amp;amp;signature=e176da4d473a25a29b97b14081ae70b40fb742839efe249b7bf17bf0c38476e7"
+                },
+                {
+                  "lineNumber": 1444,
+                  "content": "{\"success\":true,\"source\":\"coins.ph\",\"data\":{\"code\":-1022,\"msg\":\"Signature for this request is not valid.\"},\"timestamp\":\"1763837755292\",\"signature\":\"53bd9f8b655ad1bfab70e5d2386b2837c1bdcf2bd451424932e8e5d4ba1a2528\",\"requestParams\":{\"quoteId\":\"2088568334659666570\",\"timestamp\":\"1763837755292\",\"signature\":\"53bd9f8b655ad1bfab70e5d2386b2837c1bdcf2bd451424932e8e5d4ba1a2528\"}}"
+                },
+                {
+                  "lineNumber": 1494,
+                  "content": "3. Ensure your IP is whitelisted in the Coins.ph dashboard"
+                },
+                {
+                  "lineNumber": 1526,
+                  "content": "1. Whitelist your server's IP address in the Coins.ph dashboard"
+                },
+                {
+                  "lineNumber": 1857,
+                  "content": "curl --location 'https://api.pro.coins.ph/openapi/fiat/v1/cash-out?signature=1ea96e2e127c5196e32c8840744186bd0bc50955c86a427520e6c2662ae13d80' \\"
+                },
+                {
+                  "lineNumber": 1907,
+                  "content": "  url: 'https://api.pro.coins.ph/openapi/fiat/v1/cash-out?signature=1ea96e2e127c5196e32c8840744186bd0bc50955c86a427520e6c2662ae13d80',"
+                },
+                {
+                  "lineNumber": 2018,
+                  "content": "+  * Cash Out - Coins.ph API"
+                },
+                {
+                  "lineNumber": 2037,
+                  "content": "+           message: 'Coins.ph API credentials not configured',"
+                },
+                {
+                  "lineNumber": 2080,
+                  "content": "+     // Make request to Coins.ph API (matching axios config)"
+                },
+                {
+                  "lineNumber": 2098,
+                  "content": "+       source: 'coins.ph',"
+                },
+                {
+                  "lineNumber": 2273,
+                  "content": "+     name: 'Coins.ph',"
+                },
+                {
+                  "lineNumber": 2274,
+                  "content": "+     baseUrl: 'https://api.pro.coins.ph',"
+                },
+                {
+                  "lineNumber": 2359,
+                  "content": "- const COINS_API_BASE_URL = 'https://api.pro.coins.ph';"
+                },
+                {
+                  "lineNumber": 2415,
+                  "content": "-           message: 'Coins.ph API credentials not configured',"
+                },
+                {
+                  "lineNumber": 2497,
+                  "content": "-           message: 'Coins.ph API credentials not configured',"
+                },
+                {
+                  "lineNumber": 2561,
+                  "content": "-           message: 'Coins.ph API credentials not configured',"
+                },
+                {
+                  "lineNumber": 2798,
+                  "content": "&lt;summary&gt;Tool use: **grep** • Grep for \"COINS_API_BASE_URL|source: 'coins.ph'\" in \"/Users/satheesh/go/src/offramp/routes/coins.js\" • 3 matches&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 2805,
+                  "content": "| &#96;routes/coins.js&#96; | &#96;source: 'coins.ph',&#96; | L166 |"
+                },
+                {
+                  "lineNumber": 2806,
+                  "content": "| &#96;routes/coins.js&#96; | &#96;source: 'coins.ph',&#96; | L299 |"
+                },
+                {
+                  "lineNumber": 2807,
+                  "content": "| &#96;routes/coins.js&#96; | &#96;source: 'coins.ph',&#96; | L417 |"
+                },
+                {
+                  "lineNumber": 2826,
+                  "content": "-       source: 'coins.ph',"
+                },
+                {
+                  "lineNumber": 2840,
+                  "content": "-       source: 'coins.ph',"
+                },
+                {
+                  "lineNumber": 2854,
+                  "content": "-       source: 'coins.ph',"
+                },
+                {
+                  "lineNumber": 3014,
+                  "content": "+ # Test script for Coins.ph API endpoints"
+                },
+                {
+                  "lineNumber": 3021,
+                  "content": "+ echo \"Testing Coins.ph API Endpoints\""
+                },
+                {
+                  "lineNumber": 3428,
+                  "content": "    name: 'Coins.ph',"
+                },
+                {
+                  "lineNumber": 3429,
+                  "content": "    baseUrl: 'https://api.pro.coins.ph',"
+                },
+                {
+                  "lineNumber": 3549,
+                  "content": "| &#96;server.js&#96; | &#96;// Coins.ph API routes&#96; | L32 |"
+                },
+                {
+                  "lineNumber": 3551,
+                  "content": "| &#96;server.js&#96; | &#96;console.log(&#96;Coins.ph API: http://localhost:$\\{PORT\\}/api/coins&#96;);&#96; | L59 |"
+                },
+                {
+                  "lineNumber": 3622,
+                  "content": "      name: 'Coins.ph',"
+                },
+                {
+                  "lineNumber": 3623,
+                  "content": "      baseUrl: 'https://api.pro.coins.ph',"
+                },
+                {
+                  "lineNumber": 3709,
+                  "content": "- // Coins.ph API routes"
+                },
+                {
+                  "lineNumber": 3711,
+                  "content": "+ // Coins.ph API routes - using id0001 in URL"
+                },
+                {
+                  "lineNumber": 3734,
+                  "content": "-   console.log(&amp;#96;Coins.ph API: http://localhost:${PORT}/api/coins&amp;#96;);"
+                },
+                {
+                  "lineNumber": 3735,
+                  "content": "+   console.log(&amp;#96;Coins.ph API: http://localhost:${PORT}/api/id0001&amp;#96;);"
+                },
+                {
+                  "lineNumber": 3756,
+                  "content": "| &#96;./server.js&#96; | &#96;// Coins.ph API routes - using id0001 in URL&#96; | L32 |"
+                },
+                {
+                  "lineNumber": 3758,
+                  "content": "| &#96;./server.js&#96; | &#96;console.log(&#96;Coins.ph API: http://localhost:$\\{PORT\\}/api/id0001&#96;);&#96; | L59 |"
+                },
+                {
+                  "lineNumber": 3759,
+                  "content": "| &#96;./routes/coins.js&#96; | &#96;* Coins.ph API Routes&#96; | L2 |"
+                },
+                {
+                  "lineNumber": 3760,
+                  "content": "| &#96;./routes/coins.js&#96; | &#96;* Wraps Coins.ph API with signature generation&#96; | L3 |"
+                },
+                {
+                  "lineNumber": 3761,
+                  "content": "| &#96;./routes/coins.js&#96; | &#96;* Get Quote - Coins.ph API&#96; | L59 |"
+                },
+                {
+                  "lineNumber": 3764,
+                  "content": "| &#96;./routes/coins.js&#96; | &#96;// Make request to Coins.ph API (matching axios config)&#96; | L147 |"
+                },
+                {
+                  "lineNumber": 3766,
+                  "content": "| &#96;./routes/coins.js&#96; | &#96;* Accept Quote - Coins.ph API&#96; | L211 |"
+                },
+                {
+                  "lineNumber": 3769,
+                  "content": "| &#96;./routes/coins.js&#96; | &#96;// Make request to Coins.ph API (matching axios config)&#96; | L284 |"
+                },
+                {
+                  "lineNumber": 3771,
+                  "content": "| &#96;./routes/coins.js&#96; | &#96;* Cash Out - Coins.ph API&#96; | L345 |"
+                },
+                {
+                  "lineNumber": 3774,
+                  "content": "| &#96;./routes/coins.js&#96; | &#96;// Make request to Coins.ph API (matching axios config)&#96; | L401 |"
+                },
+                {
+                  "lineNumber": 3776,
+                  "content": "| &#96;./config/partners.js&#96; | &#96;name: 'Coins.ph',&#96; | L8 |"
+                },
+                {
+                  "lineNumber": 3777,
+                  "content": "| &#96;./config/partners.js&#96; | &#96;baseUrl: 'https://api.pro.coins.ph',&#96; | L9 |"
+                },
+                {
+                  "lineNumber": 3790,
+                  "content": "| &#96;./README.md&#96; | &#96;Node.js Express API server with Coins.ph integration and dynamic signature generation.&#96; | L3 |"
+                },
+                {
+                  "lineNumber": 3791,
+                  "content": "| &#96;./README.md&#96; | &#96;- **Coins.ph Integration** - Pre-configured endpoints with HMAC SHA256 signature generation&#96; | L8 |"
+                },
+                {
+                  "lineNumber": 3792,
+                  "content": "| &#96;./README.md&#96; | &#96;3. Update &#96;.env&#96; with your Coins.ph credentials:&#96; | L26 |"
+                },
+                {
+                  "lineNumber": 3797,
+                  "content": "| &#96;./README.md&#96; | &#96;\"source\": \"coins.ph\",&#96; | L90 |"
+                },
+                {
+                  "lineNumber": 3801,
+                  "content": "| &#96;./README.md&#96; | &#96;\"source\": \"coins.ph\",&#96; | L135 |"
+                },
+                {
+                  "lineNumber": 3805,
+                  "content": "| &#96;./README.md&#96; | &#96;│   └── coins.js          # Coins.ph API routes&#96; | L238 |"
+                },
+                {
+                  "lineNumber": 3806,
+                  "content": "| &#96;./package.json&#96; | &#96;\"description\": \"Express API server with Coins.ph integration and signature generation\",&#96; | L4 |"
+                },
+                {
+                  "lineNumber": 3807,
+                  "content": "| &#96;./package.json&#96; | &#96;\"coins.ph\"&#96; | L15 |"
+                },
+                {
+                  "lineNumber": 4152,
+                  "content": "+ # Test script for Coins.ph API endpoints"
+                },
+                {
+                  "lineNumber": 4159,
+                  "content": "+ echo \"Testing Coins.ph API Endpoints\""
+                },
+                {
+                  "lineNumber": 4266,
+                  "content": "- // Coins.ph API routes - using id0001 in URL"
+                },
+                {
+                  "lineNumber": 4268,
+                  "content": "+ // Coins.ph API routes - dynamic partner ID from URL path"
+                },
+                {
+                  "lineNumber": 4522,
+                  "content": "-   console.log(&amp;#96;Coins.ph API: http://localhost:${PORT}/api/id0001&amp;#96;);"
+                },
+                {
+                  "lineNumber": 4617,
+                  "content": "&lt;details&gt;&lt;summary&gt;Tool use: **run_terminal_cmd** • Run command: cd /Users/satheesh/go/src/offramp &amp;&amp; echo \"The issue is with unquoted &amp; characters in the URL.\" &amp;&amp; echo \"\" &amp;&amp; echo \"❌ Wrong (causes parse error):\" &amp;&amp; echo \"curl https://api.pro.coins.ph/openapi/convert/v1/get-quote?sourceCurrency=XDC&amp;targetCurrency=PHP&amp;...\" &amp;&amp; echo \"\" &amp;&amp; echo \"✅ Correct (quoted URL):\" &amp;&amp; echo \"curl 'https://api.pro.coins.ph/openapi/convert/v1/get-quote?sourceCurrency=XDC&amp;targetCurrency=PHP&amp;sourceAmount=50&amp;timestamp=1763841550059&amp;signature=d271ff956117cccdeb6bcd29251a1feaaf488f1cbdc7aa2ef8792fe9c7b452e8'\"&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 4620,
+                  "content": "cd /Users/satheesh/go/src/offramp &amp;&amp; echo \"The issue is with unquoted &amp; characters in the URL.\" &amp;&amp; echo \"\" &amp;&amp; echo \"❌ Wrong (causes parse error):\" &amp;&amp; echo \"curl https://api.pro.coins.ph/openapi/convert/v1/get-quote?sourceCurrency=XDC&amp;targetCurrency=PHP&amp;...\" &amp;&amp; echo \"\" &amp;&amp; echo \"✅ Correct (quoted URL):\" &amp;&amp; echo \"curl 'https://api.pro.coins.ph/openapi/convert/v1/get-quote?sourceCurrency=XDC&amp;targetCurrency=PHP&amp;sourceAmount=50&amp;timestamp=1763841550059&amp;signature=d271ff956117cccdeb6bcd29251a1feaaf488f1cbdc7aa2ef8792fe9c7b452e8'\""
+                },
+                {
+                  "lineNumber": 4627,
+                  "content": "curl https://api.pro.coins.ph/openapi/convert/v1/get-quote?sourceCurrency=XDC&amp;amp;targetCurrency=PHP&amp;amp;..."
+                },
+                {
+                  "lineNumber": 4630,
+                  "content": "curl 'https://api.pro.coins.ph/openapi/convert/v1/get-quote?sourceCurrency=XDC&amp;amp;targetCurrency=PHP&amp;amp;sourceAmount=50&amp;amp;timestamp=1763841550059&amp;amp;signature=d271ff956117cccdeb6bcd29251a1feaaf488f1cbdc7aa2ef8792fe9c7b452e8'"
+                },
+                {
+                  "lineNumber": 4700,
+                  "content": "curl https://api.pro.coins.ph/openapi/convert/v1/get-quote?sourceCurrency=XDC&amp;targetCurrency=PHP&amp;..."
+                },
+                {
+                  "lineNumber": 4782,
+                  "content": "Final URL: https://api.pro.coins.ph/openapi/convert/v1/get-quote?sourceCurrency=XDC&amp;amp;targetCurrency=PHP&amp;amp;sourceAmount=50&amp;amp;timestamp=1763795217668&amp;amp;signature=e176da4d473a25a29b97b14081ae70b40fb742839efe249b7bf17bf0c38476e7"
+                },
+                {
+                  "lineNumber": 6103,
+                  "content": "    name: 'Coins.ph',"
+                },
+                {
+                  "lineNumber": 6105,
+                  "content": "    baseUrl: 'https://api.pro.coins.ph',"
+                },
+                {
+                  "lineNumber": 6119,
+                  "content": "  name: 'Coins.ph',"
+                },
+                {
+                  "lineNumber": 6121,
+                  "content": "  baseUrl: 'https://api.pro.coins.ph',"
+                },
+                {
+                  "lineNumber": 6133,
+                  "content": "Partner config: { name: 'Coins.ph', baseUrl: 'https://api.pro.coins.ph' }"
+                },
+                {
+                  "lineNumber": 6169,
+                  "content": "Final URL: https://api.pro.coins.ph/openapi/convert/v1/get-quote?sourceCurrency=XDC&amp;targetCurrency=PHP&amp;sourceAmount=50&amp;timestamp=1763843177566&amp;signature=d320e722718f9d109ac8a65c9e1cb865420ac74183bae26dc01127025f639746"
+                },
+                {
+                  "lineNumber": 6192,
+                  "content": "Partner config loads correctly. The 400 Bad Request is from the Coins.ph API, not our server. Checking the request code and comparing with the working local setup:"
+                },
+                {
+                  "lineNumber": 6253,
+                  "content": "The 400 Bad Request is from the Coins.ph API. Adding detailed error logging to capture the exact response and compare with the working local setup:"
+                },
+                {
+                  "lineNumber": 6300,
+                  "content": "&lt;details&gt;&lt;summary&gt;Tool use: **run_terminal_cmd** • Run command: cd /Users/satheesh/go/src/offramp &amp;&amp; echo \"✅ Added detailed error logging\" &amp;&amp; echo \"\" &amp;&amp; echo \"The 400 error from Coins.ph API could be due to:\" &amp;&amp; echo \"1. Time sync issue (timestamp too old/new)\" &amp;&amp; echo \"2. Signature validation failing\" &amp;&amp; echo \"3. Request format issue\" &amp;&amp; echo \"4. Network/proxy on Ubuntu server\" &amp;&amp; echo \"\" &amp;&amp; echo \"Added logging to show:\" &amp;&amp; echo \"- Full axios request config\" &amp;&amp; echo \"- Complete error response from Coins.ph\" &amp;&amp; echo \"- Request URL, method, headers\" &amp;&amp; echo \"\" &amp;&amp; echo \"Check server logs on Ubuntu to see the detailed error response!\"&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 6303,
+                  "content": "cd /Users/satheesh/go/src/offramp &amp;&amp; echo \"✅ Added detailed error logging\" &amp;&amp; echo \"\" &amp;&amp; echo \"The 400 error from Coins.ph API could be due to:\" &amp;&amp; echo \"1. Time sync issue (timestamp too old/new)\" &amp;&amp; echo \"2. Signature validation failing\" &amp;&amp; echo \"3. Request format issue\" &amp;&amp; echo \"4. Network/proxy on Ubuntu server\" &amp;&amp; echo \"\" &amp;&amp; echo \"Added logging to show:\" &amp;&amp; echo \"- Full axios request config\" &amp;&amp; echo \"- Complete error response from Coins.ph\" &amp;&amp; echo \"- Request URL, method, headers\" &amp;&amp; echo \"\" &amp;&amp; echo \"Check server logs on Ubuntu to see the detailed error response!\""
+                },
+                {
+                  "lineNumber": 6309,
+                  "content": "The 400 error from Coins.ph API could be due to:"
+                },
+                {
+                  "lineNumber": 6317,
+                  "content": "- Complete error response from Coins.ph"
+                },
+                {
+                  "lineNumber": 6380,
+                  "content": "Adding detailed error logging to the get-quote endpoint to capture the Coins.ph API response:"
+                },
+                {
+                  "lineNumber": 6408,
+                  "content": "+       console.error('No response received from Coins.ph API');"
+                },
+                {
+                  "lineNumber": 6451,
+                  "content": "&lt;details&gt;&lt;summary&gt;Tool use: **run_terminal_cmd** • Run command: cd /Users/satheesh/go/src/offramp &amp;&amp; echo \"✅ Added detailed error logging to get-quote endpoint\" &amp;&amp; echo \"\" &amp;&amp; echo \"The 400 error from Coins.ph could be due to:\" &amp;&amp; echo \"1. ⏰ Time sync issue - Check Ubuntu server time: date\" &amp;&amp; echo \"2. 🔐 Signature validation - Check if secret encoding differs\" &amp;&amp; echo \"3. 🌐 Network/proxy - Ubuntu server might be behind proxy\" &amp;&amp; echo \"4. 📝 Request format - Might need empty body {}\" &amp;&amp; echo \"\" &amp;&amp; echo \"On Ubuntu server, check:\" &amp;&amp; echo \"  date  # Should be close to current time\" &amp;&amp; echo \"  curl -X POST 'https://api.pro.coins.ph/openapi/convert/v1/get-quote?sourceCurrency=XDC&amp;targetCurrency=PHP&amp;sourceAmount=50&amp;timestamp=1763843177566&amp;signature=d320e722718f9d109ac8a65c9e1cb865420ac74183bae26dc01127025f639746' -H 'X-COINS-APIKEY: HRqjJcBxjppZAvVyzZvdxMI95O74jPDYbd2sbGaBecvPIHd6jl4FgHs78wQKNUCE'\"&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 6454,
+                  "content": "cd /Users/satheesh/go/src/offramp &amp;&amp; echo \"✅ Added detailed error logging to get-quote endpoint\" &amp;&amp; echo \"\" &amp;&amp; echo \"The 400 error from Coins.ph could be due to:\" &amp;&amp; echo \"1. ⏰ Time sync issue - Check Ubuntu server time: date\" &amp;&amp; echo \"2. 🔐 Signature validation - Check if secret encoding differs\" &amp;&amp; echo \"3. 🌐 Network/proxy - Ubuntu server might be behind proxy\" &amp;&amp; echo \"4. 📝 Request format - Might need empty body {}\" &amp;&amp; echo \"\" &amp;&amp; echo \"On Ubuntu server, check:\" &amp;&amp; echo \"  date  # Should be close to current time\" &amp;&amp; echo \"  curl -X POST 'https://api.pro.coins.ph/openapi/convert/v1/get-quote?sourceCurrency=XDC&amp;targetCurrency=PHP&amp;sourceAmount=50&amp;timestamp=1763843177566&amp;signature=d320e722718f9d109ac8a65c9e1cb865420ac74183bae26dc01127025f639746' -H 'X-COINS-APIKEY: HRqjJcBxjppZAvVyzZvdxMI95O74jPDYbd2sbGaBecvPIHd6jl4FgHs78wQKNUCE'\""
+                },
+                {
+                  "lineNumber": 6460,
+                  "content": "The 400 error from Coins.ph could be due to:"
+                },
+                {
+                  "lineNumber": 6468,
+                  "content": "  curl -X POST 'https://api.pro.coins.ph/openapi/convert/v1/get-quote?sourceCurrency=XDC&amp;amp;targetCurrency=PHP&amp;amp;sourceAmount=50&amp;amp;timestamp=1763843177566&amp;amp;signature=d320e722718f9d109ac8a65c9e1cb865420ac74183bae26dc01127025f639746' -H 'X-COINS-APIKEY: HRqjJcBxjppZAvVyzZvdxMI95O74jPDYbd2sbGaBecvPIHd6jl4FgHs78wQKNUCE'"
+                },
+                {
+                  "lineNumber": 6491,
+                  "content": "&lt;details&gt;&lt;summary&gt;Tool use: **run_terminal_cmd** • Run command: cd /Users/satheesh/go/src/offramp &amp;&amp; echo \"✅ Added empty body {} to POST request\" &amp;&amp; echo \"\" &amp;&amp; echo \"Changes made:\" &amp;&amp; echo \"1. Added detailed error logging\" &amp;&amp; echo \"2. Added empty body {} to POST request\" &amp;&amp; echo \"3. Added request config logging\" &amp;&amp; echo \"\" &amp;&amp; echo \"The 400 error is likely due to:\" &amp;&amp; echo \"- Time sync issue on Ubuntu server\" &amp;&amp; echo \"- Missing request body (now fixed)\" &amp;&amp; echo \"- Network/proxy configuration\" &amp;&amp; echo \"\" &amp;&amp; echo \"Restart server on Ubuntu and check logs for detailed error response from Coins.ph!\"&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 6494,
+                  "content": "cd /Users/satheesh/go/src/offramp &amp;&amp; echo \"✅ Added empty body {} to POST request\" &amp;&amp; echo \"\" &amp;&amp; echo \"Changes made:\" &amp;&amp; echo \"1. Added detailed error logging\" &amp;&amp; echo \"2. Added empty body {} to POST request\" &amp;&amp; echo \"3. Added request config logging\" &amp;&amp; echo \"\" &amp;&amp; echo \"The 400 error is likely due to:\" &amp;&amp; echo \"- Time sync issue on Ubuntu server\" &amp;&amp; echo \"- Missing request body (now fixed)\" &amp;&amp; echo \"- Network/proxy configuration\" &amp;&amp; echo \"\" &amp;&amp; echo \"Restart server on Ubuntu and check logs for detailed error response from Coins.ph!\""
+                },
+                {
+                  "lineNumber": 6510,
+                  "content": "Restart server on Ubuntu and check logs for detailed error response from Coins.ph!"
+                },
+                {
+                  "lineNumber": 6540,
+                  "content": "+     // Make request to Coins.ph API (matching axios config)"
+                },
+                {
+                  "lineNumber": 6592,
+                  "content": "-     // Make request to Coins.ph API (matching axios config)"
+                },
+                {
+                  "lineNumber": 6604,
+                  "content": "      // Make request to Coins.ph API (matching axios config)"
+                },
+                {
+                  "lineNumber": 6640,
+                  "content": "&lt;details&gt;&lt;summary&gt;Tool use: **run_terminal_cmd** • Run command: cd /Users/satheesh/go/src/offramp &amp;&amp; echo \"✅ Fixed duplicate config and added empty body\" &amp;&amp; echo \"\" &amp;&amp; echo \"Summary of changes:\" &amp;&amp; echo \"1. ✅ Added detailed error logging to get-quote\" &amp;&amp; echo \"2. ✅ Added empty body {} to POST request\" &amp;&amp; echo \"3. ✅ Added request config logging\" &amp;&amp; echo \"\" &amp;&amp; echo \"The 400 error from Coins.ph on Ubuntu could be:\" &amp;&amp; echo \"- Time sync issue (check: date)\" &amp;&amp; echo \"- Missing body (now fixed)\" &amp;&amp; echo \"- Network/proxy issue\" &amp;&amp; echo \"\" &amp;&amp; echo \"Restart server and check logs for detailed Coins.ph error response!\"&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 6643,
+                  "content": "cd /Users/satheesh/go/src/offramp &amp;&amp; echo \"✅ Fixed duplicate config and added empty body\" &amp;&amp; echo \"\" &amp;&amp; echo \"Summary of changes:\" &amp;&amp; echo \"1. ✅ Added detailed error logging to get-quote\" &amp;&amp; echo \"2. ✅ Added empty body {} to POST request\" &amp;&amp; echo \"3. ✅ Added request config logging\" &amp;&amp; echo \"\" &amp;&amp; echo \"The 400 error from Coins.ph on Ubuntu could be:\" &amp;&amp; echo \"- Time sync issue (check: date)\" &amp;&amp; echo \"- Missing body (now fixed)\" &amp;&amp; echo \"- Network/proxy issue\" &amp;&amp; echo \"\" &amp;&amp; echo \"Restart server and check logs for detailed Coins.ph error response!\""
+                },
+                {
+                  "lineNumber": 6654,
+                  "content": "The 400 error from Coins.ph on Ubuntu could be:"
+                },
+                {
+                  "lineNumber": 6659,
+                  "content": "Restart server and check logs for detailed Coins.ph error response!"
+                },
+                {
+                  "lineNumber": 6674,
+                  "content": "1. Added detailed error logging — shows the full Coins.ph API error response"
+                },
+                {
+                  "lineNumber": 6697,
+                  "content": "   - Full error response from Coins.ph"
+                },
+                {
+                  "lineNumber": 6701,
+                  "content": "The logs will show what Coins.ph is rejecting. Share the error details from the logs if it still fails."
+                },
+                {
+                  "lineNumber": 6733,
+                  "content": "    \"__cf_bm=cMcY3SM5kt_5Hl9I9bF1oXa5FdX1xle4FDc3uQRivWg-1763843561-1.0.1.1-vHhAiODuTOnbk2A.IJ1aVoa030thyYB7tvSJhdCAmzs5gpDJ.FMJQ8TqEYbE7.KzKwU2ihyo8fAI3ajfnjWEZiu3Em0gYVg33goasop2V60; path=/; expires=Sat, 22-Nov-25 21:02:41 GMT; domain=.coins.ph; HttpOnly; Secure; SameSite=None\""
+                },
+                {
+                  "lineNumber": 6765,
+                  "content": "Request URL: https://api.pro.coins.ph/openapi/convert/v1/get-quote?sourceCurrency=XDC&amp;targetCurrency=PHP&amp;sourceAmount=50&amp;timestamp=1763843560667&amp;signature=fd2947ded38cfb8fd9331fce29c9353368e025f2ae8821f1705f4f283577b635"
+                },
+                {
+                  "lineNumber": 6794,
+                  "content": "The 400 Bad Request from Coins.ph is generic. Verifying signature generation and adding validation. Checking if the query string order or encoding is causing the issue:"
+                },
+                {
+                  "lineNumber": 6974,
+                  "content": "      // Make request to Coins.ph API (matching axios config)"
+                },
+                {
+                  "lineNumber": 7088,
+                  "content": "&lt;details&gt;&lt;summary&gt;Tool use: **run_terminal_cmd** • Run command: cd /Users/satheesh/go/src/offramp &amp;&amp; echo \"The 400 error from Coins.ph is likely due to:\" &amp;&amp; echo \"\" &amp;&amp; echo \"1. ⏰ Time sync issue - Ubuntu server time might be off\" &amp;&amp; echo \"   Check: date (should be close to current time)\" &amp;&amp; echo \"   Fix: sudo ntpdate -s time.nist.gov\" &amp;&amp; echo \"\" &amp;&amp; echo \"2. 🔐 Signature validation - Even if signature looks correct,\" &amp;&amp; echo \"   Coins.ph might reject if timestamp is too old/new\" &amp;&amp; echo \"\" &amp;&amp; echo \"3. 🌐 Network/Proxy - Ubuntu server might be behind proxy\" &amp;&amp; echo \"   that modifies requests\" &amp;&amp; echo \"\" &amp;&amp; echo \"4. 📝 Missing recvWindow parameter - Some APIs require it\" &amp;&amp; echo \"\" &amp;&amp; echo \"Let's add recvWindow parameter and check time sync!\"&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 7091,
+                  "content": "cd /Users/satheesh/go/src/offramp &amp;&amp; echo \"The 400 error from Coins.ph is likely due to:\" &amp;&amp; echo \"\" &amp;&amp; echo \"1. ⏰ Time sync issue - Ubuntu server time might be off\" &amp;&amp; echo \"   Check: date (should be close to current time)\" &amp;&amp; echo \"   Fix: sudo ntpdate -s time.nist.gov\" &amp;&amp; echo \"\" &amp;&amp; echo \"2. 🔐 Signature validation - Even if signature looks correct,\" &amp;&amp; echo \"   Coins.ph might reject if timestamp is too old/new\" &amp;&amp; echo \"\" &amp;&amp; echo \"3. 🌐 Network/Proxy - Ubuntu server might be behind proxy\" &amp;&amp; echo \"   that modifies requests\" &amp;&amp; echo \"\" &amp;&amp; echo \"4. 📝 Missing recvWindow parameter - Some APIs require it\" &amp;&amp; echo \"\" &amp;&amp; echo \"Let's add recvWindow parameter and check time sync!\""
+                },
+                {
+                  "lineNumber": 7095,
+                  "content": "The 400 error from Coins.ph is likely due to:"
+                },
+                {
+                  "lineNumber": 7102,
+                  "content": "   Coins.ph might reject if timestamp is too old/new"
+                },
+                {
+                  "lineNumber": 7302,
+                  "content": "1. Time sync issue — if Ubuntu server time is off, Coins.ph will reject the timestamp"
+                },
+                {
+                  "lineNumber": 8037,
+                  "content": "    \"__cf_bm=SQWTTFgO6Ucnbt7r1XBfbDJIeIQyEoML2enbYlO8Ox4-1763844318-1.0.1.1-JiEWs8owDCRAgW03c1uc4i4RVu6HLqcj8s1HXqFTbQ1rrtI8VIpqAtrhlawdrmET49W3jiDj6UPNmIOfKuFGANvR_nlUbe_wqzxyh16M.tY; path=/; expires=Sat, 22-Nov-25 21:15:18 GMT; domain=.coins.ph; HttpOnly; Secure; SameSite=None\""
+                },
+                {
+                  "lineNumber": 8069,
+                  "content": "Request URL: https://api.pro.coins.ph/openapi/convert/v1/get-quote?sourceCurrency=XDC&amp;targetCurrency=PHP&amp;sourceAmount=50&amp;timestamp=1763844317704&amp;recvWindow=5000&amp;signature=c57dac6ee996c4c8bb198cf0cd015c182ac5902ddca61b0d4de7165a82b056d7"
+                },
+                {
+                  "lineNumber": 8098,
+                  "content": "Request looks correct, but Coins.ph still returns 400. Verifying signature generation and testing without &#96;recvWindow&#96; (Postman used &#96;recvWindow=null&#96;). Adding signature verification:"
+                },
+                {
+                  "lineNumber": 8535,
+                  "content": "+ \t\t\"description\": \"API proxy for Coins.ph integration. Partner details are abstracted - just use the partner ID in the URL path.\\n\\n**Setup:**\\n1. Set &amp;#96;base_url&amp;#96; variable to your server URL (e.g., &amp;#96;http://localhost:3002&amp;#96;)\\n2. Set &amp;#96;partner_id&amp;#96; variable to your partner ID (e.g., &amp;#96;id0001&amp;#96;)\\n3. All endpoints automatically handle signature generation - no need to configure API keys/secrets!\","
+                },
+                {
+                  "lineNumber": 8828,
+                  "content": "+   \"source\": \"Coins.ph\","
+                },
+                {
+                  "lineNumber": 8829,
+                  "content": "+   \"partner\": \"Coins.ph\","
+                },
+                {
+                  "lineNumber": 8847,
+                  "content": "+   \"source\": \"Coins.ph\","
+                },
+                {
+                  "lineNumber": 8848,
+                  "content": "+   \"partner\": \"Coins.ph\","
+                },
+                {
+                  "lineNumber": 8860,
+                  "content": "+   \"source\": \"Coins.ph\","
+                },
+                {
+                  "lineNumber": 8861,
+                  "content": "+   \"partner\": \"Coins.ph\","
+                },
+                {
+                  "lineNumber": 8986,
+                  "content": "| &#96;routes/coins.js&#96; | &#96;* Coins.ph API Routes&#96; | L2 |"
+                },
+                {
+                  "lineNumber": 8987,
+                  "content": "| &#96;routes/coins.js&#96; | &#96;* Wraps Coins.ph API with signature generation&#96; | L3 |"
+                },
+                {
+                  "lineNumber": 8988,
+                  "content": "| &#96;routes/coins.js&#96; | &#96;* Get Quote - Coins.ph API&#96; | L85 |"
+                },
+                {
+                  "lineNumber": 8991,
+                  "content": "| &#96;routes/coins.js&#96; | &#96;// Make request to Coins.ph API (matching axios config)&#96; | L209 |"
+                },
+                {
+                  "lineNumber": 8995,
+                  "content": "| &#96;routes/coins.js&#96; | &#96;console.error('No response received from Coins.ph API');&#96; | L275 |"
+                },
+                {
+                  "lineNumber": 8996,
+                  "content": "| &#96;routes/coins.js&#96; | &#96;* Accept Quote - Coins.ph API&#96; | L304 |"
+                },
+                {
+                  "lineNumber": 8999,
+                  "content": "| &#96;routes/coins.js&#96; | &#96;// Make request to Coins.ph API (matching axios config)&#96; | L377 |"
+                },
+                {
+                  "lineNumber": 9003,
+                  "content": "| &#96;routes/coins.js&#96; | &#96;* Cash Out - Coins.ph API&#96; | L438 |"
+                },
+                {
+                  "lineNumber": 9006,
+                  "content": "| &#96;routes/coins.js&#96; | &#96;// Make request to Coins.ph API (matching axios config)&#96; | L494 |"
+                },
+                {
+                  "lineNumber": 9184,
+                  "content": "-       console.error('No response received from Coins.ph API');"
+                },
+                {
+                  "lineNumber": 9207,
+                  "content": "-     // Make request to Coins.ph API (matching axios config)"
+                },
+                {
+                  "lineNumber": 9220,
+                  "content": "-     // Make request to Coins.ph API (matching axios config)"
+                },
+                {
+                  "lineNumber": 9233,
+                  "content": "-     // Make request to Coins.ph API (matching axios config)"
+                },
+                {
+                  "lineNumber": 9268,
+                  "content": "-  * Get Quote - Coins.ph API"
+                },
+                {
+                  "lineNumber": 9293,
+                  "content": "-  * Accept Quote - Coins.ph API"
+                },
+                {
+                  "lineNumber": 9318,
+                  "content": "-  * Cash Out - Coins.ph API"
+                },
+                {
+                  "lineNumber": 9359,
+                  "content": "-   \"source\": \"Coins.ph\","
+                },
+                {
+                  "lineNumber": 9360,
+                  "content": "-   \"partner\": \"Coins.ph\","
+                },
+                {
+                  "lineNumber": 9387,
+                  "content": "-   \"source\": \"Coins.ph\","
+                },
+                {
+                  "lineNumber": 9388,
+                  "content": "-   \"partner\": \"Coins.ph\","
+                },
+                {
+                  "lineNumber": 9400,
+                  "content": "-   \"source\": \"Coins.ph\","
+                },
+                {
+                  "lineNumber": 9401,
+                  "content": "-   \"partner\": \"Coins.ph\","
+                },
+                {
+                  "lineNumber": 9439,
+                  "content": "&lt;details&gt;&lt;summary&gt;Tool use: **run_terminal_cmd** • Run command: cd /Users/satheesh/go/src/offramp &amp;&amp; echo \"✅ Removed all 'coins' references from API responses\" &amp;&amp; echo \"\" &amp;&amp; echo \"Changes made:\" &amp;&amp; echo \"1. ✅ Removed 'source' and 'partner' fields from responses\" &amp;&amp; echo \"2. ✅ Removed 'timestamp' and 'signature' from responses\" &amp;&amp; echo \"3. ✅ Removed 'requestParams' from responses\" &amp;&amp; echo \"4. ✅ Updated comments to be generic (no 'Coins.ph')\" &amp;&amp; echo \"5. ✅ Updated Postman documentation\" &amp;&amp; echo \"\" &amp;&amp; echo \"Now responses only return:\" &amp;&amp; echo \"  { success: true, data: {...} }\" &amp;&amp; echo \"\" &amp;&amp; echo \"All partner details are completely masked from end users!\"&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 9442,
+                  "content": "cd /Users/satheesh/go/src/offramp &amp;&amp; echo \"✅ Removed all 'coins' references from API responses\" &amp;&amp; echo \"\" &amp;&amp; echo \"Changes made:\" &amp;&amp; echo \"1. ✅ Removed 'source' and 'partner' fields from responses\" &amp;&amp; echo \"2. ✅ Removed 'timestamp' and 'signature' from responses\" &amp;&amp; echo \"3. ✅ Removed 'requestParams' from responses\" &amp;&amp; echo \"4. ✅ Updated comments to be generic (no 'Coins.ph')\" &amp;&amp; echo \"5. ✅ Updated Postman documentation\" &amp;&amp; echo \"\" &amp;&amp; echo \"Now responses only return:\" &amp;&amp; echo \"  { success: true, data: {...} }\" &amp;&amp; echo \"\" &amp;&amp; echo \"All partner details are completely masked from end users!\""
+                },
+                {
+                  "lineNumber": 9452,
+                  "content": "4. ✅ Updated comments to be generic (no 'Coins.ph')"
+                },
+                {
+                  "lineNumber": 9503,
+                  "content": "- \t\t\"description\": \"API proxy for Coins.ph integration. Partner details are abstracted - just use the partner ID in the URL path.\\n\\n**Setup:**\\n1. Set &amp;#96;base_url&amp;#96; variable to your server URL (e.g., &amp;#96;http://localhost:3002&amp;#96;)\\n2. Set &amp;#96;partner_id&amp;#96; variable to your partner ID (e.g., &amp;#96;id0001&amp;#96;)\\n3. All endpoints automatically handle signature generation - no need to configure API keys/secrets!\","
+                },
+                {
+                  "lineNumber": 9516,
+                  "content": "&lt;details&gt;&lt;summary&gt;Tool use: **run_terminal_cmd** • Run command: cd /Users/satheesh/go/src/offramp &amp;&amp; echo \"✅ Updated Postman collection description\" &amp;&amp; echo \"\" &amp;&amp; echo \"Summary of all changes:\" &amp;&amp; echo \"1. ✅ Removed 'source', 'partner', 'timestamp', 'signature' from all responses\" &amp;&amp; echo \"2. ✅ Removed 'requestParams' and 'requestBody' from responses\" &amp;&amp; echo \"3. ✅ Updated all comments to remove 'Coins.ph' references\" &amp;&amp; echo \"4. ✅ Updated Postman collection description\" &amp;&amp; echo \"5. ✅ Updated Postman documentation examples\" &amp;&amp; echo \"\" &amp;&amp; echo \"API responses now only return:\" &amp;&amp; echo \"  { success: true, data: {...} }\" &amp;&amp; echo \"\" &amp;&amp; echo \"All partner details are completely masked - end users only see id0001!\"&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 9519,
+                  "content": "cd /Users/satheesh/go/src/offramp &amp;&amp; echo \"✅ Updated Postman collection description\" &amp;&amp; echo \"\" &amp;&amp; echo \"Summary of all changes:\" &amp;&amp; echo \"1. ✅ Removed 'source', 'partner', 'timestamp', 'signature' from all responses\" &amp;&amp; echo \"2. ✅ Removed 'requestParams' and 'requestBody' from responses\" &amp;&amp; echo \"3. ✅ Updated all comments to remove 'Coins.ph' references\" &amp;&amp; echo \"4. ✅ Updated Postman collection description\" &amp;&amp; echo \"5. ✅ Updated Postman documentation examples\" &amp;&amp; echo \"\" &amp;&amp; echo \"API responses now only return:\" &amp;&amp; echo \"  { success: true, data: {...} }\" &amp;&amp; echo \"\" &amp;&amp; echo \"All partner details are completely masked - end users only see id0001!\""
+                },
+                {
+                  "lineNumber": 9528,
+                  "content": "3. ✅ Updated all comments to remove 'Coins.ph' references"
+                },
+                {
+                  "lineNumber": 9553,
+                  "content": "- Removed &#96;source&#96; field (was \"Coins.ph\")"
+                },
+                {
+                  "lineNumber": 9554,
+                  "content": "- Removed &#96;partner&#96; field (was \"Coins.ph\")"
+                },
+                {
+                  "lineNumber": 9561,
+                  "content": "- Changed \"Coins.ph API\" → \"Partner API\""
+                },
+                {
+                  "lineNumber": 9562,
+                  "content": "- Changed \"Coins.ph\" → \"partner API\" in error messages"
+                },
+                {
+                  "lineNumber": 10443,
+                  "content": "    name: 'Coins.ph',"
+                },
+                {
+                  "lineNumber": 10445,
+                  "content": "    baseUrl: 'https://api.pro.coins.ph',"
+                },
+                {
+                  "lineNumber": 10459,
+                  "content": "  name: 'Coins.ph',"
+                },
+                {
+                  "lineNumber": 10461,
+                  "content": "  baseUrl: 'https://api.pro.coins.ph',"
+                },
+                {
+                  "lineNumber": 10473,
+                  "content": "Partner config: { name: 'Coins.ph', baseUrl: 'https://api.pro.coins.ph' }"
+                },
+                {
+                  "lineNumber": 10527,
+                  "content": "Final URL: https://api.pro.coins.ph/openapi/convert/v1/get-quote?sourceCurrency=XDC&amp;targetCurrency=PHP&amp;sourceAmount=50&amp;timestamp=1763909445975&amp;recvWindow=5000&amp;signature=7c30bbd4e356533a5c705c5f4f93512e6dc789cf02ab3ab4a015fa5c6d71920e"
+                },
+                {
+                  "lineNumber": 10543,
+                  "content": "URL: https://api.pro.coins.ph/openapi/convert/v1/get-quote?sourceCurrency=XDC&amp;targetCurrency=PHP&amp;sourceAmount=50&amp;timestamp=1763909445975&amp;recvWindow=5000&amp;signature=7c30bbd4e356533a5c705c5f4f93512e6dc789cf02ab3ab4a015fa5c6d71920e"
+                },
+                {
+                  "lineNumber": 10589,
+                  "content": "    \"__cf_bm=x1vu31g9i4e8LEzh.34SAhTotCsrTSrq4YXUvnG2cXQ-1763909447-1.0.1.1-GDfMj3LR16wpAgOaLYwmc.acFrdum1n3WiVYmwyp42sW5OaqGadGlwaH6tbqV7dXKRfbOg7UZBNXxwHy9lIy9oSYcPr9W0NHKtav6lsyusU; path=/; expires=Sun, 23-Nov-25 15:20:47 GMT; domain=.coins.ph; HttpOnly; Secure; SameSite=None\""
+                },
+                {
+                  "lineNumber": 10621,
+                  "content": "Request URL: https://api.pro.coins.ph/openapi/convert/v1/get-quote?sourceCurrency=XDC&amp;targetCurrency=PHP&amp;sourceAmount=50&amp;timestamp=1763909445975&amp;recvWindow=5000&amp;signature=7c30bbd4e356533a5c705c5f4f93512e6dc789cf02ab3ab4a015fa5c6d71920e"
+                },
+                {
+                  "lineNumber": 10786,
+                  "content": "+     // Original Postman had recvWindow=null, but Coins.ph rejects it - remove completely"
+                },
+                {
+                  "lineNumber": 10890,
+                  "content": "      // Original Postman had recvWindow=null, but Coins.ph rejects it - remove completely"
+                },
+                {
+                  "lineNumber": 10952,
+                  "content": "| &#96;routes/coins.js&#96; | &#96;// Original Postman had recvWindow=null, but Coins.ph rejects it - remove completely&#96; | L158 |"
+                },
+                {
+                  "lineNumber": 11552,
+                  "content": "    \"__cf_bm=VZEMOUYQioIa6qCnjKLZi9cqKB1H4Iu_4xhaA5isCTc-1763910828-1.0.1.1-9.rIt.zZ2uXlxV.suiS_ChwfTrIdwxTbprv2QLhALtAEIemFE_ldtMmbuaWb8hThjCR1L64AZwkGIyNQ4j85VTgmEgGmr.Cp2ZaAaKyQhvI; path=/; expires=Sun, 23-Nov-25 15:43:48 GMT; domain=.coins.ph; HttpOnly; Secure; SameSite=None\""
+                },
+                {
+                  "lineNumber": 11584,
+                  "content": "Request URL: https://api.pro.coins.ph/openapi/convert/v1/get-quote?sourceCurrency=XDC&amp;targetCurrency=PHP&amp;sourceAmount=50&amp;timestamp=1763910828166&amp;signature=fd8b50ffe2faf6bc1240aa8e87304290b78fcf3e56dbbb5d1e8d82f59df4a349"
+                },
+                {
+                  "lineNumber": 11623,
+                  "content": "Adding logging to output the exact curl command that matches the request sent to Coins.ph, so you can test it on another server:"
+                },
+                {
+                  "lineNumber": 11863,
+                  "content": "&lt;details&gt;&lt;summary&gt;Tool use: **run_terminal_cmd** • Run command: cd /Users/satheesh/go/src/offramp &amp;&amp; echo \"✅ Added curl command logging to all endpoints\" &amp;&amp; echo \"\" &amp;&amp; echo \"Now when you make a request, the server logs will show:\" &amp;&amp; echo \"\" &amp;&amp; echo \"=== EXACT CURL COMMAND (for testing) ===\" &amp;&amp; echo \"curl -X POST \\\\\" &amp;&amp; echo \"  -H \\\"X-COINS-APIKEY: ...\\\" \\\\\" &amp;&amp; echo \"  -H \\\"Content-Type: application/json\\\" \\\\\" &amp;&amp; echo \"  \\\"https://api.pro.coins.ph/...?signature=...\\\"\" &amp;&amp; echo \"\" &amp;&amp; echo \"=== SINGLE LINE CURL (copy-paste ready) ===\" &amp;&amp; echo \"curl -X POST -H \\\"X-COINS-APIKEY: ...\\\" -H \\\"Content-Type: application/json\\\" \\\"https://...\\\"\" &amp;&amp; echo \"\" &amp;&amp; echo \"You can:\" &amp;&amp; echo \"1. Copy the curl command from server logs\" &amp;&amp; echo \"2. Test it on a different server/terminal\" &amp;&amp; echo \"3. See if it works outside Node.js\" &amp;&amp; echo \"\" &amp;&amp; echo \"This will help identify if the issue is with:\" &amp;&amp; echo \"- The signature/request format\" &amp;&amp; echo \"- Or something specific to Node.js/axios\"&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 11866,
+                  "content": "cd /Users/satheesh/go/src/offramp &amp;&amp; echo \"✅ Added curl command logging to all endpoints\" &amp;&amp; echo \"\" &amp;&amp; echo \"Now when you make a request, the server logs will show:\" &amp;&amp; echo \"\" &amp;&amp; echo \"=== EXACT CURL COMMAND (for testing) ===\" &amp;&amp; echo \"curl -X POST \\\\\" &amp;&amp; echo \"  -H \\\"X-COINS-APIKEY: ...\\\" \\\\\" &amp;&amp; echo \"  -H \\\"Content-Type: application/json\\\" \\\\\" &amp;&amp; echo \"  \\\"https://api.pro.coins.ph/...?signature=...\\\"\" &amp;&amp; echo \"\" &amp;&amp; echo \"=== SINGLE LINE CURL (copy-paste ready) ===\" &amp;&amp; echo \"curl -X POST -H \\\"X-COINS-APIKEY: ...\\\" -H \\\"Content-Type: application/json\\\" \\\"https://...\\\"\" &amp;&amp; echo \"\" &amp;&amp; echo \"You can:\" &amp;&amp; echo \"1. Copy the curl command from server logs\" &amp;&amp; echo \"2. Test it on a different server/terminal\" &amp;&amp; echo \"3. See if it works outside Node.js\" &amp;&amp; echo \"\" &amp;&amp; echo \"This will help identify if the issue is with:\" &amp;&amp; echo \"- The signature/request format\" &amp;&amp; echo \"- Or something specific to Node.js/axios\""
+                },
+                {
+                  "lineNumber": 11878,
+                  "content": "  \"https://api.pro.coins.ph/...?signature=...\""
+                },
+                {
+                  "lineNumber": 11958,
+                  "content": "     \"https://api.pro.coins.ph/...?signature=...\""
+                },
+                {
+                  "lineNumber": 11973,
+                  "content": "curl -X POST -H \"X-COINS-APIKEY: HRqjJcBxjppZAvVyzZvdxMI95O74jPDYbd2sbGaBecvPIHd6jl4FgHs78wQKNUCE\" -H \"Content-Type: application/json\" \"https://api.pro.coins.ph/openapi/convert/v1/get-quote?sourceCurrency=XDC&amp;targetCurrency=PHP&amp;sourceAmount=50&amp;timestamp=1763910828166&amp;signature=fd8b50ffe2faf6bc1240aa8e87304290b78fcf3e56dbbb5d1e8d82f59df4a349\""
+                },
+                {
+                  "lineNumber": 12117,
+                  "content": "+ This means the server time is out of sync with Coins.ph servers."
+                },
+                {
+                  "lineNumber": 12209,
+                  "content": "+ - Coins.ph API validates timestamps strictly"
+                },
+                {
+                  "lineNumber": 12211,
+                  "content": "+ - Server time must be within recvWindow of Coins.ph server time"
+                },
+                {
+                  "lineNumber": 12229,
+                  "content": "&lt;details&gt;&lt;summary&gt;Tool use: **run_terminal_cmd** • Run command: cd /Users/satheesh/go/src/offramp &amp;&amp; echo \"✅ Added recvWindow parameter and time sync fix\" &amp;&amp; echo \"\" &amp;&amp; echo \"The error 'Timestamp outside recv window' means:\" &amp;&amp; echo \"- Server time is out of sync with Coins.ph\" &amp;&amp; echo \"- Time difference: ~70 seconds in your case\" &amp;&amp; echo \"\" &amp;&amp; echo \"Fixes applied:\" &amp;&amp; echo \"1. ✅ Added recvWindow=60000 (60 seconds) to allow time differences\" &amp;&amp; echo \"2. ✅ Added time sync logging\" &amp;&amp; echo \"3. ✅ Created TIME_SYNC_FIX.md with instructions\" &amp;&amp; echo \"\" &amp;&amp; echo \"On Ubuntu server, run:\" &amp;&amp; echo \"  sudo timedatectl set-ntp true\" &amp;&amp; echo \"  sudo ntpdate -s time.nist.gov\" &amp;&amp; echo \"\" &amp;&amp; echo \"Or increase recvWindow in .env:\" &amp;&amp; echo \"  RECV_WINDOW=120000  # 120 seconds\"&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 12232,
+                  "content": "cd /Users/satheesh/go/src/offramp &amp;&amp; echo \"✅ Added recvWindow parameter and time sync fix\" &amp;&amp; echo \"\" &amp;&amp; echo \"The error 'Timestamp outside recv window' means:\" &amp;&amp; echo \"- Server time is out of sync with Coins.ph\" &amp;&amp; echo \"- Time difference: ~70 seconds in your case\" &amp;&amp; echo \"\" &amp;&amp; echo \"Fixes applied:\" &amp;&amp; echo \"1. ✅ Added recvWindow=60000 (60 seconds) to allow time differences\" &amp;&amp; echo \"2. ✅ Added time sync logging\" &amp;&amp; echo \"3. ✅ Created TIME_SYNC_FIX.md with instructions\" &amp;&amp; echo \"\" &amp;&amp; echo \"On Ubuntu server, run:\" &amp;&amp; echo \"  sudo timedatectl set-ntp true\" &amp;&amp; echo \"  sudo ntpdate -s time.nist.gov\" &amp;&amp; echo \"\" &amp;&amp; echo \"Or increase recvWindow in .env:\" &amp;&amp; echo \"  RECV_WINDOW=120000  # 120 seconds\""
+                },
+                {
+                  "lineNumber": 13308,
+                  "content": "curl --location 'https://api.pro.coins.ph/openapi/v1/account?signature=1ea96e2e127c5196e32c8840744186bd0bc50955c86a427520e6c2662ae13d80' \\"
+                },
+                {
+                  "lineNumber": 16377,
+                  "content": "curl --location 'https://api.pro.coins.ph/openapi/fiat/v1/cash-out?signature=10f8d8d2c6e5993988bac010ae87f8601135c3e63c963541d09ff53e84d37a26' \\"
+                },
+                {
+                  "lineNumber": 16433,
+                  "content": "  url: 'https://api.pro.coins.ph/openapi/fiat/v1/cash-out?signature=10f8d8d2c6e5993988bac010ae87f8601135c3e63c963541d09ff53e84d37a26',"
+                },
+                {
+                  "lineNumber": 16551,
+                  "content": "+     // curl --location 'https://api.pro.coins.ph/openapi/fiat/v1/cash-out?signature=...' \\"
+                },
+                {
+                  "lineNumber": 16560,
+                  "content": "+       url: url, // URL format: https://api.pro.coins.ph/openapi/fiat/v1/cash-out?signature=..."
+                },
+                {
+                  "lineNumber": 16654,
+                  "content": "1. **URL Format**: &#96;https://api.pro.coins.ph/openapi/fiat/v1/cash-out?signature=...&#96;"
+                },
+                {
+                  "lineNumber": 16717,
+                  "content": "  url: 'https://api.pro.coins.ph/openapi/fiat/v1/cash-out?signature=10f8d8d2c6e5993988bac010ae87f8601135c3e63c963541d09ff53e84d37a26',"
+                },
+                {
+                  "lineNumber": 16885,
+                  "content": "+     //   url: 'https://api.pro.coins.ph/openapi/fiat/v1/cash-out?signature=...',"
+                },
+                {
+                  "lineNumber": 16897,
+                  "content": "+       url: url, // Format: https://api.pro.coins.ph/openapi/fiat/v1/cash-out?signature=..."
+                },
+                {
+                  "lineNumber": 17062,
+                  "content": "  url: 'https://api.pro.coins.ph/openapi/fiat/v1/cash-out?signature=10f8d8d2c6e5993988bac010ae87f8601135c3e63c963541d09ff53e84d37a26',"
+                },
+                {
+                  "lineNumber": 17246,
+                  "content": "+     url: 'https://api.pro.coins.ph/openapi/fiat/v1/cash-out?signature=INVALID_SIGNATURE_FOR_REFERENCE',"
+                },
+                {
+                  "lineNumber": 17578,
+                  "content": "+       url: url, // Format: https://api.pro.coins.ph/openapi/fiat/v1/cash-out?signature=..."
+                },
+                {
+                  "lineNumber": 18067,
+                  "content": "-       url: url, // Format: https://api.pro.coins.ph/openapi/fiat/v1/cash-out?signature=..."
+                },
+                {
+                  "lineNumber": 19803,
+                  "content": "  // Coins.ph API routes - dynamic partner ID from URL path"
+                }
+              ]
+            }
+          ],
+          "totalLines": 309,
+          "totalMatchedLines": 309
+        }
+      }
+    }
+  }
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "pattern": "Coins",
+  "path": "/Users/satheesh/go/src/xdcross/offramp/docs",
+  "caseInsensitive": false
+}
+```
+Result:
+
+```json
+{
+  "success": {
+    "pattern": "Coins",
+    "path": "/Users/satheesh/go/src/xdcross/offramp/docs",
+    "outputMode": "content",
+    "workspaceResults": {
+      "/Users/satheesh/go/src/xdcross/offramp": {
+        "content": {
+          "matches": [
+            {
+              "file": "docs/_book/search_index.json",
+              "matches": [
+                {
+                  "lineNumber": 1,
+                  "content": "{\"index\":{\"version\":\"0.5.12\",\"fields\":[{\"name\":\"title\",\"boost\":10},{\"name\":\"keywords\",\"boost\":15},{\"name\":\"body\",\"boost\":1}],\"ref\":\"url\",\"documentStore\":{\"store\":{\"./\":[\"(aed,\",\"(api\",\"(crypto\",\"(fiat\",\"(in\",\"(india),\",\"(optional):\",\"(philippines),\",\"(queri\",\"(uae),\",\"(usdc\",\"(xdc\",\".\",\"/api/get\",\"/api/onramp/quote.\",\"/api/{endpoint}\",\"a\",\"aed/inr\",\"api\",\"api:\",\"application/json\",\"application/x\",\"authent\",\"authorization:\",\"bank\",\"base\",\"bearer\",\"between\",\"bodi\",\"body)\",\"breakdown\",\"busi\",\"call\",\"cash\",\"chain)\",\"clear\",\"combin\",\"competit\",\"content\",\"convers\",\"convert\",\"covered.\",\"creat\",\"crypto\",\"crypto)\",\"crypto,\",\"crypto.\",\"currenc\",\"documentation,\",\"documentation.\",\"e.g.\",\"enabl\",\"enabled,\",\"endpoint:\",\"endpoints;\",\"examples.\",\"exchang\",\"fast\",\"featur\",\"fee\",\"fetch\",\"fiat\",\"fiat)\",\"form\",\"format:\",\"gateway\",\"get,\",\"header\",\"https://xdc.cash\",\"id\",\"id:\",\"imps,\",\"includ\",\"india,\",\"inr\",\"inr,\",\"instapay,\",\"integr\",\"integrating.\",\"integration.\",\"introduct\",\"it'\",\"key\",\"key)\",\"lightn\",\"li [... omitted end of long line]"
+                }
+              ]
+            },
+            {
+              "file": "docs/_book/api-reference.html",
+              "matches": [
+                {
+                  "lineNumber": 174,
+                  "content": "                    Coins.ph API"
+                },
+                {
+                  "lineNumber": 287,
+                  "content": "&lt;h2 id=\"convert--coins-get-quote-accept-quote-cash-out-account\"&gt;Convert / Coins (Get Quote, Accept Quote, Cash Out, Account)&lt;/h2&gt;"
+                }
+              ]
+            },
+            {
+              "file": "docs/_book/coins-api.html",
+              "matches": [
+                {
+                  "lineNumber": 6,
+                  "content": "        &lt;title&gt;Coins.ph API · Offramp API&lt;/title&gt;"
+                },
+                {
+                  "lineNumber": 174,
+                  "content": "                    Coins.ph API"
+                },
+                {
+                  "lineNumber": 225,
+                  "content": "        &lt;a href=\".\" &gt;Coins.ph API&lt;/a&gt;"
+                },
+                {
+                  "lineNumber": 240,
+                  "content": "                                &lt;h1 id=\"coinsph-api\"&gt;Coins.ph API&lt;/h1&gt;"
+                },
+                {
+                  "lineNumber": 470,
+                  "content": "            gitbook.page.hasChanged({\"page\":{\"title\":\"Coins.ph API\",\"level\":\"1.7\",\"depth\":1,\"next\":{\"title\":\"Quick Reference\",\"level\":\"1.8\",\"depth\":1,\"path\":\"quick-reference.md\",\"ref\":\"quick-reference.md\",\"articles\":[]},\"previous\":{\"title\":\"Get Exchange Rate\",\"level\":\"1.6\",\"depth\":1,\"path\":\"get-exchange-rate.md\",\"ref\":\"get-exchange-rate.md\",\"articles\":[]},\"dir\":\"ltr\"},\"config\":{\"plugins\":[\"livereload\"],\"root\":\".\",\"styles\":{\"website\":\"styles/website.css\",\"pdf\":\"styles/pdf.css\",\"epub\":\"styles/epub.css\",\"mobi\":\"styles/mobi.css\",\"ebook\":\"styles/ebook.css\",\"print\":\"styles/print.css\"},\"pluginsConfig\":{\"livereload\":{},\"highlight\":{},\"search\":{},\"lunr\":{\"maxIndexSize\":1000000,\"ignoreSpecialCharacters\":false},\"fontsettings\":{\"theme\":\"white\",\"family\":\"sans\",\"size\":2},\"theme-default\":{\"styles\":{\"website\":\"styles/website.css\",\"pdf\":\"styles/pdf.css\",\"epub\":\"styles/epub.css\",\"mobi\":\"styles/mobi.css\",\"ebook\":\"styles/ebook.css\",\"print\":\"styles/print.css\"},\"showLevel\":false}},\"theme\":\"default\",\"author\" [... omitted end of long line]"
+                }
+              ]
+            },
+            {
+              "file": "docs/_book/onramp-api.html",
+              "matches": [
+                {
+                  "lineNumber": 174,
+                  "content": "                    Coins.ph API"
+                }
+              ]
+            },
+            {
+              "file": "docs/_book/quick-reference.html",
+              "matches": [
+                {
+                  "lineNumber": 172,
+                  "content": "                    Coins.ph API"
+                },
+                {
+                  "lineNumber": 240,
+                  "content": "&lt;h2 id=\"convert--coins\"&gt;Convert / Coins&lt;/h2&gt;"
+                },
+                {
+                  "lineNumber": 363,
+                  "content": "                &lt;a href=\"coins-api.html\" class=\"navigation navigation-prev navigation-unique\" aria-label=\"Previous page: Coins.ph API\"&gt;"
+                },
+                {
+                  "lineNumber": 375,
+                  "content": "            gitbook.page.hasChanged({\"page\":{\"title\":\"Quick Reference\",\"level\":\"1.8\",\"depth\":1,\"previous\":{\"title\":\"Coins.ph API\",\"level\":\"1.7\",\"depth\":1,\"path\":\"coins-api.md\",\"ref\":\"coins-api.md\",\"articles\":[]},\"dir\":\"ltr\"},\"config\":{\"plugins\":[\"livereload\"],\"root\":\".\",\"styles\":{\"website\":\"styles/website.css\",\"pdf\":\"styles/pdf.css\",\"epub\":\"styles/epub.css\",\"mobi\":\"styles/mobi.css\",\"ebook\":\"styles/ebook.css\",\"print\":\"styles/print.css\"},\"pluginsConfig\":{\"livereload\":{},\"highlight\":{},\"search\":{},\"lunr\":{\"maxIndexSize\":1000000,\"ignoreSpecialCharacters\":false},\"fontsettings\":{\"theme\":\"white\",\"family\":\"sans\",\"size\":2},\"theme-default\":{\"styles\":{\"website\":\"styles/website.css\",\"pdf\":\"styles/pdf.css\",\"epub\":\"styles/epub.css\",\"mobi\":\"styles/mobi.css\",\"ebook\":\"styles/ebook.css\",\"print\":\"styles/print.css\"},\"showLevel\":false}},\"theme\":\"default\",\"author\":\"XDC Cash\",\"pdf\":{\"pageNumbers\":true,\"fontSize\":12,\"fontFamily\":\"Arial\",\"paperSize\":\"a4\",\"chapterMark\":\"pagebreak\",\"pageBreaksBefore\":\"/\",\"margin [... omitted end of long line]"
+                }
+              ]
+            },
+            {
+              "file": "docs/_book/get-exchange-rate.html",
+              "matches": [
+                {
+                  "lineNumber": 174,
+                  "content": "                    Coins.ph API"
+                },
+                {
+                  "lineNumber": 447,
+                  "content": "                &lt;a href=\"coins-api.html\" class=\"navigation navigation-next \" aria-label=\"Next page: Coins.ph API\"&gt;"
+                },
+                {
+                  "lineNumber": 458,
+                  "content": "            gitbook.page.hasChanged({\"page\":{\"title\":\"Get Exchange Rate\",\"level\":\"1.6\",\"depth\":1,\"next\":{\"title\":\"Coins.ph API\",\"level\":\"1.7\",\"depth\":1,\"path\":\"coins-api.md\",\"ref\":\"coins-api.md\",\"articles\":[]},\"previous\":{\"title\":\"Offramp Operations\",\"level\":\"1.5\",\"depth\":1,\"path\":\"offramp-api.md\",\"ref\":\"offramp-api.md\",\"articles\":[]},\"dir\":\"ltr\"},\"config\":{\"plugins\":[\"livereload\"],\"root\":\".\",\"styles\":{\"website\":\"styles/website.css\",\"pdf\":\"styles/pdf.css\",\"epub\":\"styles/epub.css\",\"mobi\":\"styles/mobi.css\",\"ebook\":\"styles/ebook.css\",\"print\":\"styles/print.css\"},\"pluginsConfig\":{\"livereload\":{},\"highlight\":{},\"search\":{},\"lunr\":{\"maxIndexSize\":1000000,\"ignoreSpecialCharacters\":false},\"fontsettings\":{\"theme\":\"white\",\"family\":\"sans\",\"size\":2},\"theme-default\":{\"styles\":{\"website\":\"styles/website.css\",\"pdf\":\"styles/pdf.css\",\"epub\":\"styles/epub.css\",\"mobi\":\"styles/mobi.css\",\"ebook\":\"styles/ebook.css\",\"print\":\"styles/print.css\"},\"showLevel\":false}},\"theme\":\"default\",\"author\":\"XDC Cash\",\"pdf\":{\"p [... omitted end of long line]"
+                }
+              ]
+            },
+            {
+              "file": "docs/_book/index.html",
+              "matches": [
+                {
+                  "lineNumber": 172,
+                  "content": "                    Coins.ph API"
+                }
+              ]
+            },
+            {
+              "file": "docs/_book/offramp-api.html",
+              "matches": [
+                {
+                  "lineNumber": 174,
+                  "content": "                    Coins.ph API"
+                }
+              ]
+            },
+            {
+              "file": "docs/_book/AUTH.html",
+              "matches": [
+                {
+                  "lineNumber": 174,
+                  "content": "                    Coins.ph API"
+                }
+              ]
+            },
+            {
+              "file": "docs/quick-reference.md",
+              "matches": [
+                {
+                  "lineNumber": 5,
+                  "content": "## Convert / Coins"
+                }
+              ]
+            },
+            {
+              "file": "docs/coins-api.md",
+              "matches": [
+                {
+                  "lineNumber": 1,
+                  "content": "# Coins.ph API"
+                }
+              ]
+            },
+            {
+              "file": "docs/api-reference.md",
+              "matches": [
+                {
+                  "lineNumber": 46,
+                  "content": "## Convert / Coins (Get Quote, Accept Quote, Cash Out, Account)"
+                }
+              ]
+            },
+            {
+              "file": "docs/SUMMARY.md",
+              "matches": [
+                {
+                  "lineNumber": 9,
+                  "content": "* [Coins.ph API](coins-api.md)"
+                }
+              ]
+            }
+          ],
+          "totalLines": 23,
+          "totalMatchedLines": 23
+        }
+      }
+    }
+  }
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "pattern": "Coins|coins",
+  "path": "/Users/satheesh/go/src/xdcross/offramp/CURL_COMMANDS.md",
+  "caseInsensitive": false
+}
+```
+Result:
+
+```json
+{
+  "success": {
+    "pattern": "Coins|coins",
+    "path": "/Users/satheesh/go/src/xdcross/offramp/CURL_COMMANDS.md",
+    "outputMode": "content",
+    "workspaceResults": {
+      "/Users/satheesh/go/src/xdcross/offramp": {
+        "content": {
+          "matches": [
+            {
+              "file": "CURL_COMMANDS.md",
+              "matches": [
+                {
+                  "lineNumber": 13,
+                  "content": "- Coins partner: &#96;ref_id=id0001&#96;"
+                },
+                {
+                  "lineNumber": 660,
+                  "content": "- **ref_id required** - Pass partner as &#96;ref_id&#96; in query (GET) or in body (POST), e.g. &#96;ref_id=id0001&#96; (Coins) or &#96;ref_id=id0002&#96; (Onramp)."
+                }
+              ]
+            }
+          ],
+          "totalLines": 2,
+          "totalMatchedLines": 2
+        }
+      }
+    }
+  }
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<think><details><summary>Thought Process</summary>
+
+The user wants to remove "Coins.ph" from the docs and use wording like "PHP offramp" instead. I'll update:
+
+1. **docs/SUMMARY.md** - Change "Coins.ph API" to something like "PHP offramp (XDC ↔ PHP)" or "Convert (XDC ↔ PHP)"
+2. **docs/coins-api.md** - Title "Coins.ph API" → e.g. "PHP offramp (XDC ↔ PHP)" or "Convert / XDC ↔ PHP"
+3. **docs/api-reference.md** - "Convert / Coins" → "Convert / PHP offramp" or "XDC ↔ PHP"
+4. **docs/quick-reference.md** - "Convert / Coins" → same
+5. **CURL_COMMANDS.md** - "Coins partner" → e.g. "PHP offramp partner" or "XDC↔PHP partner"; "Coins" in notes → "PHP offramp" or similar
+
+I'll avoid changing the .specstory history or _book (generated). I'll only change the source docs and CURL_COMMANDS. The _book is built from the source, so after changing SUMMARY and coins-api etc., they need to run docs:build again to regenerate _book.
+
+Let me read the actual doc files to make consistent wording.
+</details></think>
+
+---
+
+
+Updating docs to replace "Coins.ph" and "Coins" with "PHP offramp" (XDC ↔ PHP) wording.
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/satheesh/go/src/xdcross/offramp/docs/SUMMARY.md</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/satheesh/go/src/xdcross/offramp/docs/coins-api.md</summary>
+
+</details>
+</tool-use>
+
+---
+
+<think><details><summary>Thought Process</summary>
+
+I'll use:
+- "PHP offramp (XDC ↔ PHP)" for the section that does XDC → PHP conversion (get-quote, accept-quote, cash-out, account). So the page title can be "PHP offramp (XDC ↔ PHP)" and in SUMMARY "PHP offramp (XDC ↔ PHP)".
+- In api-reference and quick-reference, "Convert / Coins" → "PHP offramp (XDC ↔ PHP)" or shorter "Convert (XDC ↔ PHP)".
+- CURL_COMMANDS: "Coins partner" → "PHP offramp (XDC↔PHP) partner" or "ref_id=id0001 (XDC↔PHP)"
+
+Actually re-reading the user message: "remove coins.ph in docs... use PHP offramp like that" — so they want:
+1. Remove "Coins.ph" everywhere
+2. Use "PHP offramp" (or similar) instead
+
+So:
+- SUMMARY: "Coins.ph API" → "PHP offramp (XDC ↔ PHP)"
+- coins-api.md: "# Coins.ph API" → "# PHP offramp (XDC ↔ PHP)"
+- api-reference.md: "Convert / Coins" → "PHP offramp (XDC ↔ PHP)" or "Convert (XDC ↔ PHP)"
+- quick-reference.md: "Convert / Coins" → "PHP offramp" or "Convert (XDC ↔ PHP)"
+- CURL_COMMANDS: "Coins partner" → "PHP offramp partner" or "XDC↔PHP"; "ref_id=id0001 (Coins)" → "ref_id=id0001 (PHP offramp)"
+
+I won't edit _book/ files as they are generated; the user can run docs:build to regenerate.
+</details></think>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/docs/SUMMARY.md</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/docs/coins-api.md</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/docs/api-reference.md</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/docs/quick-reference.md</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/CURL_COMMANDS.md</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/CURL_COMMANDS.md</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<think><details><summary>Thought Process</summary>
+
+Checking docs/README.md for any "Coins" or "coins.ph" reference.
+</details></think>
+
+---
+
+
+Checking the docs README for "Coins" or "coins.ph" references:
+
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "pattern": "Coins|coins\\.ph",
+  "path": "/Users/satheesh/go/src/xdcross/offramp/docs",
+  "glob": "*.md",
+  "caseInsensitive": false
+}
+```
+Result:
+
+```json
+{
+  "success": {
+    "pattern": "Coins|coins\\.ph",
+    "path": "/Users/satheesh/go/src/xdcross/offramp/docs",
+    "outputMode": "content",
+    "workspaceResults": {
+      "/Users/satheesh/go/src/xdcross/offramp": {
+        "content": {}
+      }
+    }
+  }
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<think><details><summary>Thought Process</summary>
+
+Good - no more Coins or coins.ph in the docs .md files. The _book/ HTML files are generated; when the user runs `npm run docs:build` they'll get updated. I'll mention that in the summary.
+</details></think>
+
+---
+
+
+Summary of changes:
+
+**Docs (source .md only)**
+
+- **docs/SUMMARY.md** – TOC entry: "Coins.ph API" → "PHP offramp (XDC ↔ PHP)".
+- **docs/coins-api.md** – Title: "# Coins.ph API" → "# PHP offramp (XDC ↔ PHP)".
+- **docs/api-reference.md** – Section: "Convert / Coins (...)" → "PHP offramp (XDC ↔ PHP) — Get Quote, Accept Quote, Cash Out, Account".
+- **docs/quick-reference.md** – Section: "Convert / Coins" → "PHP offramp (XDC ↔ PHP)".
+
+**CURL_COMMANDS.md**
+
+- "Coins partner" → "PHP offramp (XDC ↔ PHP)".
+- Note: "ref_id=id0001 (Coins)" → "ref_id=id0001 (PHP offramp)".
+
+There are no remaining "Coins.ph" or "Coins" references in the docs source. The built site in `docs/_book/` still has the old labels; rebuild with `npm run docs:build` so the sidebar and titles use "PHP offramp (XDC ↔ PHP)" there too.
+
+---
+
+_**User**_
+
+satheesh@Satheeshs-MBP customer-module % curl --location 'https://xdc.cash/api/getExchangeRate' \
+--header 'X-API-Key: 160b88f80e944c3218ee95439af7a6cecda6c32f5ac50dbab6f617429ffccba8' \
+--header 'Content-Type: application/x-www-form-urlencoded' \
+--data-urlencode 'fromCurrency=INR' \
+--data-urlencode 'toCurrency=USDC' \
+--data-urlencode 'fromAmount=200' \
+--data-urlencode 'chain=XDC' \
+--data-urlencode 'paymentMethodType=UPI' \
+--data-urlencode 'ref_id=id0002'
+{"error":{"message":"Onramp API error","status":401,"data":{"error":{"message":"Missing API key. Send X-API-Key header or Authorization: Bearer <key>.","status":401,"code":"MISSING_API_KEY"}}}}%   
+
+
+what error
+
+---
+
