@@ -518,7 +518,7 @@ VirgoPAY partner uses `ref_id=id0003`. The server signs requests using VirgoPAY 
 **Create customer (maps to `POST /api/v1/customer/create` on VirgoPAY):**
 
 ```bash
-curl -X POST "http://localhost:3002/api/virgopay/customer/create" \
+curl -X POST "http://localhost:3002/api/customer/create" \
   -H "X-API-Key: <your-api-key>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -534,7 +534,7 @@ curl -X POST "http://localhost:3002/api/virgopay/customer/create" \
 BASE_URL="http://localhost:3002"
 API_KEY="<your-api-key>"
 
-curl -X POST "${BASE_URL}/api/virgopay/customer/create" \
+curl -X POST "${BASE_URL}/api/customer/create" \
   -H "X-API-Key: ${API_KEY}" \
   -H "Content-Type: application/json" \
   -d '{
@@ -549,7 +549,7 @@ curl -X POST "${BASE_URL}/api/virgopay/customer/create" \
 Fetch a VirgoPAY customer by ID. The ID is returned by VirgoPAY in the create-customer response.
 
 ```bash
-curl -X GET "http://localhost:3002/api/virgopay/customer/1ea57af6-8e30-4a37-aa2f-d7e967a8b957?ref_id=id0003" \
+curl -X GET "http://localhost:3002/api/customer/1ea57af6-8e30-4a37-aa2f-d7e967a8b957?ref_id=id0003" \
   -H "X-API-Key: <your-api-key>" \
   -H "Accept: application/json"
 ```
@@ -561,7 +561,7 @@ BASE_URL="http://localhost:3002"
 API_KEY="<your-api-key>"
 CUSTOMER_ID="1ea57af6-8e30-4a37-aa2f-d7e967a8b957"
 
-curl -X GET "${BASE_URL}/api/virgopay/customer/${CUSTOMER_ID}?ref_id=id0003" \
+curl -X GET "${BASE_URL}/api/customer/${CUSTOMER_ID}?ref_id=id0003" \
   -H "X-API-Key: ${API_KEY}" \
   -H "Accept: application/json"
 ```
@@ -571,7 +571,7 @@ curl -X GET "${BASE_URL}/api/virgopay/customer/${CUSTOMER_ID}?ref_id=id0003" \
 Update customer KYC/profile details in VirgoPAY.
 
 ```bash
-curl -X POST "http://localhost:3002/api/virgopay/customer/partial-update" \
+curl -X POST "http://localhost:3002/api/customer/partial-update" \
   -H "X-API-Key: <your-api-key>" \
   -H "Content-Type: application/json" \
   -H "Accept: application/json" \
@@ -621,7 +621,7 @@ curl -X POST "http://localhost:3002/api/virgopay/customer/partial-update" \
 Full update customer KYC/profile details in VirgoPAY.
 
 ```bash
-curl -X POST "http://localhost:3002/api/virgopay/customer/update" \
+curl -X POST "http://localhost:3002/api/customer/update" \
   -H "X-API-Key: <your-api-key>" \
   -H "Content-Type: application/json" \
   -H "Accept: application/json" \
@@ -669,7 +669,7 @@ curl -X POST "http://localhost:3002/api/virgopay/customer/update" \
 ## 17. VirgoPAY - Create Fiat Account
 
 ```bash
-curl -X POST "http://localhost:3002/api/virgopay/fiatAccount" \
+curl -X POST "http://localhost:3002/api/fiatAccount" \
   -H "X-API-Key: <your-api-key>" \
   -H "Content-Type: application/json" \
   -H "Accept: application/json" \
@@ -688,7 +688,7 @@ curl -X POST "http://localhost:3002/api/virgopay/fiatAccount" \
 ## 18. VirgoPAY - List Fiat Accounts
 
 ```bash
-curl -X GET "http://localhost:3002/api/virgopay/fiatAccount?ref_id=id0003&customerId=1ea57af6-8e30-4a37-aa2f-d7e967a8b957" \
+curl -X GET "http://localhost:3002/api/fiatAccount?ref_id=id0003&customerId=1ea57af6-8e30-4a37-aa2f-d7e967a8b957" \
   -H "X-API-Key: <your-api-key>" \
   -H "Accept: application/json"
 ```
@@ -696,7 +696,7 @@ curl -X GET "http://localhost:3002/api/virgopay/fiatAccount?ref_id=id0003&custom
 ## 19. VirgoPAY - Delete Fiat Account
 
 ```bash
-curl -X POST "http://localhost:3002/api/virgopay/fiatAccount/delete/f3af54d0-cdd9-4f65-98b7-4b8ab8a13f31?ref_id=id0003" \
+curl -X POST "http://localhost:3002/api/fiatAccount/delete/f3af54d0-cdd9-4f65-98b7-4b8ab8a13f31?ref_id=id0003" \
   -H "X-API-Key: <your-api-key>" \
   -H "Accept: application/json"
 ```
@@ -704,7 +704,7 @@ curl -X POST "http://localhost:3002/api/virgopay/fiatAccount/delete/f3af54d0-cdd
 ## 20. VirgoPAY - Onramp Transfer
 
 ```bash
-curl -X POST "http://localhost:3002/api/virgopay/transfer/onramp" \
+curl -X POST "http://localhost:3002/api/transfer/onramp" \
   -H "X-API-Key: <your-api-key>" \
   -H "Content-Type: application/json" \
   -H "Accept: application/json" \
@@ -726,7 +726,7 @@ curl -X POST "http://localhost:3002/api/virgopay/transfer/onramp" \
 ## 21. VirgoPAY - Offramp Transfer
 
 ```bash
-curl -X POST "http://localhost:3002/api/virgopay/transfer/offramp" \
+curl -X POST "http://localhost:3002/api/transfer/offramp" \
   -H "X-API-Key: <your-api-key>" \
   -H "Content-Type: application/json" \
   -H "Accept: application/json" \
@@ -743,7 +743,7 @@ curl -X POST "http://localhost:3002/api/virgopay/transfer/offramp" \
 ## 22. VirgoPAY - Transfer Detail
 
 ```bash
-curl -X GET "http://localhost:3002/api/virgopay/transfer/detail?ref_id=id0003&transferId=2c149e06-bb12-4741-ba8f-4166c2ba34a0" \
+curl -X GET "http://localhost:3002/api/transfer/detail?ref_id=id0003&transferId=2c149e06-bb12-4741-ba8f-4166c2ba34a0" \
   -H "X-API-Key: <your-api-key>" \
   -H "Accept: application/json"
 ```
@@ -751,7 +751,7 @@ curl -X GET "http://localhost:3002/api/virgopay/transfer/detail?ref_id=id0003&tr
 ## 23. VirgoPAY - List Transfers
 
 ```bash
-curl -X GET "http://localhost:3002/api/virgopay/transfer?ref_id=id0003&id=5802c426-a4f4-486d-966d-f1ac9f222ebb&customerId=47d571c7-9571-4ae7-a5a1-9840e5087910&type=1&status=5&page=1&size=20&countryCode=CAN" \
+curl -X GET "http://localhost:3002/api/transfer?ref_id=id0003&id=5802c426-a4f4-486d-966d-f1ac9f222ebb&customerId=47d571c7-9571-4ae7-a5a1-9840e5087910&type=1&status=5&page=1&size=20&countryCode=CAN" \
   -H "X-API-Key: <your-api-key>" \
   -H "Accept: application/json"
 ```

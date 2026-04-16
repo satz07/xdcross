@@ -68,10 +68,10 @@ function buildVirgoHeaders(partner, signingObject) {
 
 /**
  * Create customer (VirgoPAY)
- * POST /api/virgopay/customer/create
+ * POST /api/customer/create
  * Requires ref_id=id0003 in body or query.
  */
-router.post('/virgopay/customer/create', async (req, res) => {
+router.post('/customer/create', async (req, res) => {
   try {
     const { partner } = getPartnerFromRequest(req);
     const { apiKey, secret, countryCode, baseUrl } = partner;
@@ -129,10 +129,10 @@ router.post('/virgopay/customer/create', async (req, res) => {
 
 /**
  * Get customer by ID (VirgoPAY)
- * GET /api/virgopay/customer/:customerId
+ * GET /api/customer/:customerId
  * Requires ref_id=id0003 in query.
  */
-router.get('/virgopay/customer/:customerId', async (req, res) => {
+router.get('/customer/:customerId', async (req, res) => {
   try {
     const { partner } = getPartnerFromRequest(req);
     const { apiKey, secret, countryCode, baseUrl } = partner;
@@ -188,10 +188,10 @@ router.get('/virgopay/customer/:customerId', async (req, res) => {
 
 /**
  * Partial update customer (VirgoPAY)
- * POST /api/virgopay/customer/partial-update
+ * POST /api/customer/partial-update
  * Requires ref_id=id0003 in body or query.
  */
-router.post('/virgopay/customer/partial-update', async (req, res) => {
+router.post('/customer/partial-update', async (req, res) => {
   try {
     const { partner } = getPartnerFromRequest(req);
     const { apiKey, secret, countryCode, baseUrl } = partner;
@@ -249,10 +249,10 @@ router.post('/virgopay/customer/partial-update', async (req, res) => {
 
 /**
  * Full update customer (VirgoPAY)
- * POST /api/virgopay/customer/update
+ * POST /api/customer/update
  * Requires ref_id=id0003 in body or query.
  */
-router.post('/virgopay/customer/update', async (req, res) => {
+router.post('/customer/update', async (req, res) => {
   try {
     const { partner } = getPartnerFromRequest(req);
     const { apiKey, secret, countryCode, baseUrl } = partner;
@@ -310,10 +310,10 @@ router.post('/virgopay/customer/update', async (req, res) => {
 
 /**
  * Create fiat account (VirgoPAY)
- * POST /api/virgopay/fiatAccount
+ * POST /api/fiatAccount
  * Requires ref_id=id0003 in body or query.
  */
-router.post('/virgopay/fiatAccount', async (req, res) => {
+router.post('/fiatAccount', async (req, res) => {
   try {
     const { partner } = getPartnerFromRequest(req);
     const { apiKey, secret, countryCode, baseUrl } = partner;
@@ -371,10 +371,10 @@ router.post('/virgopay/fiatAccount', async (req, res) => {
 
 /**
  * List fiat accounts (VirgoPAY)
- * GET /api/virgopay/fiatAccount
+ * GET /api/fiatAccount
  * Requires ref_id=id0003 and customerId in query.
  */
-router.get('/virgopay/fiatAccount', async (req, res) => {
+router.get('/fiatAccount', async (req, res) => {
   try {
     const { partner } = getPartnerFromRequest(req);
     const { apiKey, secret, countryCode, baseUrl } = partner;
@@ -430,10 +430,10 @@ router.get('/virgopay/fiatAccount', async (req, res) => {
 
 /**
  * Delete fiat account (VirgoPAY)
- * POST /api/virgopay/fiatAccount/delete/:fiatAccountId
+ * POST /api/fiatAccount/delete/:fiatAccountId
  * Requires ref_id=id0003 in query.
  */
-router.post('/virgopay/fiatAccount/delete/:fiatAccountId', async (req, res) => {
+router.post('/fiatAccount/delete/:fiatAccountId', async (req, res) => {
   try {
     const { partner } = getPartnerFromRequest(req);
     const { apiKey, secret, countryCode, baseUrl } = partner;
@@ -489,10 +489,10 @@ router.post('/virgopay/fiatAccount/delete/:fiatAccountId', async (req, res) => {
 
 /**
  * Create onramp transfer (VirgoPAY)
- * POST /api/virgopay/transfer/onramp
+ * POST /api/transfer/onramp
  * Requires ref_id=id0003 in body or query.
  */
-router.post('/virgopay/transfer/onramp', async (req, res) => {
+router.post('/transfer/onramp', async (req, res) => {
   try {
     const { partner } = getPartnerFromRequest(req);
     const { apiKey, secret, countryCode, baseUrl } = partner;
@@ -550,10 +550,10 @@ router.post('/virgopay/transfer/onramp', async (req, res) => {
 
 /**
  * Create offramp transfer (VirgoPAY)
- * POST /api/virgopay/transfer/offramp
+ * POST /api/transfer/offramp
  * Requires ref_id=id0003 in body or query.
  */
-router.post('/virgopay/transfer/offramp', async (req, res) => {
+router.post('/transfer/offramp', async (req, res) => {
   try {
     const { partner } = getPartnerFromRequest(req);
     const { apiKey, secret, countryCode, baseUrl } = partner;
@@ -611,10 +611,10 @@ router.post('/virgopay/transfer/offramp', async (req, res) => {
 
 /**
  * Get transfer detail (VirgoPAY)
- * GET /api/virgopay/transfer/detail
+ * GET /api/transfer/detail
  * Requires ref_id=id0003 and transferId in query.
  */
-router.get('/virgopay/transfer/detail', async (req, res) => {
+router.get('/transfer/detail', async (req, res) => {
   try {
     const { partner } = getPartnerFromRequest(req);
     const { apiKey, secret, countryCode, baseUrl } = partner;
@@ -670,10 +670,10 @@ router.get('/virgopay/transfer/detail', async (req, res) => {
 
 /**
  * List transfers (VirgoPAY)
- * GET /api/virgopay/transfer
+ * GET /api/transfer
  * Requires ref_id=id0003. Supports same query params as VirgoPAY (id, customerId, type, status, page, size, countryCode, etc.).
  */
-router.get('/virgopay/transfer', async (req, res) => {
+router.get('/transfer', async (req, res) => {
   try {
     const { partner } = getPartnerFromRequest(req);
     const { apiKey, secret, countryCode, baseUrl } = partner;

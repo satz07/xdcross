@@ -35,8 +35,12 @@ Thumbs.db
 *.swo
 *~
 
-# Cursor
+# Cursor / AI tooling artifacts
 .cursor/
+.specstory/
+*.cursorindex
+*.index
+.index/
 
 # Spec / test output
 spec/
@@ -48,6 +52,7 @@ coverage/
 dist/
 build/
 out/
+docs/_book/
 
 # Temporary
 tmp/

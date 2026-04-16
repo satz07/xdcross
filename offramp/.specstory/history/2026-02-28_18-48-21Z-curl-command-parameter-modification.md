@@ -31891,3 +31891,144 @@ curl -X GET "http://localhost:3002/api/virgopay/transfer?ref_id=id0003&id=5802c4
 ```
 
 All of these are now also in `CURL_COMMANDS.md` under sections 20–23.
+
+---
+
+_**User**_
+
+add .gitignoe and all rquired fiels icnluseing curdos cpecsortir and oher indexer
+
+---
+
+_**Agent (default)**_
+
+I’ll update `.gitignore` to include Cursor/specstory/indexer/generated artifacts (including docs build output) and keep essentials tracked.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/satheesh/go/src/xdcross/offramp/.gitignore</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search">
+<details>
+<summary>Tool use: **glob_file_search** • Searched codebase "" • **0** results in **1** directory</summary>
+
+Directory: **/Users/satheesh/go/src/xdcross/offramp** (0 files)
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search"><details>
+<summary>Tool use: **glob_file_search**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search">
+<details>
+<summary>Tool use: **glob_file_search** • Searched codebase "" • **2** results in **1** directory</summary>
+
+Directory: **/Users/satheesh/go/src/xdcross/offramp** (2 files)
+
+| File |
+|------|
+| `.specstory/history/2026-02-28_18-48-21Z-curl-command-parameter-modification.md` |
+| `.specstory/statistics.json` |
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search"><details>
+<summary>Tool use: **glob_file_search**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search">
+<details>
+<summary>Tool use: **glob_file_search** • Searched codebase "" • **25** results in **1** directory</summary>
+
+Directory: **/Users/satheesh/go/src/xdcross/offramp** (25 files)
+
+| File |
+|------|
+| `docs/_book/quick-reference.html` |
+| `docs/_book/testing.md` |
+| `docs/_book/api-reference.html` |
+| `docs/_book/coins-api.html` |
+| `docs/_book/search_index.json` |
+| `docs/_book/onramp-api.html` |
+| `docs/_book/get-exchange-rate.html` |
+| `docs/_book/index.html` |
+| `docs/_book/offramp-api.html` |
+| `docs/_book/AUTH.html` |
+| `docs/_book/gitbook/gitbook-plugin-livereload/plugin.js` |
+| `docs/_book/gitbook/@honkit/honkit-plugin-highlight/ebook.css` |
+| `docs/_book/gitbook/@honkit/honkit-plugin-highlight/website.css` |
+| `docs/_book/gitbook/gitbook-plugin-search/lunr.min.js` |
+| `docs/_book/gitbook/gitbook-plugin-search/search-engine.js` |
+| `docs/_book/gitbook/gitbook-plugin-search/search.css` |
+| `docs/_book/gitbook/gitbook-plugin-search/search.js` |
+| `docs/_book/gitbook/gitbook-plugin-lunr/lunr.min.js` |
+| `docs/_book/gitbook/gitbook-plugin-lunr/search-lunr.js` |
+| `docs/_book/gitbook/gitbook-plugin-fontsettings/fontsettings.js` |
+| `docs/_book/gitbook/gitbook-plugin-fontsettings/website.css` |
+| `docs/_book/gitbook/fonts/fontawesome/fontawesome-webfont.svg` |
+| `docs/_book/gitbook/gitbook.js` |
+| `docs/_book/gitbook/style.css` |
+| `docs/_book/gitbook/theme.js` |
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search"><details>
+<summary>Tool use: **glob_file_search**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/satheesh/go/src/xdcross/offramp/.gitignore</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+Updated `.gitignore` with Cursor/specstory/indexer/build artifacts.
+
+### Added entries
+
+- `.specstory/`
+- `*.cursorindex`
+- `*.index`
+- `.index/`
+- `docs/_book/` (generated Honkit output)
+
+### Kept existing useful entries
+
+- `.cursor/`
+- `.env*` (with `!.env.example`)
+- `node_modules/`, logs, temp/cache, coverage, etc.
+
+If you want, I can also add ignores for common local AI/meta files like `.turbo/`, `.eslintcache`, and `.vercel/`.
