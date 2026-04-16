@@ -12,7 +12,8 @@ Replace `BASE_URL` with your server URL:
 Partner is identified by **ref_id** in the request (query string or body), not in the URL path.
 - PHP offramp (XDC ↔ PHP): `ref_id=id0001`
 - Onramp partner: `ref_id=id0002`
-Add `ref_id` to every request (e.g. `?ref_id=id0001` for GET/query, or `ref_id=id0002` in form/JSON body for POST).
+- VirgoPAY (customer / onramp widget): `ref_id=id0003`
+Add `ref_id` to every request (e.g. `?ref_id=id0001` for GET/query, `ref_id=id0002` / `id0003` in form/JSON body for POST).
 
 ## API key (optional)
 If the server has API key authentication enabled, add this header to every request:
@@ -508,6 +509,251 @@ curl -X POST "http://localhost:3002/api/bank/bankDetails" -H "X-API-Key: <your-a
     }
   }
 }
+```
+
+## 13. VirgoPAY - Create Customer
+
+VirgoPAY partner uses `ref_id=id0003`. The server signs requests using VirgoPAY API key/secret and country code from env.
+
+**Create customer (maps to `POST /api/v1/customer/create` on VirgoPAY):**
+
+```bash
+curl -X POST "http://localhost:3002/api/virgopay/customer/create" \
+  -H "X-API-Key: <your-api-key>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "ref_id": "id0003",
+    "email": "satheesh2@xinfin.org",
+    "phone": "00919791430120"
+  }'
+```
+
+**With variables:**
+
+```bash
+BASE_URL="http://localhost:3002"
+API_KEY="<your-api-key>"
+
+curl -X POST "${BASE_URL}/api/virgopay/customer/create" \
+  -H "X-API-Key: ${API_KEY}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "ref_id": "id0003",
+    "email": "satheesh2@xinfin.org",
+    "phone": "00919791430120"
+  }'
+```
+
+## 14. VirgoPAY - Get Customer
+
+Fetch a VirgoPAY customer by ID. The ID is returned by VirgoPAY in the create-customer response.
+
+```bash
+curl -X GET "http://localhost:3002/api/virgopay/customer/1ea57af6-8e30-4a37-aa2f-d7e967a8b957?ref_id=id0003" \
+  -H "X-API-Key: <your-api-key>" \
+  -H "Accept: application/json"
+```
+
+**With variables:**
+
+```bash
+BASE_URL="http://localhost:3002"
+API_KEY="<your-api-key>"
+CUSTOMER_ID="1ea57af6-8e30-4a37-aa2f-d7e967a8b957"
+
+curl -X GET "${BASE_URL}/api/virgopay/customer/${CUSTOMER_ID}?ref_id=id0003" \
+  -H "X-API-Key: ${API_KEY}" \
+  -H "Accept: application/json"
+```
+
+## 15. VirgoPAY - Partial Update Customer
+
+Update customer KYC/profile details in VirgoPAY.
+
+```bash
+curl -X POST "http://localhost:3002/api/virgopay/customer/partial-update" \
+  -H "X-API-Key: <your-api-key>" \
+  -H "Content-Type: application/json" \
+  -H "Accept: application/json" \
+  -d '{
+    "ref_id": "id0003",
+    "id": "9c18e722-5a9f-4de1-b739-700e736f7583",
+    "firstName": "John",
+    "middleName": "Jimmy",
+    "lastName": "Doe",
+    "dateOfBirth": "2000-12-25",
+    "addressProofUrl": "https://www.ontario.ca/files/styles/large/s3/2023-04/DL_2023%20300x200-100-min.jpg",
+    "idType": "PASSPORT",
+    "idNumber": "D01234567890123",
+    "idExpiryDate": "2028-10-07T00:00:00Z",
+    "idFrontUrl": "https://www.ontario.ca/files/styles/large/s3/2023-04/DL_2023%20300x200-100-min.jpg",
+    "idBackUrl": "https://www.ontario.ca/files/styles/large/s3/2023-04/DL_2023%20300x200-100-min.jpg",
+    "idCountryCode": "CAN",
+    "idProvince": "ON",
+    "selfieUrl": "a-selfie-url",
+    "taxIdType": "ssn",
+    "taxIdNumber": "123456789",
+    "additionalIdNumber": "123456789",
+    "isPoliticallyExposed": false,
+    "sourceOfFunds": "2,3,6",
+    "occupation": "1",
+    "employmentStatus": 1,
+    "employerName": "VirgoCX",
+    "industry": 25,
+    "streetNumber": "4950",
+    "streetName": "Yonge St",
+    "unitNumber": "900",
+    "city": "Toronto",
+    "province": "ON",
+    "addressLineOne": "123 Main Street",
+    "postalCode": "M2N 6K1",
+    "gender": 1,
+    "nationality": "CAN",
+    "accountPurpose": "investment_purposes",
+    "otherPurpose": "other purpose",
+    "actingAsIntermediary": false,
+    "expectedMonthlyPayments": "0_4999"
+  }'
+```
+
+## 16. VirgoPAY - Update Customer
+
+Full update customer KYC/profile details in VirgoPAY.
+
+```bash
+curl -X POST "http://localhost:3002/api/virgopay/customer/update" \
+  -H "X-API-Key: <your-api-key>" \
+  -H "Content-Type: application/json" \
+  -H "Accept: application/json" \
+  -d '{
+    "ref_id": "id0003",
+    "id": "4d420a31-7d91-4f8c-a818-a33becc27b29",
+    "firstName": "John",
+    "middleName": "Jimmy",
+    "lastName": "Doe",
+    "dateOfBirth": "2000-12-25",
+    "addressProofUrl": "https://www.ontario.ca/files/styles/large/s3/2023-04/DL_2023%20300x200-100-min.jpg",
+    "idType": "PASSPORT",
+    "idNumber": "D01234567890123",
+    "idExpiryDate": "2028-10-07T00:00:00Z",
+    "idFrontUrl": "https://www.ontario.ca/files/styles/large/s3/2023-04/DL_2023%20300x200-100-min.jpg",
+    "idBackUrl": "https://www.ontario.ca/files/styles/large/s3/2023-04/DL_2023%20300x200-100-min.jpg",
+    "idCountryCode": "CAN",
+    "idProvince": "ON",
+    "selfieUrl": "a-selfie-url",
+    "taxIdType": "ssn",
+    "taxIdNumber": "123456789",
+    "additionalIdNumber": "123456789",
+    "isPoliticallyExposed": false,
+    "sourceOfFunds": "2,3,6",
+    "occupation": "1",
+    "employmentStatus": 1,
+    "employerName": "VirgoCX",
+    "industry": 25,
+    "streetNumber": "4950",
+    "streetName": "Yonge St",
+    "unitNumber": "900",
+    "city": "Toronto",
+    "province": "ON",
+    "addressLineOne": "123 Main Street",
+    "postalCode": "M2N 6K1",
+    "gender": 1,
+    "nationality": "CAN",
+    "accountPurpose": "investment_purposes",
+    "otherPurpose": "other purpose",
+    "actingAsIntermediary": false,
+    "expectedMonthlyPayments": "0_4999"
+  }'
+```
+
+## 17. VirgoPAY - Create Fiat Account
+
+```bash
+curl -X POST "http://localhost:3002/api/virgopay/fiatAccount" \
+  -H "X-API-Key: <your-api-key>" \
+  -H "Content-Type: application/json" \
+  -H "Accept: application/json" \
+  -d '{
+    "ref_id": "id0003",
+    "customerId": "1ea57af6-8e30-4a37-aa2f-d7e967a8b957",
+    "paymentMethodCode": "IMPS",
+    "fiatAccount": {
+      "accountNumber": "1234567",
+      "bankName": "State Bank of India",
+      "routingNumber": "12345"
+    }
+  }'
+```
+
+## 18. VirgoPAY - List Fiat Accounts
+
+```bash
+curl -X GET "http://localhost:3002/api/virgopay/fiatAccount?ref_id=id0003&customerId=1ea57af6-8e30-4a37-aa2f-d7e967a8b957" \
+  -H "X-API-Key: <your-api-key>" \
+  -H "Accept: application/json"
+```
+
+## 19. VirgoPAY - Delete Fiat Account
+
+```bash
+curl -X POST "http://localhost:3002/api/virgopay/fiatAccount/delete/f3af54d0-cdd9-4f65-98b7-4b8ab8a13f31?ref_id=id0003" \
+  -H "X-API-Key: <your-api-key>" \
+  -H "Accept: application/json"
+```
+
+## 20. VirgoPAY - Onramp Transfer
+
+```bash
+curl -X POST "http://localhost:3002/api/virgopay/transfer/onramp" \
+  -H "X-API-Key: <your-api-key>" \
+  -H "Content-Type: application/json" \
+  -H "Accept: application/json" \
+  -d '{
+    "ref_id": "id0003",
+    "amount": 32.25,
+    "customerId": "8629eb45-2c25-47c4-8bfd-552587a47e6e",
+    "marketPair": "CAD/USDC",
+    "paymentMethodCode": "interactEtransfer",
+    "networkName": "UGA",
+    "cryptoWallet": {
+      "address": "0x32Be343B94f860124dC4fEe278FDCBD38C102D88",
+      "networkSymbol": "erc20"
+    },
+    "fiatAccountId": "705ae478-6541-4ccf-9689-9c0b3c32f4d8"
+  }'
+```
+
+## 21. VirgoPAY - Offramp Transfer
+
+```bash
+curl -X POST "http://localhost:3002/api/virgopay/transfer/offramp" \
+  -H "X-API-Key: <your-api-key>" \
+  -H "Content-Type: application/json" \
+  -H "Accept: application/json" \
+  -d '{
+    "ref_id": "id0003",
+    "amount": 100,
+    "customerId": "8629eb45-2c25-47c4-8bfd-552587a47e6e",
+    "marketPair": "USDC/CAD",
+    "fiatAccountId": "705ae478-6541-4ccf-9689-9c0b3c32f4d8",
+    "cryptoNetworkSymbol": "erc20"
+  }'
+```
+
+## 22. VirgoPAY - Transfer Detail
+
+```bash
+curl -X GET "http://localhost:3002/api/virgopay/transfer/detail?ref_id=id0003&transferId=2c149e06-bb12-4741-ba8f-4166c2ba34a0" \
+  -H "X-API-Key: <your-api-key>" \
+  -H "Accept: application/json"
+```
+
+## 23. VirgoPAY - List Transfers
+
+```bash
+curl -X GET "http://localhost:3002/api/virgopay/transfer?ref_id=id0003&id=5802c426-a4f4-486d-966d-f1ac9f222ebb&customerId=47d571c7-9571-4ae7-a5a1-9840e5087910&type=1&status=5&page=1&size=20&countryCode=CAN" \
+  -H "X-API-Key: <your-api-key>" \
+  -H "Accept: application/json"
 ```
 
 ## Single Line Commands (Copy-Paste Ready)

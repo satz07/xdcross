@@ -6,6 +6,7 @@ require('dotenv').config();
 
 const coinsRoutes = require('./routes/coins');
 const onrampRoutes = require('./routes/onramp');
+const virgopayRoutes = require('./routes/virgopay');
 const { apiKeyAuth } = require('./middleware/api-key-auth');
 const { isAuthEnabled } = require('./config/api-keys');
 
@@ -74,6 +75,7 @@ app.use('/api', (req, res, next) => {
 });
 app.use('/api', coinsRoutes);
 app.use('/api', onrampRoutes);
+app.use('/api', virgopayRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {

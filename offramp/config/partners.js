@@ -18,6 +18,14 @@ const partners = {
     secret: process.env.ONRAMP_SECRET || 'MfeppKpi9A7LSwCxMPqs5VH9dV9Ix3Sh',
     enabled: true
   },
+  id0003: {
+    name: 'VirgoPAY',
+    baseUrl: process.env.VIRGOPAY_BASE_URL || 'https://sandbox.virgopay.co',
+    apiKey: process.env.VIRGOPAY_API_KEY,
+    secret: process.env.VIRGOPAY_SECRET,
+    countryCode: process.env.VIRGOPAY_COUNTRY_CODE || 'IND',
+    enabled: true
+  },
   // Add more partners here
   // partner2: {
   //   name: 'Partner 2',
