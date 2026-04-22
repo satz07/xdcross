@@ -433,6 +433,18 @@ curl -X POST "${BASE_URL}/api/getExchangeRate" \
 curl -X POST "http://localhost:3002/api/getExchangeRate" -H "X-API-Key: <your-api-key>" -H "Content-Type: application/x-www-form-urlencoded" -d "ref_id=id0002&fromCurrency=AED&toCurrency=PHP&fromAmount=200&chain=XDC&paymentMethodType=AED-BANK-TRANSFER"
 ```
 
+**USD -> INR (VirgoPAY market/list path):**
+```bash
+curl -X POST "http://localhost:3002/api/getExchangeRate" \
+  --header 'X-API-Key: <your-api-key>' \
+  --header 'Content-Type: application/x-www-form-urlencoded' \
+  --data-urlencode 'ref_id=id0003' \
+  --data-urlencode 'fromCurrency=USD' \
+  --data-urlencode 'toCurrency=INR' \
+  --data-urlencode 'fromAmount=100' \
+  --data-urlencode 'chain=XDC'
+```
+
 ## 12. Onramp - Bank Details
 
 **Onramp.money API endpoint:**
@@ -752,6 +764,14 @@ curl -X GET "http://localhost:3002/api/transfer/detail?ref_id=id0003&transferId=
 
 ```bash
 curl -X GET "http://localhost:3002/api/transfer?ref_id=id0003&id=5802c426-a4f4-486d-966d-f1ac9f222ebb&customerId=47d571c7-9571-4ae7-a5a1-9840e5087910&type=1&status=5&page=1&size=20&countryCode=CAN" \
+  -H "X-API-Key: <your-api-key>" \
+  -H "Accept: application/json"
+```
+
+## 24. VirgoPAY - Market List
+
+```bash
+curl -X GET "http://localhost:3002/api/market/list?ref_id=id0003&sourceCoin=USDT&destinationCoin=INR&type=2" \
   -H "X-API-Key: <your-api-key>" \
   -H "Accept: application/json"
 ```

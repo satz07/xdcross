@@ -43,10 +43,10 @@ function buildSigningObject(method, req) {
   return signingObject;
 }
 
-function buildVirgoHeaders(partner, signingObject) {
+function buildVirgoHeaders(partner, signingObject, countryCodeOverride) {
   const apiKey = partner.apiKey;
   const secret = partner.secret;
-  const countryCode = partner.countryCode;
+  const countryCode = countryCodeOverride || partner.countryCode;
   const timestamp = Math.floor(Date.now() / 1000).toString();
 
   const payloadObject = { ...signingObject, apiKey, timestamp };
@@ -63,6 +63,39 @@ function buildVirgoHeaders(partner, signingObject) {
     'X-TIMESTAMP': timestamp,
     'X-HMAC': signature,
     'COUNTRY-CODE': countryCode
+  };
+}
+
+function resolveMarketCountryCode(query, partner) {
+  const override = query && query.countryCode;
+  if (override) {
+    return String(override).toUpperCase();
+  }
+
+  const type = String((query && query.type) || '');
+  const sourceCoin = String((query && query.sourceCoin) || '').toUpperCase();
+  const destinationCoin = String((query && query.destinationCoin) || '').toUpperCase();
+  const currencyToCountryCode = {
+    USD: 'USA',
+    INR: 'IND'
+  };
+
+  if (type === '1' && currencyToCountryCode[sourceCoin]) {
+    return currencyToCountryCode[sourceCoin];
+  }
+
+  if (type === '2' && currencyToCountryCode[destinationCoin]) {
+    return currencyToCountryCode[destinationCoin];
+  }
+
+  return partner.countryCode;
+}
+
+function maskVirgoHeaders(headers) {
+  return {
+    ...headers,
+    'X-API-KEY': headers['X-API-KEY'] ? '***' : undefined,
+    'X-HMAC': headers['X-HMAC'] ? '***' : undefined
   };
 }
 
@@ -389,7 +422,8 @@ router.get('/fiatAccount', async (req, res) => {
     }
 
     const signingObject = buildSigningObject('GET', req);
-    const headers = buildVirgoHeaders(partner, signingObject);
+    const marketCountryCode = resolveMarketCountryCode(req.query, partner);
+    const headers = buildVirgoHeaders(partner, signingObject, marketCountryCode);
     const url = `${baseUrl.replace(/\/+$/, '')}/api/v1/fiatAccount`;
 
     const response = await axios.get(url, {
@@ -709,6 +743,104 @@ router.get('/transfer', async (req, res) => {
     }
 
     if (error.response) {
+      return res.status(error.response.status).json({
+        error: {
+          message: error.response.data?.message || 'VirgoPAY API error',
+          status: error.response.status,
+          data: error.response.data
+        }
+      });
+    }
+
+    return res.status(500).json({
+      error: {
+        message: error.message || 'Internal server error',
+        status: 500
+      }
+    });
+  }
+});
+
+/**
+ * List market pairs (VirgoPAY)
+ * GET /api/market/list
+ * Requires ref_id=id0003. Example query: sourceCoin, destinationCoin, type.
+ */
+router.get('/market/list', async (req, res) => {
+  try {
+    const { partner } = getPartnerFromRequest(req);
+    const { apiKey, secret, countryCode, baseUrl } = partner;
+
+    if (!apiKey || !secret || !countryCode) {
+      return res.status(500).json({
+        error: {
+          message: 'Missing VirgoPAY credentials. Set VIRGOPAY_API_KEY, VIRGOPAY_SECRET, VIRGOPAY_COUNTRY_CODE.',
+          status: 500
+        }
+      });
+    }
+
+    const params = { ...(req.query || {}) };
+    delete params.ref_id;
+    const missingFields = ['sourceCoin', 'destinationCoin', 'type'].filter((k) => !params[k]);
+    if (missingFields.length > 0) {
+      return res.status(400).json({
+        error: {
+          message: `Missing required query params: ${missingFields.join(', ')}`,
+          status: 400
+        }
+      });
+    }
+
+    if (!['1', '2'].includes(String(params.type))) {
+      return res.status(400).json({
+        error: {
+          message: "Invalid 'type'. Allowed values: 1 (onramp), 2 (offramp)",
+          status: 400
+        }
+      });
+    }
+
+    const signingObject = buildSigningObject('GET', req);
+    const marketCountryCode = resolveMarketCountryCode(req.query, partner);
+    const headers = buildVirgoHeaders(partner, signingObject, marketCountryCode);
+    const url = `${baseUrl.replace(/\/+$/, '')}/api/v1/market/list`;
+    const outgoingHeaders = maskVirgoHeaders(headers);
+
+    console.log('[virgopay/market/list] inbound query:', req.query);
+    console.log('[virgopay/market/list] resolved country code:', marketCountryCode);
+    console.log('[virgopay/market/list] signing object:', signingObject);
+    console.log('[virgopay/market/list] outbound url:', url);
+    console.log('[virgopay/market/list] outbound params:', params);
+    console.log('[virgopay/market/list] outbound headers:', outgoingHeaders);
+
+    const response = await axios.get(url, {
+      headers,
+      params,
+      timeout: 30000
+    });
+
+    const rowCount = Array.isArray(response.data?.data) ? response.data.data.length : null;
+    console.log('[virgopay/market/list] upstream status:', response.status);
+    console.log('[virgopay/market/list] upstream rowCount:', rowCount);
+    if (rowCount === 0) {
+      console.warn('[virgopay/market/list] upstream returned empty data array');
+    }
+
+    return res.status(response.status).json(response.data);
+  } catch (error) {
+    if (error.message && (error.message.includes('Partner') || error.message.includes('ref_id'))) {
+      return res.status(400).json({
+        error: {
+          message: error.message,
+          status: 400
+        }
+      });
+    }
+
+    if (error.response) {
+      console.error('[virgopay/market/list] upstream error status:', error.response.status);
+      console.error('[virgopay/market/list] upstream error data:', error.response.data);
       return res.status(error.response.status).json({
         error: {
           message: error.response.data?.message || 'VirgoPAY API error',

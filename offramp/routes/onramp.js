@@ -1096,6 +1096,97 @@ async function callOfframpQuote(partnerId, body, apiKeyForInternal) {
 }
 
 /**
+ * Helper function to call VirgoPAY market list endpoint internally.
+ */
+async function callVirgoMarketList(partnerId, query, apiKeyForInternal) {
+  const port = process.env.PORT || 3000;
+  const url = `http://localhost:${port}/api/market/list`;
+  const params = { ...(query || {}), ref_id: partnerId };
+  try {
+    const headers = { Accept: 'application/json' };
+    if (apiKeyForInternal) {
+      headers['X-API-Key'] = apiKeyForInternal;
+    }
+
+    const response = await axios.get(url, {
+      headers,
+      params,
+      timeout: 30000
+    });
+    return response.data;
+  } catch (err) {
+    if (err.response) {
+      console.error('[callVirgoMarketList] Internal market/list failed - status:', err.response.status, 'data:', JSON.stringify(err.response.data));
+    }
+    throw err;
+  }
+}
+
+function buildInternalMarketListCurl(port, partnerId, query, apiKeyForInternal) {
+  const params = new URLSearchParams({ ...(query || {}), ref_id: partnerId }).toString();
+  const maskedApiKey = apiKeyForInternal ? '***' : '<your-api-key>';
+  return `curl -X GET "http://localhost:${port}/api/market/list?${params}" -H "X-API-Key: ${maskedApiKey}" -H "Accept: application/json"`;
+}
+
+function extractMarketRate(virgoResponse) {
+  const data = virgoResponse && virgoResponse.data;
+  const list = Array.isArray(data)
+    ? data
+    : Array.isArray(data && data.list)
+      ? data.list
+      : Array.isArray(data && data.records)
+        ? data.records
+        : [];
+
+  const item = list[0] || (data && typeof data === 'object' ? data : null);
+  if (!item || typeof item !== 'object') {
+    return null;
+  }
+
+  const directRate = item.rate ?? item.price ?? item.exchangeRate ?? item.marketRate;
+  if (directRate !== undefined && directRate !== null && !Number.isNaN(Number(directRate))) {
+    return { rate: Number(directRate), item };
+  }
+
+  const srcAmt = Number(item.sourceAmount);
+  const dstAmt = Number(item.destinationAmount);
+  if (!Number.isNaN(srcAmt) && !Number.isNaN(dstAmt) && srcAmt > 0) {
+    return { rate: dstAmt / srcAmt, item };
+  }
+
+  return null;
+}
+
+async function getVirgoLegRate(partnerId, query, apiKeyForInternal) {
+  const port = process.env.PORT || 3000;
+  console.log('[Virgo market] internal curl:', buildInternalMarketListCurl(port, partnerId, query, apiKeyForInternal));
+  const result = await callVirgoMarketList(partnerId, query, apiKeyForInternal);
+  if (result && result.success === false) {
+    throw new Error(`VirgoPAY market/list returned success=false: ${JSON.stringify(result)}`);
+  }
+  if (result && result.errorCode !== undefined && Number(result.errorCode) !== 0) {
+    throw new Error(`VirgoPAY market/list returned non-zero errorCode: ${JSON.stringify(result)}`);
+  }
+  const parsed = extractMarketRate(result);
+  return { result, parsed };
+}
+
+function resolveCountryCodeFromCurrency(currency) {
+  const map = {
+    USD: 'USA',
+    INR: 'IND',
+    AED: 'ARE',
+    PHP: 'PHL',
+    CAD: 'CAN',
+    EUR: 'EUR',
+    GBP: 'GBR',
+    USDT: 'USA',
+    USDC: 'USA'
+  };
+  return map[String(currency || '').toUpperCase()] || null;
+}
+
+/**
  * Get Combined Exchange Rate - AED to PHP via USDC
  * POST /api/getExchangeRate (ref_id in query or body)
  * 
@@ -1146,6 +1237,149 @@ router.post('/getExchangeRate', async (req, res) => {
 
     const fromCurr = fromCurrency.toUpperCase();
     const toCurr = toCurrency.toUpperCase();
+    if (fromCurr === toCurr) {
+      return res.status(400).json({
+        error: {
+          message: 'fromCurrency and toCurrency cannot be the same',
+          status: 400
+        }
+      });
+    }
+
+    // VirgoPAY special flow: dynamic input currency -> USDT -> output currency via market/list
+    if (partnerId === 'id0003') {
+      const inputAmount = Number(fromAmount);
+      if (Number.isNaN(inputAmount) || inputAmount <= 0) {
+        return res.status(400).json({
+          error: {
+            message: 'fromAmount must be a positive number',
+            status: 400
+          }
+        });
+      }
+
+      const fromCountryCode = String(body.fromCountryCode || resolveCountryCodeFromCurrency(fromCurr) || 'USA').toUpperCase();
+      const toCountryCode = String(body.toCountryCode || resolveCountryCodeFromCurrency(toCurr) || 'IND').toUpperCase();
+      if (fromCountryCode.length !== 3 || toCountryCode.length !== 3) {
+        return res.status(400).json({
+          error: {
+            message: 'fromCountryCode and toCountryCode must be 3-letter country codes',
+            status: 400
+          }
+        });
+      }
+      const bridgeCandidates = ['USDT'];
+
+      console.log(`VirgoPAY dynamic flow via market/list: ${fromCurr} -> USDT -> ${toCurr}`);
+
+      let chosenBridge = null;
+      let step1Rate = 1;
+      let step1Raw = null;
+      let usdtAmount = inputAmount;
+      let step2Rate = 1;
+      let step2Raw = null;
+      let finalAmount = inputAmount;
+      const bridgeErrors = [];
+
+      for (const bridge of bridgeCandidates) {
+        try {
+          let leg1Parsed = { rate: 1, item: null };
+          let leg2Parsed = { rate: 1, item: null };
+          let intermediate = inputAmount;
+
+          if (fromCurr !== bridge) {
+            const leg1 = await getVirgoLegRate(
+              partnerId,
+              { sourceCoin: fromCurr, destinationCoin: bridge, type: 1, countryCode: fromCountryCode },
+              req.apiKey
+            );
+            if (!leg1.parsed) {
+              bridgeErrors.push(`${fromCurr}->${bridge}: ${JSON.stringify(leg1.result)}`);
+              continue;
+            }
+            leg1Parsed = leg1.parsed;
+            intermediate = inputAmount * leg1Parsed.rate;
+          }
+
+          if (toCurr !== bridge) {
+            const leg2 = await getVirgoLegRate(
+              partnerId,
+              { sourceCoin: bridge, destinationCoin: toCurr, type: 2, countryCode: toCountryCode },
+              req.apiKey
+            );
+            if (!leg2.parsed) {
+              bridgeErrors.push(`${bridge}->${toCurr}: ${JSON.stringify(leg2.result)}`);
+              continue;
+            }
+            leg2Parsed = leg2.parsed;
+            finalAmount = intermediate * leg2Parsed.rate;
+          } else {
+            finalAmount = intermediate;
+          }
+
+          chosenBridge = bridge;
+          step1Rate = leg1Parsed.rate;
+          step1Raw = leg1Parsed.item;
+          usdtAmount = intermediate;
+          step2Rate = leg2Parsed.rate;
+          step2Raw = leg2Parsed.item;
+          break;
+        } catch (err) {
+          bridgeErrors.push(`${fromCurr}->${bridge}->${toCurr}: ${err.message}`);
+        }
+      }
+
+      if (!chosenBridge) {
+        throw new Error(`No VirgoPAY market path found for ${fromCurr}->${toCurr}. Attempts: ${bridgeErrors.join(' | ')}`);
+      }
+
+      const effectiveRate = finalAmount / inputAmount;
+      const baselineRateNoStep1Fee = (toCurr === chosenBridge ? 1 : step2Rate);
+      const baselineToAmountNoStep1Fee = inputAmount * baselineRateNoStep1Fee;
+      const totalFeeInToCurrency = Math.max(0, baselineToAmountNoStep1Fee - finalAmount);
+      const totalFeeInFromCurrency = effectiveRate > 0 ? (totalFeeInToCurrency / effectiveRate) : 0;
+
+      return res.status(200).json({
+        status: 1,
+        code: 200,
+        data: {
+          input: {
+            fromCurrency: fromCurr,
+            toCurrency: toCurr,
+            fromAmount: String(fromAmount),
+            chain: chain || '',
+            fromCountryCode,
+            toCountryCode
+          },
+          step1: {
+            description: `${fromCurr} to ${chosenBridge} (VirgoPAY market/list, type=1, countryCode=${fromCountryCode})`,
+            fromCurrency: fromCurr,
+            toCurrency: chosenBridge,
+            fromAmount: String(fromAmount),
+            toAmount: usdtAmount.toFixed(6),
+            rate: step1Rate.toFixed(8),
+            raw: step1Raw
+          },
+          step2: {
+            description: `${chosenBridge} to ${toCurr} (VirgoPAY market/list, type=2, countryCode=${toCountryCode})`,
+            fromCurrency: chosenBridge,
+            toCurrency: toCurr,
+            fromAmount: usdtAmount.toFixed(6),
+            toAmount: finalAmount.toFixed(6),
+            rate: step2Rate.toFixed(8),
+            raw: step2Raw
+          },
+          final: {
+            fromCurrency: fromCurr,
+            toCurrency: toCurr,
+            fromAmount: String(fromAmount),
+            toAmount: finalAmount.toFixed(6),
+            effectiveRate: effectiveRate.toFixed(8),
+            fee: totalFeeInFromCurrency.toFixed(6)
+          }
+        }
+      });
+    }
 
     // Step 1: Get onramp quote (AED → USDC)
     console.log('Step 1: Getting onramp quote (AED → USDC)...');
