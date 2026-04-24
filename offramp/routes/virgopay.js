@@ -422,13 +422,14 @@ router.get('/fiatAccount', async (req, res) => {
     }
 
     const signingObject = buildSigningObject('GET', req);
-    const marketCountryCode = resolveMarketCountryCode(req.query, partner);
-    const headers = buildVirgoHeaders(partner, signingObject, marketCountryCode);
+    const headers = buildVirgoHeaders(partner, signingObject);
     const url = `${baseUrl.replace(/\/+$/, '')}/api/v1/fiatAccount`;
+    const params = { ...(req.query || {}) };
+    delete params.ref_id;
 
     const response = await axios.get(url, {
       headers,
-      params: req.query,
+      params,
       timeout: 30000
     });
 
@@ -665,10 +666,12 @@ router.get('/transfer/detail', async (req, res) => {
     const signingObject = buildSigningObject('GET', req);
     const headers = buildVirgoHeaders(partner, signingObject);
     const url = `${baseUrl.replace(/\/+$/, '')}/api/v1/transfer/detail`;
+    const params = { ...(req.query || {}) };
+    delete params.ref_id;
 
     const response = await axios.get(url, {
       headers,
-      params: req.query,
+      params,
       timeout: 30000
     });
 
@@ -724,10 +727,12 @@ router.get('/transfer', async (req, res) => {
     const signingObject = buildSigningObject('GET', req);
     const headers = buildVirgoHeaders(partner, signingObject);
     const url = `${baseUrl.replace(/\/+$/, '')}/api/v1/transfer`;
+    const params = { ...(req.query || {}) };
+    delete params.ref_id;
 
     const response = await axios.get(url, {
       headers,
-      params: req.query,
+      params,
       timeout: 30000
     });
 
