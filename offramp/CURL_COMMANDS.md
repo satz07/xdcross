@@ -525,7 +525,7 @@ curl -X POST "http://localhost:3002/api/bank/bankDetails" -H "X-API-Key: <your-a
 
 ## 13. VirgoPAY - Create Customer
 
-VirgoPAY partner uses `ref_id=id0003`. The server signs requests using VirgoPAY API key/secret and country code from env.
+VirgoPAY partner uses `ref_id=id0003`. You can optionally pass `countryCode` (query/body) to override `COUNTRY-CODE` header per request.
 
 **Create customer (maps to `POST /api/v1/customer/create` on VirgoPAY):**
 
@@ -535,6 +535,7 @@ curl -X POST "http://localhost:3002/api/customer/create" \
   -H "Content-Type: application/json" \
   -d '{
     "ref_id": "id0003",
+    "countryCode": "IND",
     "email": "satheesh2@xinfin.org",
     "phone": "00919791430120"
   }'
@@ -551,6 +552,7 @@ curl -X POST "${BASE_URL}/api/customer/create" \
   -H "Content-Type: application/json" \
   -d '{
     "ref_id": "id0003",
+    "countryCode": "IND",
     "email": "satheesh2@xinfin.org",
     "phone": "00919791430120"
   }'
@@ -589,6 +591,7 @@ curl -X POST "http://localhost:3002/api/customer/partial-update" \
   -H "Accept: application/json" \
   -d '{
     "ref_id": "id0003",
+    "countryCode": "IND",
     "id": "9c18e722-5a9f-4de1-b739-700e736f7583",
     "firstName": "John",
     "middleName": "Jimmy",
@@ -639,6 +642,7 @@ curl -X POST "http://localhost:3002/api/customer/update" \
   -H "Accept: application/json" \
   -d '{
     "ref_id": "id0003",
+    "countryCode": "IND",
     "id": "4d420a31-7d91-4f8c-a818-a33becc27b29",
     "firstName": "John",
     "middleName": "Jimmy",
@@ -687,6 +691,7 @@ curl -X POST "http://localhost:3002/api/fiatAccount" \
   -H "Accept: application/json" \
   -d '{
     "ref_id": "id0003",
+    "countryCode": "IND",
     "customerId": "1ea57af6-8e30-4a37-aa2f-d7e967a8b957",
     "paymentMethodCode": "IMPS",
     "fiatAccount": {
@@ -722,6 +727,7 @@ curl -X POST "http://localhost:3002/api/transfer/onramp" \
   -H "Accept: application/json" \
   -d '{
     "ref_id": "id0003",
+    "countryCode": "USA",
     "amount": 32.25,
     "customerId": "8629eb45-2c25-47c4-8bfd-552587a47e6e",
     "marketPair": "CAD/USDC",
@@ -744,6 +750,7 @@ curl -X POST "http://localhost:3002/api/transfer/offramp" \
   -H "Accept: application/json" \
   -d '{
     "ref_id": "id0003",
+    "countryCode": "IND",
     "amount": 100,
     "customerId": "8629eb45-2c25-47c4-8bfd-552587a47e6e",
     "marketPair": "USDC/CAD",

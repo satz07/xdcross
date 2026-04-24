@@ -91,6 +91,13 @@ function resolveMarketCountryCode(query, partner) {
   return partner.countryCode;
 }
 
+function resolveCountryCodeFromRequest(req, partner) {
+  const queryCode = req.query && req.query.countryCode;
+  const bodyCode = req.body && req.body.countryCode;
+  const candidate = queryCode || bodyCode || partner.countryCode;
+  return String(candidate || partner.countryCode || '').toUpperCase();
+}
+
 function maskVirgoHeaders(headers) {
   return {
     ...headers,
@@ -120,9 +127,11 @@ router.post('/customer/create', async (req, res) => {
 
     const requestBody = { ...(req.body || {}) };
     delete requestBody.ref_id;
+    delete requestBody.countryCode;
 
     const signingObject = buildSigningObject('POST', { ...req, body: requestBody });
-    const headers = buildVirgoHeaders(partner, signingObject);
+    const requestCountryCode = resolveCountryCodeFromRequest(req, partner);
+    const headers = buildVirgoHeaders(partner, signingObject, requestCountryCode);
     const url = `${baseUrl.replace(/\/+$/, '')}/api/v1/customer/create`;
 
     const response = await axios.post(url, requestBody, {
@@ -240,9 +249,11 @@ router.post('/customer/partial-update', async (req, res) => {
 
     const requestBody = { ...(req.body || {}) };
     delete requestBody.ref_id;
+    delete requestBody.countryCode;
 
     const signingObject = buildSigningObject('POST', { ...req, body: requestBody });
-    const headers = buildVirgoHeaders(partner, signingObject);
+    const requestCountryCode = resolveCountryCodeFromRequest(req, partner);
+    const headers = buildVirgoHeaders(partner, signingObject, requestCountryCode);
     const url = `${baseUrl.replace(/\/+$/, '')}/api/v1/customer/partial-update`;
 
     const response = await axios.post(url, requestBody, {
@@ -301,9 +312,11 @@ router.post('/customer/update', async (req, res) => {
 
     const requestBody = { ...(req.body || {}) };
     delete requestBody.ref_id;
+    delete requestBody.countryCode;
 
     const signingObject = buildSigningObject('POST', { ...req, body: requestBody });
-    const headers = buildVirgoHeaders(partner, signingObject);
+    const requestCountryCode = resolveCountryCodeFromRequest(req, partner);
+    const headers = buildVirgoHeaders(partner, signingObject, requestCountryCode);
     const url = `${baseUrl.replace(/\/+$/, '')}/api/v1/customer/update`;
 
     const response = await axios.post(url, requestBody, {
@@ -362,9 +375,11 @@ router.post('/fiatAccount', async (req, res) => {
 
     const requestBody = { ...(req.body || {}) };
     delete requestBody.ref_id;
+    delete requestBody.countryCode;
 
     const signingObject = buildSigningObject('POST', { ...req, body: requestBody });
-    const headers = buildVirgoHeaders(partner, signingObject);
+    const requestCountryCode = resolveCountryCodeFromRequest(req, partner);
+    const headers = buildVirgoHeaders(partner, signingObject, requestCountryCode);
     const url = `${baseUrl.replace(/\/+$/, '')}/api/v1/fiatAccount`;
 
     const response = await axios.post(url, requestBody, {
@@ -543,9 +558,11 @@ router.post('/transfer/onramp', async (req, res) => {
 
     const requestBody = { ...(req.body || {}) };
     delete requestBody.ref_id;
+    delete requestBody.countryCode;
 
     const signingObject = buildSigningObject('POST', { ...req, body: requestBody });
-    const headers = buildVirgoHeaders(partner, signingObject);
+    const requestCountryCode = resolveCountryCodeFromRequest(req, partner);
+    const headers = buildVirgoHeaders(partner, signingObject, requestCountryCode);
     const url = `${baseUrl.replace(/\/+$/, '')}/api/v1/transfer/onramp`;
 
     const response = await axios.post(url, requestBody, {
@@ -604,9 +621,11 @@ router.post('/transfer/offramp', async (req, res) => {
 
     const requestBody = { ...(req.body || {}) };
     delete requestBody.ref_id;
+    delete requestBody.countryCode;
 
     const signingObject = buildSigningObject('POST', { ...req, body: requestBody });
-    const headers = buildVirgoHeaders(partner, signingObject);
+    const requestCountryCode = resolveCountryCodeFromRequest(req, partner);
+    const headers = buildVirgoHeaders(partner, signingObject, requestCountryCode);
     const url = `${baseUrl.replace(/\/+$/, '')}/api/v1/transfer/offramp`;
 
     const response = await axios.post(url, requestBody, {
